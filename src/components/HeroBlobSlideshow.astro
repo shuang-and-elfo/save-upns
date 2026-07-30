@@ -1,6 +1,5 @@
 ---
 import { withBase } from "../utils/url";
-import DoodleIllustration from "./DoodleIllustration.astro";
 
 const slides = [
   {
@@ -41,11 +40,6 @@ const slides = [
         />
       </div>
     ))}
-
-    {/* Decorative Sun Doodle Badge at Top Right */}
-    <div class="doodle-badge" aria-hidden="true">
-      <DoodleIllustration name="sun" size="lg" color="var(--color-primary, #d86f58)" />
-    </div>
   </div>
 </div>
 
@@ -118,16 +112,6 @@ const slides = [
     height: 100%;
     object-fit: cover;
     display: block;
-  }
-
-  .doodle-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1.25rem;
-    z-index: 10;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
-    pointer-events: none;
-    transition: transform 1.4s ease;
   }
 
   @media (prefers-reduced-motion: reduce) {

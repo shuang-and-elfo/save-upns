@@ -1,4 +1,6 @@
 ---
+import DoodleIllustration from "./DoodleIllustration.astro";
+
 const TESTIMONIALS = [
   {
     quote:
@@ -26,6 +28,11 @@ const TESTIMONIALS = [
     <div class="testimonial-wrapper">
       {/* Main Cloud Blob Container */}
       <div class="cloud-container">
+        {/* Decorative Sun Doodle Sticker at Top Right */}
+        <div class="reviews-sun-sticker" aria-hidden="true">
+          <DoodleIllustration name="sun" size="xl" />
+        </div>
+
         <h3 class="handwritten-title">Reviews of Happy Parents</h3>
 
         <div class="carousel-viewport" id="testimonial-viewport" aria-live="polite">
@@ -152,6 +159,16 @@ const TESTIMONIALS = [
     justify-content: center;
     box-shadow: none;
     min-height: 420px;
+  }
+
+  .reviews-sun-sticker {
+    position: absolute;
+    top: -15px;
+    right: 25px;
+    z-index: 15;
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.12));
+    pointer-events: none;
+    transform: rotate(12deg);
   }
 
   /* Section Subtitle Style */
@@ -300,6 +317,12 @@ const TESTIMONIALS = [
 
     .quote-text {
       font-size: 1.25rem;
+    }
+
+    .reviews-sun-sticker {
+      top: -5px;
+      right: 10px;
+      transform: scale(0.8) rotate(12deg);
     }
   }
 </style>
