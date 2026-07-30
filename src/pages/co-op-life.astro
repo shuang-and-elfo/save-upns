@@ -168,6 +168,8 @@ import PhotoCutout from "../components/PhotoCutout.astro";
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2.5rem;
+    max-width: 80%;
+    margin: 0 auto;
   }
 
   .resp-card {
@@ -202,7 +204,7 @@ import PhotoCutout from "../components/PhotoCutout.astro";
   }
 
   .resp-desc {
-    font-size: 1.02rem;
+    font-size: 1.05rem;
     line-height: 1.6;
     color: var(--color-text-muted);
     margin: 0 0 1.25rem;
@@ -221,14 +223,14 @@ import PhotoCutout from "../components/PhotoCutout.astro";
     display: flex;
     align-items: flex-start;
     gap: 0.65rem;
-    font-size: 0.95rem;
-    color: var(--color-text);
-    line-height: 1.5;
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
   }
 
   .bullet {
     color: var(--color-yellow);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     flex-shrink: 0;
   }
 
@@ -301,6 +303,7 @@ import PhotoCutout from "../components/PhotoCutout.astro";
     .time-box {
       grid-template-columns: 1fr;
       gap: 2.5rem;
+      max-width: 100%;
     }
   }
 
