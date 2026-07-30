@@ -332,7 +332,14 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
 
   /* Teachers Preview Section */
   .teachers-section {
+    position: relative;
+    overflow: hidden;
     padding: 5.5rem 0;
+  }
+
+  .teachers-section .container {
+    position: relative;
+    z-index: 2;
   }
 
   .teachers-preview-grid {
