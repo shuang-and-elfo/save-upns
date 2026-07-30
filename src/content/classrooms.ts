@@ -27,13 +27,13 @@ export const CLASSROOMS: ClassroomInfo[] = [
     id: "kitten",
     name: "Kitten Room",
     slug: "kitten",
-    ageRange: "18 months – 2 year olds",
+    ageRange: "18 months – 3 year olds",
     animal: "kitten",
     tagline: "A gentle, comforting bridge from home to school.",
     shortDescription:
       "Our youngest classroom supports toddlers as they explore sensory play, build trust with teachers, and experience their very first preschool community.",
     longDescription:
-      "The Kitten Room is thoughtfully designed for toddlers aged 18 months to 2 years. At this tender stage of development, our primary focus is helping children feel safe, seen, and secure as they separate from parents and discover the joy of school. Children engage in water and sand play, finger painting, block building, storytime, and gentle outdoor play.",
+      "The Kitten Room is thoughtfully designed for toddlers aged 18 months to 3 years. At this tender stage of development, our primary focus is helping children feel safe, seen, and secure as they separate from parents and discover the joy of school. Children engage in water and sand play, finger painting, block building, storytime, and gentle outdoor play.",
     heroImage: "kitten4.jpg",
     galleryImages: [
       "kitten.jpg",

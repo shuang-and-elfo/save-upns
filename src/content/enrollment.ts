@@ -24,7 +24,7 @@ export const ENROLLMENT_DATA = {
     whoCanAttend:
       "UPNS proudly serves families of UCLA students, staff, and faculty as well as non-UCLA affiliated families from the general public.",
     pottyTraining:
-      "Potty training is NOT required to enroll in the Kitten Room (18 mos–2 yrs). Our teachers partner with you when your child is ready. Potty training is REQUIRED for Kangaroo and Dolphin rooms.",
+      "Potty training is NOT required to enroll in the Kitten Room (18 mos–3 yrs). Our teachers partner with you when your child is ready. Potty training is REQUIRED for Kangaroo and Dolphin rooms.",
   },
   fees: {
     applicationFee: "$50.00 (non-refundable)",
@@ -106,7 +106,7 @@ export const ENROLLMENT_DATA = {
     {
       question: "🚽 What if my child is not potty trained yet?",
       answer:
-        "Our Kitten Room (18 months–2 years) welcomes children who are not yet potty trained and supports diapering. Our Kangaroo and Dolphin rooms require children to be potty trained prior to enrolling in those classrooms.",
+        "Our Kitten Room (18 months–3 years) welcomes children who are not yet potty trained and supports diapering. Our Kangaroo and Dolphin rooms require children to be potty trained prior to enrolling in those classrooms.",
     },
     {
       question: "What is the parent co-op commitment?",
