@@ -56,9 +56,13 @@ const galleryPhotos = [
 >
   {/* CLASSROOM HERO */}
   <header class="room-hero">
-    <FloatingIllustration src="kangaroo.png" position="top-right" size="lg" rotate={-8} />
+    <FloatingIllustration src="kangaroo.png" position="top-right" size="xl" rotate={-8} opacity={1} />
     <div class="container hero-grid">
       <div class="hero-text">
+        <div class="room-age-subtitle">
+          <span>{room.ageRange}</span>
+        </div>
+
         <h1 class="room-title">{room.name}</h1>
 
         <p class="room-tagline">{room.tagline}</p>
@@ -66,18 +70,6 @@ const galleryPhotos = [
         <p class="room-desc">
           {room.longDescription}
         </p>
-
-      </div>
-
-      <div class="hero-stats">
-        <div class="stat-card">
-          <span class="stat-label">Verified Age Range</span>
-          <span class="stat-value">{room.ageRange}</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-label">Classroom Ratio & Setup</span>
-          <span class="stat-value">{room.ratioNote}</span>
-        </div>
       </div>
     </div>
   </header>
@@ -165,14 +157,28 @@ const galleryPhotos = [
   }
 
   .hero-grid {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: 3.5rem;
-    align-items: center;
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .room-age-subtitle {
+    display: inline-block;
+    background: #ffffff;
+    color: var(--color-primary, #35483c);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.4rem 1.15rem;
+    border-radius: 999px;
+    border: 2px solid var(--color-border, #f2ead6);
+    margin-bottom: 0.85rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   }
 
   .room-title {
-    font-size: 3.2rem;
+    font-size: 3.4rem;
     font-weight: 800;
     margin: 0 0 0.5rem;
     line-height: 1.1;
@@ -186,48 +192,11 @@ const galleryPhotos = [
   }
 
   .room-desc {
-    font-size: 1.08rem;
+    font-size: 1.12rem;
     line-height: 1.7;
     color: var(--color-text-muted);
-    margin: 0 0 1.5rem;
-  }
-
-  .hero-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .stat-card {
-    background: #ffffff;
-    border: 2px solid var(--color-border);
-    border-radius: 20px;
-    padding: 1.25rem 1.5rem;
-    box-shadow: var(--shadow-natural);
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .stat-card:first-child {
-    width: 50%;
-  }
-
-  .stat-card:last-child {
-    width: 70%;
-  }
-
-  .stat-label {
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-
-  .stat-value {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--color-text);
+    margin: 0 auto 1.5rem;
+    max-width: 760px;
   }
 
   .gallery-section {
@@ -321,12 +290,6 @@ const galleryPhotos = [
   }
 
   @media (max-width: 768px) {
-    .stat-card:first-child,
-    .stat-card:last-child {
-      width: 100%;
-    }
-
-    .hero-grid,
     .support-grid {
       grid-template-columns: 1fr;
       gap: 2.5rem;
