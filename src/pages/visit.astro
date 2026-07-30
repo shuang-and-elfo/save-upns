@@ -33,8 +33,8 @@ import DoodleIllustration from "../components/DoodleIllustration.astro";
       <div class="info-grid">
         {/* Address */}
         <div class="info-item">
-          <div class="info-icon">
-            <DoodleIllustration name="house" size="md" color="var(--color-tomato)" />
+          <div class="info-icon-badge">
+            <DoodleIllustration name="house" size="sm" color="var(--color-tomato)" />
           </div>
           <div class="info-content">
             <h3>Address</h3>
@@ -53,8 +53,8 @@ import DoodleIllustration from "../components/DoodleIllustration.astro";
 
         {/* Hours */}
         <div class="info-item">
-          <div class="info-icon">
-            <DoodleIllustration name="sun" size="xl" color="var(--color-yellow)" />
+          <div class="info-icon-badge">
+            <DoodleIllustration name="sun" size="sm" color="var(--color-yellow)" />
           </div>
           <div class="info-content">
             <h3>Hours of Operation</h3>
@@ -68,8 +68,8 @@ import DoodleIllustration from "../components/DoodleIllustration.astro";
 
         {/* Phone & Email */}
         <div class="info-item">
-          <div class="info-icon">
-            <DoodleIllustration name="phone" size="lg" color="var(--color-tomato)" />
+          <div class="info-icon-badge">
+            <DoodleIllustration name="phone" size="sm" color="var(--color-tomato)" />
           </div>
           <div class="info-content">
             <h3>Phone & Email</h3>
@@ -87,8 +87,8 @@ import DoodleIllustration from "../components/DoodleIllustration.astro";
 
         {/* Parking */}
         <div class="info-item">
-          <div class="info-icon">
-            <DoodleIllustration name="tractor" size="xl" color="var(--color-leaf-green)" />
+          <div class="info-icon-badge">
+            <DoodleIllustration name="tractor" size="sm" color="var(--color-leaf-green)" />
           </div>
           <div class="info-content">
             <h3>Parking & Arrival</h3>
@@ -305,58 +305,76 @@ import DoodleIllustration from "../components/DoodleIllustration.astro";
   .info-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2.5rem;
+    gap: 2rem;
     max-width: 960px;
-    margin: 3rem auto 0;
+    margin: 2.5rem auto 0;
   }
 
   .info-item {
-    background: var(--color-paper-white, #fffcf6);
+    background: #ffffff;
     border: 2px solid var(--color-border, #f2ead6);
     border-radius: 24px;
-    padding: 2rem;
+    padding: 2.25rem 2.5rem;
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
-    gap: 1.25rem;
-    box-shadow: 0 4px 14px rgba(53, 72, 60, 0.04);
+    box-shadow: var(--shadow-natural);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
 
-  .info-icon {
-    flex-shrink: 0;
-    width: 150px;
+  .info-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(53, 72, 60, 0.08);
+  }
+
+  .info-icon-badge {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: #fff9ee;
+    border: 2px solid var(--color-border, #f2ead6);
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-top: 0.25rem;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  }
+
+  .info-content {
+    width: 100%;
   }
 
   .info-content h3 {
-    font-size: 1.3rem;
-    margin: 0 0 0.65rem;
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin: 0 0 0.6rem;
     color: var(--color-text);
   }
 
   .info-main {
-    font-size: 1.1rem;
+    font-size: 1.08rem;
     font-weight: 700;
     color: var(--color-text);
     margin: 0 0 0.5rem;
-    line-height: 1.4;
+    line-height: 1.45;
   }
 
   .info-main a {
     color: var(--color-tomato);
     text-decoration: none;
+    transition: color 0.2s ease;
   }
 
   .info-main a:hover {
+    color: #c75c45;
     text-decoration: underline;
   }
 
   .info-sub {
-    font-size: 0.95rem;
+    font-size: 0.96rem;
     color: var(--color-text-muted);
-    line-height: 1.6;
+    line-height: 1.65;
     margin: 0;
   }
 
@@ -364,15 +382,20 @@ import DoodleIllustration from "../components/DoodleIllustration.astro";
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 0.75rem;
+    margin-top: 1rem;
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--color-tomato);
     text-decoration: none;
+    padding: 0.55rem 1.15rem;
+    background: #ffede8;
+    border-radius: 999px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
   }
 
   .map-link-btn:hover {
-    text-decoration: underline;
+    background: #ffdcd2;
+    transform: translateY(-2px);
   }
 
   /* Inquiry Form */
