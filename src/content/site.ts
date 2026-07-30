@@ -38,10 +38,10 @@ export interface SiteConfig {
 export const SITE_CONFIG: SiteConfig = {
   name: "University Parents Nursery School",
   shortName: "UPNS",
-  tagline: "A little school with a big community.",
+  tagline: "A cooperative school with a big community.",
   currentSchoolYear: "2026–2027",
   description:
-    "A parent-participation cooperative preschool in Los Angeles where children learn through play and families become part of a caring neighborhood school community.",
+    "Founded in 1966, UPNS is a parent-participation cooperative preschool in Los Angeles where children learn through play and families become part of a caring neighborhood school community.",
   history:
     "UPNS has a rich history dating back to 1966 when a group of families residing in UCLA Family Student Housing recognized the need for a nursery school. Over the decades, we have evolved and grown, moving to our current location on Sepulveda Boulevard in 1996.",
   mission:
