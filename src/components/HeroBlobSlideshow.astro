@@ -46,11 +46,6 @@ const slides = [
     <div class="doodle-badge" aria-hidden="true">
       <DoodleIllustration name="sun" size="lg" color="var(--color-primary, #d86f58)" />
     </div>
-
-    {/* Est. 1966 Badge at Bottom Left */}
-    <div class="est-badge" aria-hidden="true">
-      <span>Est. 1966</span>
-    </div>
   </div>
 </div>
 
@@ -133,23 +128,6 @@ const slides = [
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
     pointer-events: none;
     transition: transform 1.4s ease;
-  }
-
-  .est-badge {
-    position: absolute;
-    bottom: 1.25rem;
-    left: 1.25rem;
-    background: var(--color-paper-white, #fffcf6);
-    color: var(--color-text, #35483c);
-    font-family: var(--font-body, sans-serif);
-    font-size: 0.85rem;
-    font-weight: 700;
-    padding: 0.35rem 0.85rem;
-    border-radius: 999px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    pointer-events: none;
-    border: 2px solid #ffffff;
   }
 
   @media (prefers-reduced-motion: reduce) {
