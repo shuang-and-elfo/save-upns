@@ -36,11 +36,11 @@ const {
 <style>
   .cooperative-callout {
     position: relative;
-    background: linear-gradient(135deg, #fff9ee 0%, #fffcf6 100%);
-    border: 3px solid var(--color-border, #f2ead6);
-    border-radius: 32px;
-    padding: 3rem;
-    margin: 3.5rem 0;
+    background: var(--color-text, #35483c);
+    border: none;
+    border-radius: 28px;
+    padding: 2.25rem 2.5rem;
+    margin: 2.5rem 0;
     overflow: hidden;
     box-shadow: var(--shadow-natural);
   }
@@ -58,18 +58,18 @@ const {
 
   .callout-title {
     font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
-    font-size: 2.3rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    color: var(--color-text, #35483c);
-    margin: 0 0 0.75rem;
+    color: #ffffff;
+    margin: 0 0 0.6rem;
     line-height: 1.15;
   }
 
   .callout-subtitle {
-    font-size: 1.12rem;
-    line-height: 1.65;
-    color: var(--color-text-muted, #5f7065);
-    margin: 0 0 2rem 0;
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: #cedad1;
+    margin: 0 0 1.5rem 0;
     max-width: 780px;
   }
 
@@ -82,26 +82,26 @@ const {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    background: var(--color-text, #35483c);
-    color: #ffffff;
+    background: #ffffff;
+    color: var(--color-text, #35483c);
     font-family: var(--font-body, "DM Sans", sans-serif);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    padding: 0.85rem 1.75rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 999px;
     text-decoration: none;
-    box-shadow: 0 4px 14px rgba(53, 72, 60, 0.2);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
     transition: transform 0.2s ease, background-color 0.2s ease;
   }
 
   .coop-btn:hover {
-    background: #25332b;
+    background: #fff9ee;
     transform: translateY(-2px);
   }
 
   @media (max-width: 768px) {
     .cooperative-callout {
-      padding: 2rem 1.5rem;
+      padding: 1.75rem 1.5rem;
     }
     .callout-title {
       font-size: 1.8rem;
