@@ -213,6 +213,10 @@ const galleryPhotos = [
     width: 50%;
   }
 
+  .stat-card:last-child {
+    width: 70%;
+  }
+
   .stat-label {
     font-size: 0.8rem;
     font-weight: 700;
@@ -315,7 +319,8 @@ const galleryPhotos = [
   }
 
   @media (max-width: 768px) {
-    .stat-card:first-child {
+    .stat-card:first-child,
+    .stat-card:last-child {
       width: 100%;
     }
 

@@ -70,7 +70,7 @@ export const CLASSROOMS: ClassroomInfo[] = [
       { time: "4:00pm – 4:30pm", activity: "Inside Time" },
       { time: "4:30pm – 5:00pm", activity: "Pick Up Time" },
     ],
-    ratioNote: "Approximately 10–15 children in the classroom with 3 dedicated teachers and co-oping parent volunteers.",
+    ratioNote: "10–15 children in the classroom with 3 dedicated teachers and co-oping parent volunteers.",
   },
   {
     id: "kangaroo",
@@ -115,7 +115,7 @@ export const CLASSROOMS: ClassroomInfo[] = [
       { time: "3:30pm – 4:30pm", activity: "Outside Time" },
       { time: "4:30pm – 5:00pm", activity: "Pick Up Time" },
     ],
-    ratioNote: "Approximately 10–15 children in the classroom with 4 dedicated teachers and co-oping parent volunteers.",
+    ratioNote: "10–15 children in the classroom with 3 dedicated teachers and co-oping parent volunteers.",
   },
   {
     id: "dolphin",
@@ -154,7 +154,7 @@ export const CLASSROOMS: ClassroomInfo[] = [
       { time: "3:30pm – 4:30pm", activity: "Inside Activities" },
       { time: "4:30pm – 5:00pm", activity: "Clean Up, Hand Wash & Pick Up" },
     ],
-    ratioNote: "Approximately 10–15 children in the classroom with 2 dedicated teachers and co-oping parent volunteers.",
+    ratioNote: "10–15 children in the classroom with 2 dedicated teachers and co-oping parent volunteers.",
   },
 ];
 
