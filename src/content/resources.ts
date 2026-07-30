@@ -54,9 +54,10 @@ export const COOP_LIFE_DATA = {
       title: "Community Fundraising Support",
       timeCommitment: "",
       description:
-        "Annual fundraising support helps fund enrichment programs like music, soccer, and gymnastics while keeping co-op tuition reasonable for families.",
+        "Annual fundraising support helps fund our children's weekly enrichment programs—including music, dance, soccer, and Taekwondo—while keeping co-op tuition reasonable for families.",
       details: [
         "Families participate in our annual school fundraisers and Family Fun Day.",
+        "Fundraising proceeds directly support weekly professional enrichment classes for all students.",
       ],
     },
   ] as CoopResponsibility[],

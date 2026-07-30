@@ -96,6 +96,93 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
     </div>
   </section>
 
+  {/* ENRICHMENT CLASSES SECTION */}
+  <section class="enrichment-section" aria-labelledby="enrichment-heading">
+    <div class="container">
+      <SectionIntro
+        badge="Funded by Parent Fundraising"
+        title="Weekly Enrichment Classes"
+        subtitle="At UPNS, children enjoy weekly professional enrichment classes in music, dance, soccer, and Taekwondo. Because of our cooperative community's fundraising events, these classes are funded directly by school fundraising and included for every student."
+        doodle="sun"
+        align="center"
+      />
+
+      <div class="enrichment-grid">
+        {/* Music */}
+        <div class="enrichment-card">
+          <div class="enrichment-photo">
+            <PhotoCutout
+              src="music_class.jpg"
+              alt="Children engaged in singing and instruments during music class at UPNS"
+              variant="rounded"
+              aspectRatio="4:3"
+            />
+          </div>
+          <div class="enrichment-content">
+            <h3 class="enrichment-title">Music & Rhythm</h3>
+            <p class="enrichment-desc">
+              Children explore tempo, melody, singing, and instruments together, fostering auditory discrimination and joyful creative expression.
+            </p>
+          </div>
+        </div>
+
+        {/* Dance */}
+        <div class="enrichment-card">
+          <div class="enrichment-photo">
+            <PhotoCutout
+              src="dance_class.jpg"
+              alt="Children participating in creative movement and dance class at UPNS"
+              variant="rounded"
+              aspectRatio="4:3"
+            />
+          </div>
+          <div class="enrichment-content">
+            <h3 class="enrichment-title">Dance & Movement</h3>
+            <p class="enrichment-desc">
+              Creative movement sessions build spatial awareness, balance, coordination, and gross motor confidence through imaginative music and storytelling.
+            </p>
+          </div>
+        </div>
+
+        {/* Soccer */}
+        <div class="enrichment-card">
+          <div class="enrichment-photo">
+            <PhotoCutout
+              src="soccer class.JPG"
+              alt="Children playing soccer and active games on the UPNS playground"
+              variant="rounded"
+              aspectRatio="4:3"
+            />
+          </div>
+          <div class="enrichment-content">
+            <h3 class="enrichment-title">Soccer & Active Play</h3>
+            <p class="enrichment-desc">
+              On our outdoor playground, children practice footwork, teamwork, aerobic movement, and cooperative games with skilled coaches.
+            </p>
+          </div>
+        </div>
+
+        {/* Taekwondo */}
+        <div class="enrichment-card">
+          <div class="enrichment-photo">
+            <PhotoCutout
+              src="Taekwondo.JPG"
+              alt="Children participating in Taekwondo class at UPNS"
+              variant="rounded"
+              aspectRatio="4:3"
+            />
+          </div>
+          <div class="enrichment-content">
+            <h3 class="enrichment-title">Taekwondo & Focus</h3>
+            <p class="enrichment-desc">
+              Gentle, age-appropriate martial arts instruction introduces children to body control, mindfulness, self-regulation, and mutual respect.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   {/* LARGE GROUP TEACHER PHOTOGRAPH */}
   <section class="team-photo-section" id="team" aria-labelledby="team-heading">
     <div class="container">
@@ -303,6 +390,62 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
     margin: 0;
   }
 
+  /* Enrichment Classes Section */
+  .enrichment-section {
+    padding: 5.5rem 0;
+    background: #fffcf6;
+    border-top: 2px dashed var(--color-border);
+    border-bottom: 2px dashed var(--color-border);
+  }
+
+  .enrichment-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .enrichment-card {
+    background: #ffffff;
+    border: 3px solid var(--color-border);
+    border-radius: 24px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-natural);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+  }
+
+  .enrichment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .enrichment-photo {
+    margin-bottom: 1.25rem;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .enrichment-title {
+    font-size: 1.35rem;
+    color: var(--color-text);
+    margin: 0 0 0.5rem;
+  }
+
+  .enrichment-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .enrichment-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   /* Team Photo Section */
   .team-photo-section {
     padding: 5.5rem 0;
@@ -414,7 +557,8 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
       gap: 2.5rem;
     }
     .teachers-admin-grid,
-    .teachers-full-grid {
+    .teachers-full-grid,
+    .enrichment-grid {
       grid-template-columns: 1fr;
     }
     .self-card {
