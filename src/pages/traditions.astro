@@ -4,7 +4,6 @@ import { TRADITIONS } from "../content/traditions";
 import SectionIntro from "../components/SectionIntro.astro";
 import TraditionPreview from "../components/TraditionPreview.astro";
 import DoodleIllustration from "../components/DoodleIllustration.astro";
-import FloatingIllustration from "../components/FloatingIllustration.astro";
 ---
 
 <BaseLayout
@@ -13,7 +12,6 @@ import FloatingIllustration from "../components/FloatingIllustration.astro";
 >
   {/* SCRAPBOOK HEADER */}
   <header class="traditions-header">
-    <FloatingIllustration src="school.png" position="top-right" size="lg" rotate={6} />
     <div class="container header-inner">
       <h1 class="page-title">Traditions across every season.</h1>
 
@@ -27,7 +25,7 @@ import FloatingIllustration from "../components/FloatingIllustration.astro";
   <section class="traditions-list-section" aria-labelledby="scrapbook-heading">
     <div class="container">
       <SectionIntro
-        badge="Family Scrapbook"
+        badge=""
         title="Celebrating the seasons together."
         subtitle="Below are our four core school traditions organized by season: Spring, Summer, Autumn, and Winter. As an editable, data-driven scrapbook, parent volunteers can add new events or update photos each school year."
         doodle="sun"
