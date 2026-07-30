@@ -322,11 +322,35 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
     text-align: center;
   }
 
+  @keyframes wigglePulse {
+    0% {
+      transform: scale(1) rotate(0deg);
+    }
+    20% {
+      transform: scale(1.025) rotate(1.2deg);
+    }
+    40% {
+      transform: scale(0.99) rotate(-1deg);
+    }
+    60% {
+      transform: scale(1.02) rotate(0.8deg);
+    }
+    80% {
+      transform: scale(0.995) rotate(-0.6deg);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
   .timeline-img {
     width: 100%;
     height: auto;
     display: block;
     filter: drop-shadow(0 10px 24px rgba(53, 72, 60, 0.08));
+    animation: wigglePulse 6s ease-in-out infinite;
+    transform-origin: center center;
+    will-change: transform;
   }
 
   @media (max-width: 768px) {
