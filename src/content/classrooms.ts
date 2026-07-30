@@ -127,7 +127,7 @@ export const CLASSROOMS: ClassroomInfo[] = [
     shortDescription:
       "Our oldest classroom nurtures self-confidence, deeper project explorations, and social empathy as children prepare for elementary school.",
     longDescription:
-      "The Dolphin Room celebrates the confidence and capability of four- and five-year-olds. At this stage, children initiate complex cooperative play, ask deep questions about their world, and engage in sustained projects. Our teachers support holistic development, nurturing literacy, numeracy, and scientific curiosity naturally through play without corporate academic drills.",
+      "The Dolphin Room celebrates the confidence and capability of four- and five-year-olds. At this stage, children initiate complex cooperative play, ask deep questions about their world, and engage in sustained projects. Our teachers support holistic development, nurturing literacy, numeracy, and scientific curiosity naturally through play and creative problem-solving.",
     heroImage: "music_class.jpg",
     galleryImages: ["music_class.jpg", "kat-outdoor.jpg", "kangaroo2.jpg"],
     pottyTrainingPolicy:
