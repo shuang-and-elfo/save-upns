@@ -188,6 +188,10 @@ const galleryPhotos = [
     gap: 0.25rem;
   }
 
+  .stat-card:first-child {
+    width: 50%;
+  }
+
   .stat-label {
     font-size: 0.8rem;
     font-weight: 700;
@@ -290,6 +294,10 @@ const galleryPhotos = [
   }
 
   @media (max-width: 768px) {
+    .stat-card:first-child {
+      width: 100%;
+    }
+
     .hero-grid,
     .support-grid {
       grid-template-columns: 1fr;
