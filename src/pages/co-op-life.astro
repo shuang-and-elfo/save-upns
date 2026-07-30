@@ -47,13 +47,13 @@ import PhotoCutout from "../components/PhotoCutout.astro";
 
       <div class="values-grid">
         {COOP_LIFE_DATA.whyFamiliesValueCoop.map((point, idx) => {
-          const icons = ["sun", "heart", "leaves", "stars"];
+          const icons = ["sun", "flower", "leaves", "garland"];
           return (
             <div class="value-card">
               <div class="value-icon">
                 <DoodleIllustration
                   name={icons[idx % icons.length] as any}
-                  size="md"
+                  size="sm"
                   color="var(--color-tomato)"
                 />
               </div>
@@ -178,27 +178,47 @@ import PhotoCutout from "../components/PhotoCutout.astro";
   }
 
   .values-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 800px;
+    margin: 2.5rem auto 0;
   }
 
   .value-card {
     background: #ffffff;
     border: 2px solid var(--color-border);
-    border-radius: 24px;
-    padding: 2rem;
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
     box-shadow: var(--shadow-natural);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .value-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(53, 72, 60, 0.08);
   }
 
   .value-icon {
-    margin-bottom: 1rem;
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: #fff9ee;
+    border: 2px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin: 0;
   }
 
   .value-text {
-    font-size: 1.02rem;
-    line-height: 1.6;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.55;
     color: var(--color-text);
     margin: 0;
   }
