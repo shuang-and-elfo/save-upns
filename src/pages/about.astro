@@ -448,16 +448,17 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
 
   .enrichment-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    margin-top: 2.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    margin-top: 3rem;
   }
 
   .enrichment-card {
     background: #ffffff;
     border: 3px solid var(--color-border);
-    border-radius: 24px;
-    padding: 1.5rem;
+    border-radius: 28px;
+    padding: 0;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow-natural);
@@ -470,28 +471,37 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
   }
 
   .enrichment-photo {
-    margin-bottom: 1.25rem;
-    border-radius: 16px;
-    overflow: hidden;
-  }
-
-  .enrichment-title {
-    font-size: 1.35rem;
-    color: var(--color-text);
-    margin: 0 0 0.5rem;
-  }
-
-  .enrichment-desc {
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    line-height: 1.6;
+    width: 100%;
     margin: 0;
   }
 
-  @media (max-width: 1024px) {
-    .enrichment-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  .enrichment-photo :global(.photo-cutout),
+  .enrichment-photo :global(.image-frame) {
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .enrichment-content {
+    padding: 1.75rem 2.25rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .enrichment-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.75rem;
+  }
+
+  .enrichment-desc {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    margin: 0;
   }
 
   /* Team Photo Section */
