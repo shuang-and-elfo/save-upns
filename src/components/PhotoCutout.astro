@@ -34,6 +34,7 @@ const aspectClassMap = {
 
 const aspectClass = aspectClassMap[aspectRatio] || "aspect-4-3";
 const rotationStyle = rotate ? `transform: rotate(${rotate}deg);` : "";
+const isVideo = src.endsWith(".mp4") || src.endsWith(".webm") || src.endsWith(".mov");
 ---
 
 <figure
@@ -46,13 +47,25 @@ const rotationStyle = rotate ? `transform: rotate(${rotate}deg);` : "";
   )}
 
   <div class="image-frame">
-    <img
-      src={withBase(`/images/${src}`)}
-      alt={alt}
-      class="photo-img"
-      loading="lazy"
-      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-    />
+    {isVideo ? (
+      <video
+        src={withBase(`/images/${src}`)}
+        class="photo-img"
+        autoplay
+        loop
+        muted
+        playsinline
+        aria-label={alt}
+      />
+    ) : (
+      <img
+        src={withBase(`/images/${src}`)}
+        alt={alt}
+        class="photo-img"
+        loading="lazy"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+    )}
     <div class="photo-placeholder" role="img" aria-label={alt} style="display: none;">
       <div class="placeholder-pattern" />
       <div class="placeholder-content">
@@ -117,6 +130,10 @@ const rotationStyle = rotate ? `transform: rotate(${rotate}deg);` : "";
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  video.photo-img {
+    pointer-events: none;
   }
 
   /* Variants */

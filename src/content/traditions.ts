@@ -18,13 +18,13 @@ export interface Tradition {
 export const TRADITIONS: Tradition[] = [
   {
     id: "carnival",
-    title: "Annual School Carnival",
+    title: "Family Fun Day",
     slug: "carnival",
     season: "Spring",
     shortDescription:
       "A joyful outdoor celebration where our playground transforms into a festival of games, crafts, and community laughter.",
     longDescription:
-      "Each spring, UPNS families, teachers, and alumni gather on the playground for our annual Carnival. Organized and run by co-oping parent volunteers, the Carnival features handmade game booths, face painting, live music, and delicious potluck treats. It is a wonderful celebration of our shared community effort and a cherished memory for preschool children.",
+      "Each spring, UPNS families, teachers, and alumni gather on the playground for our Family Fun Day. Organized and run by co-oping parent volunteers, Family Fun Day features handmade game booths, face painting, live music, and delicious potluck treats. It is a wonderful celebration of our shared community effort and a cherished memory for preschool children.",
     coverPhoto: "carnival.jpg",
     galleryPhotos: ["carnival.jpg", "carnival2.jpg", "carnival3.jpg"],
     altText: "Children and families playing carnival games on the sunny UPNS playground.",
@@ -75,8 +75,8 @@ export const TRADITIONS: Tradition[] = [
       "A cozy winter gathering celebrating light, warmth, handmade crafts, and family connection before the holidays.",
     longDescription:
       "When the winter months arrive, UPNS transforms into a Winter Wonderland, a peaceful, creative gathering where children and families craft winter lanterns, string beads, and share warm cider. Winter Wonderland focuses on simplicity, togetherness, and celebrating diverse family winter traditions from our UCLA and Los Angeles community.",
-    coverPhoto: "tradition-winter-fair.jpg",
-    galleryPhotos: ["tradition-winter-fair.jpg"],
+    coverPhoto: "winter_wonderland.mp4",
+    galleryPhotos: ["winter_wonderland.mp4"],
     altText: "Children making winter paper crafts and lanterns together at the school Winter Wonderland celebration.",
     whatFamiliesEnjoy:
       "Families cherish the quiet craft tables, warm food sharing, and the opportunity to celebrate the winter season in an unhurried, non-commercial preschool setting.",
