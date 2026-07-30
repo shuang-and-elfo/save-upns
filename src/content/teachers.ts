@@ -17,7 +17,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "all",
     photo: "teacher-director.jpg",
     shortBio:
-      "As the professional head of UPNS, Lorraine is responsible for daily operations, supporting teachers, and guiding families in our play-based cooperative community.",
+      "Lorraine oversees the day-to-day life of UPNS, supports the teaching team, and helps families understand and take part in the co-op.",
     displayOrder: 1,
     active: true,
   },
@@ -28,7 +28,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "all",
     photo: "teacher-ana-flores.jpg",
     shortBio:
-      "Ana manages school administration, enrollment operations, and family communications, working closely with Lorraine to ensure a smooth, welcoming experience for all families.",
+      "Ana helps families with enrollment, school paperwork, communication, and the many practical details that keep UPNS running smoothly.",
     displayOrder: 2,
     active: true,
   },
@@ -39,7 +39,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "kitten",
     photo: "teacher-veronica-martell.jpg",
     shortBio:
-      "Veronica creates a calm, nurturing first classroom experience for our youngest toddlers, supporting gentle separations, early sensory exploration, and potty training readiness.",
+      "Veronica helps our youngest children feel comfortable at school as they explore, build relationships, and become more independent in their daily routines.",
     displayOrder: 10,
     active: true,
   },
@@ -50,7 +50,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "kitten",
     photo: "teacher-nahomi-romero.jpg",
     shortBio:
-      "Nahomi loves engaging our toddlers in hands-on art and outdoor water play, helping children build comfort and confidence in their first school community.",
+      "Nahomi enjoys making art and playing outside with the Kitten children while helping them feel comfortable and confident at school.",
     displayOrder: 11,
     active: true,
   },
@@ -61,7 +61,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "kitten",
     photo: "teacher-lin-han.jpg",
     shortBio:
-      "Lin brings warmth and playful storytelling to circle time, supporting toddlers as they discover new friends and independence.",
+      "Lin brings stories and play into the children’s day and helps toddlers connect with new friends and try things on their own.",
     displayOrder: 12,
     active: true,
   },
@@ -72,7 +72,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "kangaroo",
     photo: "teacher-brigitte-peistrup.jpg",
     shortBio:
-      "Brigitte guides three-year-olds through imaginative dramatic play and collaborative block building, fostering curiosity and early empathy.",
+      "Brigitte joins children in pretend play and building projects while helping them listen to one another and work through ideas together.",
     displayOrder: 20,
     active: true,
   },
@@ -83,7 +83,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "kangaroo",
     photo: "teacher-maria-maldonado.jpg",
     shortBio:
-      "Maria nurtures children's social development during outdoor play and creative art projects, partnering closely with co-oping parents every day.",
+      "Maria helps children build friendships through outdoor play and art and works closely with parents during their classroom days.",
     displayOrder: 21,
     active: true,
   },
@@ -94,7 +94,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "kangaroo",
     photo: "teacher-regina-gutierrez.jpg",
     shortBio:
-      "Regina supports children as they learn to communicate their feelings and solve problems together through stories and sensory play.",
+      "Regina uses stories and hands-on play to help children talk about their feelings and work through problems with friends.",
     displayOrder: 22,
     active: true,
   },
@@ -105,7 +105,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "dolphin",
     photo: "teacher-kareem-smith.jpg",
     shortBio:
-      "Kareem encourages active exploration on the playground and garden, celebrating every child's physical growth and outdoor discoveries.",
+      "Kareem encourages children to move, explore, garden, and challenge themselves through outdoor play.",
     displayOrder: 32,
     active: true,
   },
@@ -116,7 +116,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "dolphin",
     photo: "teacher-sulamithe-ello.jpg",
     shortBio:
-      "Sulamithe guides four- and five-year-olds through collaborative inquiry, rich discussions, and creative storytelling that honor children's emerging ideas.",
+      "Sulamithe listens closely to children’s questions and helps them develop their ideas through conversation, stories, play, and group projects.",
     displayOrder: 30,
     active: true,
   },
@@ -127,7 +127,7 @@ export const TEACHERS: Teacher[] = [
     classroom: "dolphin",
     photo: "teacher-yadira-montes.jpg",
     shortBio:
-      "Yadira fosters confidence, empathy, and group problem-solving as older preschoolers prepare for kindergarten through meaningful play.",
+      "Yadira helps older preschoolers speak up, listen to friends, solve problems together, and feel ready for their next school experience.",
     displayOrder: 31,
     active: true,
   },

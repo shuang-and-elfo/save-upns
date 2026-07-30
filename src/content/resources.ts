@@ -14,7 +14,7 @@ export interface CoopResponsibility {
 
 export const COOP_LIFE_DATA = {
   intro:
-    "Being part of a parent-participation cooperative preschool means sharing in your child's early education. A co-op involves real time and commitment; we join because we want to be present in our children's first school community, building lifelong friendships and shared ownership as parents and teachers work side-by-side.",
+    "Joining a co-op means giving real time and energy to your child’s school. Parents work alongside teachers, help the school run, get to know other families, and see more of their child’s everyday school life.",
   whyFamiliesValueCoop: [
     "You get a direct window into your child's daily school world and social milestones.",
     "You build genuine, lifelong friendships with fellow neighborhood parents and UCLA families.",
@@ -26,7 +26,7 @@ export const COOP_LIFE_DATA = {
       title: "Classroom Workday",
       timeCommitment: "",
       description:
-        "Once a month, parents assist in their child's classroom from 8:30 AM to 12:30 PM. You work side-by-side with teachers to support play setups, snack time, and light daily chores.",
+        "Once a month, a parent works in their child’s classroom from 8:30 AM to 12:30 PM. You follow the teacher’s lead, join children’s play, help with meals, and take care of small classroom tasks.",
       details: [
         "Families with multiple children enrolled work one additional session per month.",
         "Members are responsible for arranging a substitute if unable to attend.",
@@ -36,7 +36,7 @@ export const COOP_LIFE_DATA = {
       title: "Parent Education & General Meetings",
       timeCommitment: "",
       description:
-        "One adult from every family attends General Membership Meetings to connect with our community, hear guest speakers on child development, and participate in school updates.",
+        "One adult from each family attends General Membership Meetings for school updates, community decisions, and occasional parent-education speakers.",
       details: [
         "Members remain responsible for all school information shared at General Meetings.",
       ],
@@ -45,7 +45,7 @@ export const COOP_LIFE_DATA = {
       title: "School Cleaning OR Committee Role",
       timeCommitment: "",
       description:
-        "To maintain our welcoming campus, families attend one Saturday morning cleaning session per quarter (8:00 AM – 10:00 AM), or volunteer for a standing committee position.",
+        "Each family attends one Saturday cleaning session per quarter, from 8:00 AM to 10:00 AM, or takes on an approved committee role instead.",
       details: [
         "Committee roles (such as Room Parent or Event Coordinator) replace the Saturday cleaning obligation.",
       ],
@@ -54,7 +54,7 @@ export const COOP_LIFE_DATA = {
       title: "Community Fundraising Support",
       timeCommitment: "",
       description:
-        "Annual fundraising support helps fund our children's weekly enrichment programs—including music, dance, soccer, and Taekwondo—while keeping co-op tuition reasonable for families.",
+        "Families help with annual fundraising, which pays for weekly music, dance, soccer, and Taekwondo classes and helps keep tuition lower.",
       details: [
         "Families participate in our annual school fundraisers and Family Fun Day.",
         "Fundraising proceeds directly support weekly professional enrichment classes for all students.",
@@ -70,12 +70,12 @@ export const COOP_LIFE_DATA = {
     {
       question: "What happens if my child wants all my attention on my workday?",
       answer:
-        "It is completely natural for children, especially new students, to seek extra comfort from you on your workday! Teachers will guide you on how to balance reassuring your child while supporting the broader classroom activities.",
+        "This is very common, especially at first. Teachers will help you comfort your child while gradually joining the rest of the classroom work.",
     },
     {
       question: "Do I need prior teaching experience to co-op?",
       answer:
-        "Not at all. Your role is to assist the teacher and learn by doing. Our Director provides ongoing parent orientation, and teachers give clear guidance every morning.",
+        "No. You are there to assist the teacher, not lead the class. Teachers explain what they need each morning, and parents learn through experience.",
     },
   ],
 };

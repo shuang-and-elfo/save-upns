@@ -29,11 +29,11 @@ export const CLASSROOMS: ClassroomInfo[] = [
     slug: "kitten",
     ageRange: "18 months – 3 year olds",
     animal: "kitten",
-    tagline: "A gentle, comforting bridge from home to school.",
+    tagline: "A warm first step into school.",
     shortDescription:
-      "Our youngest classroom supports toddlers as they explore sensory play, build trust with teachers, and experience their very first preschool community.",
+      "Our youngest children explore water, sand, paint, blocks, stories, and outdoor play while getting comfortable with teachers and their first school routines.",
     longDescription:
-      "The Kitten Room is thoughtfully designed for toddlers aged 18 months to 3 years. At this tender stage of development, our primary focus is helping children feel safe, seen, and secure as they separate from parents and discover the joy of school. Children engage in water and sand play, finger painting, block building, storytime, and gentle outdoor play.",
+      "The Kitten Room is for toddlers ages 18 months to 3 years. Teachers focus first on helping children feel safe and comfortable as they separate from parents and get used to school. Their days include water and sand, finger painting, blocks, stories, music, and time outside.",
     heroImage: "kitten4.jpg",
     galleryImages: [
       "kitten.jpg",
@@ -46,13 +46,13 @@ export const CLASSROOMS: ClassroomInfo[] = [
     pottyTrainingPolicy:
       "Potty training is NOT required to enroll in the Kitten Room. Our teachers actively support children in diapers and partner with parents on potty training when your child shows readiness.",
     teacherSupport: [
-      "Warm, responsive caregiving during morning arrivals and separations",
-      "Supportive diaper changing and individualized potty training encouragement",
-      "Sensory-rich experiences including water tables, playdough, and music",
-      "Gentle guidance in sharing space and playing alongside peers",
+      "Comfort and reassurance during arrival and separation",
+      "Patient help with diapers, toileting, and everyday care routines",
+      "Plenty of hands-on play with water, dough, music, paint, and other materials",
+      "Help learning to play near other children, wait, share space, and connect",
     ],
     parentCoopExpectations:
-      "Working parents in the Kitten Room assist teachers by comforting children, supervising sensory tables, helping during snack and lunch transitions, and maintaining a calm, orderly environment.",
+      "On classroom workdays, parents help comfort children, supervise play, support snack and lunch, and help keep the room calm and organized.",
     schedule: [
       { time: "8:00am – 9:00am", activity: "Drop Off & Welcome" },
       { time: "9:00am – 9:30am", activity: "Outside Activities" },
@@ -78,11 +78,11 @@ export const CLASSROOMS: ClassroomInfo[] = [
     slug: "kangaroo",
     ageRange: "3 – 4 year olds",
     animal: "kangaroo",
-    tagline: "Imaginative play, friendship, and collaborative discoveries.",
+    tagline: "Big imaginations and growing friendships.",
     shortDescription:
-      "Three- and four-year-olds expand their social world through dramatic play, outdoor building, creative art, and learning to solve problems together.",
+      "Kangaroo children spend their days pretending, building, painting, climbing, talking, and learning how to play through ideas and disagreements with friends.",
     longDescription:
-      "In the Kangaroo Room, three- and four-year-olds are bursting with curiosity and imagination. Children explore deeper social interactions, learning how to negotiate play ideas, express their emotions with words, and collaborate on block structures and art projects. Teachers provide open-ended materials that encourage creativity and physical development.",
+      "Kangaroo children are full of ideas. They make up games, build together, paint, climb, and learn how to explain what they want, listen to friends, and work through disagreements. Teachers offer materials that children can use in many different ways.",
     heroImage: "kat-outdoor.jpg",
     galleryImages: [
       "kat-outdoor.jpg",
@@ -95,13 +95,13 @@ export const CLASSROOMS: ClassroomInfo[] = [
     pottyTrainingPolicy:
       "Potty training is REQUIRED for the Kangaroo Room. The Kangaroo Room is not equipped to change diapers.",
     teacherSupport: [
-      "Coaching children in emotional expression and peer conflict resolution",
-      "Providing open-ended art, dramatic play, and woodworking/gardening opportunities",
-      "Supporting growing independence in bathroom routines and self-care",
-      "Facilitating small-group discussions and interactive storytime",
+      "Helping children name feelings and work through conflicts with friends",
+      "Offering art, pretend play, building, woodworking, and gardening experiences",
+      "Encouraging independence with toileting, dressing, eating, and other routines",
+      "Making space for stories, conversations, questions, and small-group play",
     ],
     parentCoopExpectations:
-      "Working parents in the Kangaroo Room actively engage in children's imaginative play, assist at outdoor easels and garden areas, help supervise snack and lunch, and support children as they practice social problem-solving.",
+      "On classroom workdays, parents join children’s play, help with art and gardening, support meals, and help children work through everyday social moments.",
     schedule: [
       { time: "8:00am – 9:00am", activity: "Drop Off & Morning Play" },
       { time: "9:00am – 9:30am", activity: "Outside Time" },
@@ -123,23 +123,23 @@ export const CLASSROOMS: ClassroomInfo[] = [
     slug: "dolphin",
     ageRange: "4 – 5 year olds",
     animal: "dolphin",
-    tagline: "Confident inquiry, empathy, and kindergarten readiness through play.",
+    tagline: "Big questions, shared projects, and growing independence.",
     shortDescription:
-      "Our oldest classroom nurtures self-confidence, deeper project explorations, and social empathy as children prepare for elementary school.",
+      "Our oldest preschoolers take their ideas further through longer games, group projects, stories, outdoor challenges, and growing responsibility in the classroom.",
     longDescription:
-      "The Dolphin Room celebrates the confidence and capability of four- and five-year-olds. At this stage, children initiate complex cooperative play, ask deep questions about their world, and engage in sustained projects. Our teachers support holistic development, nurturing literacy, numeracy, and scientific curiosity naturally through play and creative problem-solving.",
+      "Dolphin children are ready to take their ideas further. They create longer games together, ask lots of questions, and return to projects over several days. Teachers bring reading, writing, numbers, science, and problem-solving naturally into the children’s play.",
     heroImage: "music_class.jpg",
     galleryImages: ["music_class.jpg", "kat-outdoor.jpg", "kangaroo2.jpg"],
     pottyTrainingPolicy:
       "Potty training is REQUIRED for the Dolphin Room. The Dolphin Room is not equipped to change diapers.",
     teacherSupport: [
-      "Encouraging collaborative project planning and sustained imaginative play",
-      "Fostering natural language, literacy, and early mathematical reasoning through games",
-      "Nurturing self-advocacy, leadership, and empathy among classmates",
-      "Supporting a gentle transition toward kindergarten confidence",
+      "Helping children plan games and projects together and return to them over time",
+      "Bringing language, reading, writing, and number ideas into everyday play",
+      "Encouraging children to speak up, listen, take responsibility, and care for classmates",
+      "Helping children feel capable and comfortable as they get ready for kindergarten",
     ],
     parentCoopExpectations:
-      "Working parents in the Dolphin Room support children's complex projects, read stories, assist with cooking or gardening activities, and foster independent conflict resolution.",
+      "On classroom workdays, parents may read stories, help with longer projects, join cooking or gardening, and support children as they solve problems more independently.",
     schedule: [
       { time: "8:00am – 8:45am", activity: "Arrival (Hand Wash) & Outdoor Activities" },
       { time: "8:45am – 9:15am", activity: "Hand Wash & Circle Time" },

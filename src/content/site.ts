@@ -41,17 +41,17 @@ export const SITE_CONFIG: SiteConfig = {
   tagline: "A cooperative school with a big community.",
   currentSchoolYear: "2026–2027",
   description:
-    "Founded in 1966, UPNS is a parent-participation cooperative preschool in Los Angeles where children learn through play and families become part of a caring neighborhood school community.",
+    "Since 1966, UPNS has been a place where children learn through play and parents take part in school life. Our families come from UCLA and neighborhoods across Los Angeles to learn, help, and grow together.",
   history:
-    "UPNS has a rich history dating back to 1966 when a group of families residing in UCLA Family Student Housing recognized the need for a nursery school. Over the decades, we have evolved and grown, moving to our current location on Sepulveda Boulevard in 1996.",
+    "UPNS began in 1966, when parents living in UCLA Family Student Housing came together to create a nursery school they could help shape and run. The school grew over the years and moved to its current Sepulveda Boulevard location in 1996.",
   mission:
     "Our mission is to provide a warm and supportive learning environment that fosters physical, intellectual, social, and emotional growth in children aged 18 months to 5 years. We recognize the significance of parental involvement in a child's learning journey and strive to build a bridge between home and school.",
   fiveSelves: [
-    "Social Self — building empathy, friendship, and collaboration",
-    "Emotional Self — developing self-confidence and emotional resilience",
-    "Physical Self — strengthening gross and fine motor skills through active play",
-    "Creative Self — expressing imagination through open-ended art and storytelling",
-    "Cognitive Self — discovering curiosity, problem-solving, and a love of learning",
+    "Social Self — learning to make friends, share ideas, and care about others",
+    "Emotional Self — recognizing feelings and growing more confident expressing them",
+    "Physical Self — building coordination and body confidence through active, hands-on play",
+    "Creative Self — using art, music, stories, and pretend play to bring ideas to life",
+    "Cognitive Self — asking questions, testing ideas, and figuring things out through play",
   ],
   accreditation: {
     naeyc: "Accredited by NAEYC",

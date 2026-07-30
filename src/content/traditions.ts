@@ -22,19 +22,14 @@ export const TRADITIONS: Tradition[] = [
     slug: "carnival",
     season: "Spring",
     shortDescription:
-      "A joyful outdoor celebration where our playground transforms into a festival of games, crafts, and community laughter.",
+      "The playground fills with handmade games, crafts, music, food, and families spending the day together.",
     longDescription:
-      "Each spring, UPNS families, teachers, and alumni gather on the playground for our Family Fun Day. Organized and run by co-oping parent volunteers, Family Fun Day features handmade game booths, face painting, live music, and delicious potluck treats. It is a wonderful celebration of our shared community effort and a cherished memory for preschool children.",
+      "Each spring, families, teachers, and alumni fill the playground for Family Fun Day. Parents create and run game booths, face painting, music, crafts, and a shared meal. For many children, it becomes one of their favorite school days of the year.",
     coverPhoto: "carnival.jpg",
     galleryPhotos: ["carnival.jpg", "carnival2.jpg", "carnival3.jpg"],
     altText: "Children and families playing carnival games on the sunny UPNS playground.",
     whatFamiliesEnjoy:
       "Children love the gentle hand-painted game booths and sensory crafts, while parents enjoy catching up with alumni families and celebrating the school year together.",
-    parentQuote: {
-      quote:
-        "Seeing our children run from booth to booth with their classmates is the highlight of our spring!",
-      author: "UPNS Co-op Parent",
-    },
   },
   {
     id: "summer-camping-trip",
@@ -42,9 +37,9 @@ export const TRADITIONS: Tradition[] = [
     slug: "summer-camping-trip",
     season: "Summer",
     shortDescription:
-      "An adventurous weekend where UPNS families pitch tents together, share campfires, and let children explore nature.",
+      "Families camp together for a weekend of tents, shared meals, campfires, outdoor play, and time with school friends.",
     longDescription:
-      "Our Family Camping Trip extends the UPNS community beyond the classroom walls into the great outdoors. Families travel together to a local campground, pitching tents side-by-side, cooking community meals, and letting children experience nature exploration, campfire singing, and stargazing with their school friends.",
+      "For the summer camping trip, families set up tents near one another, share meals, explore outside, sing around the campfire, and watch the stars with school friends.",
     coverPhoto: "tradition-camping.jpg",
     galleryPhotos: ["tradition-camping.jpg"],
     altText: "UPNS families and children camping together with tents under shaded trees.",
@@ -59,7 +54,7 @@ export const TRADITIONS: Tradition[] = [
     shortDescription:
       "A delightful autumn tradition where children dress in gentle costumes and parade together around our campus and UCLA community.",
     longDescription:
-      "Each autumn, UPNS celebrates the season with our beloved Halloween Parade. Children from the Kitten, Kangaroo, and Dolphin rooms don their favorite playful costumes for a gentle, non-scary parade around our courtyard and surrounding campus walkway. Co-oping parents and families line the path to cheer, take photos, and share seasonal treats in a festive outdoor celebration.",
+      "Each autumn, children wear their favorite costumes for a cheerful, not-too-spooky parade around the school. Families gather along the route to wave, take photos, and enjoy treats together.",
     coverPhoto: "halloween.jpg",
     galleryPhotos: ["halloween.jpg"],
     altText: "Children in festive costumes participating in the UPNS Halloween parade.",
@@ -74,7 +69,7 @@ export const TRADITIONS: Tradition[] = [
     shortDescription:
       "A cozy winter gathering celebrating light, warmth, handmade crafts, and family connection before the holidays.",
     longDescription:
-      "When the winter months arrive, UPNS transforms into a Winter Wonderland, a peaceful, creative gathering where children and families craft winter lanterns, string beads, and share warm cider. Winter Wonderland focuses on simplicity, togetherness, and celebrating diverse family winter traditions from our UCLA and Los Angeles community.",
+      "At Winter Wonderland, children and families make lanterns and decorations, string beads, drink warm cider, and spend a cozy evening together at school.",
     coverPhoto: "winter_wonderland.mp4",
     galleryPhotos: ["winter_wonderland.mp4"],
     altText: "Children making winter paper crafts and lanterns together at the school Winter Wonderland celebration.",
