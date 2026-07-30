@@ -198,29 +198,43 @@ const TESTIMONIALS = [
   }
 
   .quote-body {
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
+    max-width: 760px;
   }
 
   .quote-text {
-    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
-    font-size: 1.55rem;
-    font-weight: 700;
-    line-height: 1.45;
+    font-family: var(--font-body, "Plus Jakarta Sans", sans-serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.7;
     color: var(--color-text, #35483c);
-    margin: 0 0 1.75rem;
+    margin: 0 0 2rem;
+    position: relative;
   }
 
   .quote-author {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    align-items: center;
+    gap: 0.35rem;
     font-style: normal;
+    position: relative;
+    padding-top: 1.25rem;
+  }
+
+  .quote-author::before {
+    content: "";
+    width: 40px;
+    height: 3px;
+    background: var(--color-yellow, #f7c844);
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
   }
 
   .quote-author strong {
     font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--color-leaf-green, #5f8753);
   }
@@ -301,12 +315,6 @@ const TESTIMONIALS = [
 
     .quote-text {
       font-size: 1.25rem;
-    }
-
-    .reviews-sun-sticker {
-      top: -5px;
-      right: 10px;
-      transform: scale(0.8) rotate(12deg);
     }
   }
 </style>
