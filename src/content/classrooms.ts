@@ -34,7 +34,7 @@ export const CLASSROOMS: ClassroomInfo[] = [
       "Our youngest classroom supports toddlers as they explore sensory play, build trust with teachers, and experience their very first preschool community.",
     longDescription:
       "The Kitten Room is thoughtfully designed for toddlers aged 18 months to 2 years. At this tender stage of development, our primary focus is helping children feel safe, seen, and secure as they separate from parents and discover the joy of school. Children engage in water and sand play, finger painting, block building, storytime, and gentle outdoor play.",
-    heroImage: "kitten.jpg",
+    heroImage: "kitten4.jpg",
     galleryImages: [
       "kitten.jpg",
       "kitten2.jpg",
