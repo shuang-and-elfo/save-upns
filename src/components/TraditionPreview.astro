@@ -1,6 +1,7 @@
 ---
 import type { Tradition } from "../content/traditions";
 import PhotoCutout from "./PhotoCutout.astro";
+import { withBase } from "../utils/url";
 
 export interface Props {
   tradition: Tradition;
@@ -33,7 +34,7 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
   aria-labelledby={`tradition-title-${tradition.id}`}
 >
   <div class="season-sticker-pin" aria-hidden="true">
-    <img src={`/images/${seasonPng}`} alt={tradition.season} />
+    <img src={withBase(`/images/${seasonPng}`)} alt={tradition.season} />
   </div>
   <div class="tradition-grid">
     {/* Left Column: Scrapbook Photo or Collage */}
