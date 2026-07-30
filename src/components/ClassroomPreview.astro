@@ -25,43 +25,45 @@ const url = withBase(`/classrooms/${classroom.slug}/`);
   class={`classroom-preview ${className}`}
   aria-labelledby={`room-title-${classroom.id}`}
 >
-  <div class="preview-media">
-    <a href={url} class="photo-link" aria-label={`Learn more about ${classroom.name}`}>
-      <PhotoCutout
-        src={classroom.heroImage}
-        alt={`Children in the ${classroom.name} engaging in classroom activities`}
-        variant={variant}
-        aspectRatio="4:3"
-        rotate={rotate}
-        doodle={classroom.animal}
-      />
-    </a>
+  <a href={url} class="card-hit-area" aria-label={`Explore ${classroom.name}`}>
+    <div class="preview-media">
+      <div class="photo-link">
+        <PhotoCutout
+          src={classroom.heroImage}
+          alt={`Children in the ${classroom.name} engaging in classroom activities`}
+          variant={variant}
+          aspectRatio="4:3"
+          rotate={rotate}
+          doodle={classroom.animal}
+        />
+      </div>
 
-    {/* Hand-drawn animal badge overlay */}
-    <div class="animal-badge" aria-hidden="true">
-      <DoodleIllustration
-        name={classroom.animal}
-        size="lg"
-        color="var(--color-text)"
-      />
+      {/* Hand-drawn animal badge overlay */}
+      <div class="animal-badge" aria-hidden="true">
+        <DoodleIllustration
+          name={classroom.animal}
+          size="lg"
+          color="var(--color-text)"
+        />
+      </div>
     </div>
-  </div>
 
-  <div class="preview-content">
-    <h3 id={`room-title-${classroom.id}`} class="preview-title">
-      <a href={url}>{classroom.name}</a>
-    </h3>
-    <p class="preview-subtitle">{classroom.ageRange}</p>
+    <div class="preview-content">
+      <h3 id={`room-title-${classroom.id}`} class="preview-title">
+        <span class="title-text">{classroom.name}</span>
+      </h3>
+      <p class="preview-subtitle">{classroom.ageRange}</p>
 
-    <p class="preview-desc">
-      {classroom.shortDescription}
-    </p>
+      <p class="preview-desc">
+        {classroom.shortDescription}
+      </p>
 
-    <a href={url} class="preview-arrow-link">
-      <span>Explore {classroom.name}</span>
-      <span class="arrow-icon">→</span>
-    </a>
-  </div>
+      <div class="preview-arrow-link" aria-hidden="true">
+        <span>Explore {classroom.name}</span>
+        <span class="arrow-icon">→</span>
+      </div>
+    </div>
+  </a>
 </article>
 
 <style>
@@ -76,6 +78,16 @@ const url = withBase(`/classrooms/${classroom.slug}/`);
     box-shadow: 0 6px 20px rgba(53, 72, 60, 0.05);
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
       box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .card-hit-area {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-decoration: none;
+    color: inherit;
+    border-radius: inherit;
   }
 
   .classroom-preview:hover {
@@ -121,13 +133,12 @@ const url = withBase(`/classrooms/${classroom.slug}/`);
     margin: 0;
   }
 
-  .preview-title a {
+  .title-text {
     color: var(--color-text, #35483c);
-    text-decoration: none;
     transition: color 0.2s ease;
   }
 
-  .preview-title a:hover {
+  .card-hit-area:hover .title-text {
     color: var(--color-tomato, #d86f58);
   }
 
@@ -160,7 +171,7 @@ const url = withBase(`/classrooms/${classroom.slug}/`);
     transition: transform 0.2s ease, color 0.2s ease;
   }
 
-  .preview-arrow-link:hover {
+  .card-hit-area:hover .preview-arrow-link {
     color: #c75c45;
     transform: translateX(4px);
   }
@@ -170,7 +181,7 @@ const url = withBase(`/classrooms/${classroom.slug}/`);
     transition: transform 0.2s ease;
   }
 
-  .preview-arrow-link:hover .arrow-icon {
+  .card-hit-area:hover .arrow-icon {
     transform: translateX(3px);
   }
 
