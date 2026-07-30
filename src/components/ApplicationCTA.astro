@@ -1,5 +1,6 @@
 ---
 import DoodleIllustration from "./DoodleIllustration.astro";
+import { withBase } from "../utils/url";
 
 export interface Props {
   title?: string;
@@ -15,9 +16,9 @@ const {
   title = "Ready to visit or apply to UPNS?",
   subtitle = "We invite prospective families to schedule a tour of our classrooms, meet our teaching team, and see our cooperative community in action.",
   primaryText = "Apply to UPNS",
-  primaryHref = "/apply/",
+  primaryHref = withBase("/apply/"),
   secondaryText = "Schedule a Visit / Contact UPNS",
-  secondaryHref = "/visit/",
+  secondaryHref = withBase("/visit/"),
   class: className = "",
 } = Astro.props;
 ---

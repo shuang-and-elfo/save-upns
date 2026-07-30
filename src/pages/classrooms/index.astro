@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { CLASSROOMS } from "../../content/classrooms";
-import SectionIntro from "../../components/SectionIntro.astro";
 import ClassroomPreview from "../../components/ClassroomPreview.astro";
 import FloatingIllustration from "../../components/FloatingIllustration.astro";
 ---
@@ -10,27 +9,17 @@ import FloatingIllustration from "../../components/FloatingIllustration.astro";
   title="Our Classrooms"
   description="Discover the three developmental classrooms at UPNS Preschool: Kitten Room (18m–2y), Kangaroo Room (3–4y), and Dolphin Room (4–5y)."
 >
-  {/* HEADER */}
-  <header class="page-header">
-    <FloatingIllustration src="school.png" position="top-right" size="lg" rotate={10} />
-    <FloatingIllustration src="sun.png" position="bottom-left" size="md" rotate={-8} />
-    <div class="container header-content">
-      <h1 class="page-title">Our three classrooms.</h1>
-      <p class="page-desc">
-        Our classrooms grow with your child—from their first gentle toddler separations in the Kitten Room to creative block building in the Kangaroo Room and kindergarten readiness in the Dolphin Room. Every space is built for open-ended play, caring teachers, and active parent involvement.
-      </p>
-    </div>
-  </header>
-
   {/* CLASSROOMS LISTING */}
   <section class="classrooms-list-section" aria-labelledby="rooms-heading">
+    <FloatingIllustration src="school.png" position="top-right" size="lg" rotate={10} />
+    <FloatingIllustration src="sun.png" position="bottom-left" size="md" rotate={-8} />
     <div class="container">
-      <SectionIntro
-        title="Explore our classrooms"
-        subtitle="Select any classroom below to see our teachers, typical daily schedules, photos, and developmental play focus."
-        doodle="sun"
-        align="center"
-      />
+      <header class="header-content" style="margin-bottom: 3.5rem;">
+        <h1 id="rooms-heading" class="page-title">Explore our classrooms</h1>
+        <p class="page-desc">
+          Select any classroom below to see our teachers, typical daily schedules, photos, and developmental play focus.
+        </p>
+      </header>
 
       <div class="rooms-grid">
         {CLASSROOMS.map((room, index) => {
@@ -85,12 +74,6 @@ import FloatingIllustration from "../../components/FloatingIllustration.astro";
 </BaseLayout>
 
 <style>
-  .page-header {
-    padding: 4rem 0 3.5rem;
-    background: linear-gradient(180deg, var(--color-paper-white) 0%, var(--color-cream) 100%);
-    text-align: center;
-  }
-
   .header-content {
     max-width: 800px;
     margin: 0 auto;
@@ -112,7 +95,9 @@ import FloatingIllustration from "../../components/FloatingIllustration.astro";
   }
 
   .classrooms-list-section {
-    padding: 5.5rem 0;
+    position: relative;
+    overflow: hidden;
+    padding: 4.5rem 0 5.5rem;
   }
 
   .rooms-grid {

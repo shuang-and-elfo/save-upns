@@ -2,6 +2,7 @@
 import type { ClassroomInfo } from "../content/classrooms";
 import PhotoCutout from "./PhotoCutout.astro";
 import DoodleIllustration from "./DoodleIllustration.astro";
+import { withBase } from "../utils/url";
 
 export interface Props {
   classroom: ClassroomInfo;
@@ -17,7 +18,7 @@ const {
   class: className = "",
 } = Astro.props;
 
-const url = `/classrooms/${classroom.slug}/`;
+const url = withBase(`/classrooms/${classroom.slug}/`);
 ---
 
 <article
