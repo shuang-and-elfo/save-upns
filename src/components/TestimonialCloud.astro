@@ -145,11 +145,12 @@ const TESTIMONIALS = [
     align-items: center;
   }
 
-  /* Cloud Blob Container */
+  /* Rounded Rectangle Container */
   .cloud-container {
     width: 100%;
     background: #ffffff;
-    border-radius: 65% 35% 55% 45% / 50% 60% 40% 50%;
+    border: 3px solid var(--color-border, #f2ead6);
+    border-radius: 36px;
     padding: 4.5rem 3.5rem 3.5rem;
     text-align: center;
     position: relative;
@@ -157,8 +158,8 @@ const TESTIMONIALS = [
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: none;
-    min-height: 420px;
+    box-shadow: 0 8px 24px rgba(53, 72, 60, 0.05);
+    min-height: 400px;
   }
 
   .reviews-sun-sticker {
@@ -308,7 +309,7 @@ const TESTIMONIALS = [
   @media (max-width: 768px) {
     .cloud-container {
       padding: 3.5rem 1.75rem 2.5rem;
-      border-radius: 40px;
+      border-radius: 28px;
     }
 
     .handwritten-title {

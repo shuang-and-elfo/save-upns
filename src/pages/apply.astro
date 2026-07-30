@@ -26,6 +26,7 @@ import FloatingIllustration from "../components/FloatingIllustration.astro";
 
   {/* 4-STEP APPLICATION PROCESS */}
   <section class="steps-section" aria-labelledby="steps-heading">
+    <FloatingIllustration src="flower.png" position="bottom-right" size="md" rotate={10} />
     <div class="container">
       <SectionIntro
         badge="How to Apply"
@@ -226,6 +227,8 @@ import FloatingIllustration from "../components/FloatingIllustration.astro";
   /* 4-Step Process Section */
   .steps-section {
     padding: 5.5rem 0;
+    position: relative;
+    overflow: hidden;
   }
 
   .steps-stack {
