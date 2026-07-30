@@ -14,7 +14,7 @@ import TraditionPreview from "../components/TraditionPreview.astro";
       <h1 class="page-title">Traditions across every season.</h1>
 
       <p class="page-desc">
-        Some of our most cherished UPNS memories happen outside the regular school day. From our annual Family Fun Day on the playground to Autumn's gentle Halloween Parade and cozy Winter Wonderland crafts, these beloved seasonal traditions connect children, parents, and alumni families across generations.
+        Some of our most cherished UPNS memories happen outside the regular school day. From our annual Family Fun Day on the playground to Autumn's gentle Halloween Parade and cozy Winter Wonderland crafts, these beloved seasonal traditions connect children, parents, and alumni families across generations. Below are our four core school traditions organized by season: Spring, Summer, Autumn, and Winter. As an editable, data-driven scrapbook, parent volunteers can add new events or update photos each school year.
       </p>
     </div>
   </header>
@@ -22,14 +22,6 @@ import TraditionPreview from "../components/TraditionPreview.astro";
   {/* TRADITIONS SCRAPBOOK LISTING */}
   <section class="traditions-list-section" aria-labelledby="scrapbook-heading">
     <div class="container">
-      <SectionIntro
-        badge=""
-        title="Celebrating the seasons together."
-        subtitle="Below are our four core school traditions organized by season: Spring, Summer, Autumn, and Winter. As an editable, data-driven scrapbook, parent volunteers can add new events or update photos each school year."
-        doodle="sun"
-        align="center"
-      />
-
       <div class="scrapbook-stack">
         {TRADITIONS.map((tradition, idx) => (
           <TraditionPreview tradition={tradition} index={idx} />
