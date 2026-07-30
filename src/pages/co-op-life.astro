@@ -40,28 +40,10 @@ import PhotoCutout from "../components/PhotoCutout.astro";
       <SectionIntro
         badge="The Co-op Difference"
         title="Why families value a cooperative preschool"
-        subtitle="We don't join a co-op simply for lower tuition; we join to be active participants in our children's first social world and to build lifelong community."
+        subtitle="We don't join a co-op simply for lower tuition; we join to be active participants in our children's first social world and to build lifelong community. You get a direct window into your child's daily school world and milestones, build genuine friendships with neighborhood and UCLA families, and learn practical child-guidance techniques from experienced educators—creating a comforting, seamless connection between home and school."
         doodle="heart"
         align="center"
       />
-
-      <div class="values-grid">
-        {COOP_LIFE_DATA.whyFamiliesValueCoop.map((point, idx) => {
-          const icons = ["sun", "flower", "leaves", "carnival-bunting"];
-          return (
-            <div class="value-card">
-              <div class="value-icon">
-                <DoodleIllustration
-                  name={icons[idx % icons.length] as any}
-                  size="sm"
-                  color="var(--color-tomato)"
-                />
-              </div>
-              <p class="value-text">{point}</p>
-            </div>
-          );
-        })}
-      </div>
     </div>
   </section>
 
@@ -175,49 +157,6 @@ import PhotoCutout from "../components/PhotoCutout.astro";
   .value-section {
     padding: 5.5rem 0;
     background: var(--color-paper-white);
-  }
-
-  .values-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    max-width: 800px;
-    margin: 2.5rem auto 0;
-  }
-
-  .value-card {
-    background: #ffffff;
-    border: 2px solid var(--color-border);
-    border-radius: 20px;
-    padding: 1.5rem 2rem;
-    box-shadow: var(--shadow-natural);
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .value-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(53, 72, 60, 0.08);
-  }
-
-  .value-icon {
-    width: 64px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin: 0;
-  }
-
-  .value-text {
-    font-size: 1.1rem;
-    font-weight: 600;
-    line-height: 1.55;
-    color: var(--color-text);
-    margin: 0;
   }
 
   /* Member Responsibilities */
