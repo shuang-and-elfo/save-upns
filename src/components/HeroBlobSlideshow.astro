@@ -1,0 +1,278 @@
+---
+import { withBase } from "../utils/url";
+import DoodleIllustration from "./DoodleIllustration.astro";
+
+const slides = [
+  {
+    src: "play.jpg",
+    alt: "Candid photograph of children engaged in outdoor play on the sunny UPNS playground",
+  },
+  {
+    src: "kat-outdoor.jpg",
+    alt: "Children playing and exploring together in the UPNS outdoor play area",
+  },
+  {
+    src: "wagon_outings.JPG",
+    alt: "Children enjoying a fun wagon ride across the campus",
+  },
+  {
+    src: "music_class.jpg",
+    alt: "Children singing and playing musical instruments together",
+  },
+  {
+    src: "carnival.jpg",
+    alt: "Families and children celebrating together at UPNS Family Fun Day",
+  },
+];
+---
+
+<div class="hero-slideshow-wrap" style="transform: rotate(2deg);">
+  <div class="blob-frame" id="hero-blob-container" data-shape="0">
+    {slides.map((slide, index) => (
+      <div
+        class={`slide-item ${index === 0 ? "active" : ""}`}
+        data-index={index}
+      >
+        <img
+          src={withBase(`/images/${slide.src}`)}
+          alt={slide.alt}
+          class="slide-img"
+          loading={index === 0 ? "eager" : "lazy"}
+        />
+      </div>
+    ))}
+
+    {/* Decorative Sun Doodle Badge at Top Right */}
+    <div class="doodle-badge" aria-hidden="true">
+      <DoodleIllustration name="sun" size="lg" color="var(--color-primary, #d86f58)" />
+    </div>
+
+    {/* Est. 1966 Badge at Bottom Left */}
+    <div class="est-badge" aria-hidden="true">
+      <span>Est. 1966</span>
+    </div>
+  </div>
+
+  {/* Interactive Indicator Dots */}
+  <div class="slideshow-indicators" role="tablist" aria-label="Hero photo slideshow controls">
+    {slides.map((_, index) => (
+      <button
+        type="button"
+        class={`indicator-dot ${index === 0 ? "active" : ""}`}
+        data-target={index}
+        aria-label={`Show slide ${index + 1}`}
+        aria-selected={index === 0 ? "true" : "false"}
+      />
+    ))}
+  </div>
+</div>
+
+<style>
+  .hero-slideshow-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  /* Morphing organic blob container */
+  .blob-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-cream, #fff9ee);
+    border: 8px solid var(--color-paper-white, #fffcf6);
+    box-shadow: var(--shadow-natural, 0 10px 25px rgba(53, 72, 60, 0.08));
+    transition: border-radius 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s ease;
+    will-change: border-radius;
+  }
+
+  /* 5 distinct organic blob shapes */
+  .blob-frame[data-shape="0"] {
+    border-radius: 60% 40% 50% 70% / 55% 65% 45% 55%;
+  }
+
+  .blob-frame[data-shape="1"] {
+    border-radius: 48% 52% 65% 35% / 44% 56% 44% 56%;
+  }
+
+  .blob-frame[data-shape="2"] {
+    border-radius: 68% 32% 45% 55% / 58% 42% 60% 40%;
+  }
+
+  .blob-frame[data-shape="3"] {
+    border-radius: 52% 48% 58% 42% / 64% 36% 52% 48%;
+  }
+
+  .blob-frame[data-shape="4"] {
+    border-radius: 63% 37% 42% 58% / 48% 62% 38% 52%;
+  }
+
+  .slide-item {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.05);
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.9s ease,
+                transform 4.5s ease-out;
+    z-index: 1;
+  }
+
+  .slide-item.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    z-index: 2;
+  }
+
+  .slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .doodle-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    z-index: 10;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
+    pointer-events: none;
+    transition: transform 1.4s ease;
+  }
+
+  .est-badge {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    background: var(--color-paper-white, #fffcf6);
+    color: var(--color-text, #35483c);
+    font-family: var(--font-body, sans-serif);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    pointer-events: none;
+    border: 2px solid #ffffff;
+  }
+
+  /* Slideshow dots at the bottom */
+  .slideshow-indicators {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+  }
+
+  .indicator-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(53, 72, 60, 0.22);
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .indicator-dot:hover {
+    background: rgba(53, 72, 60, 0.55);
+    transform: scale(1.15);
+  }
+
+  .indicator-dot.active {
+    background: var(--color-tomato, #d86f58);
+    transform: scale(1.35);
+    box-shadow: 0 2px 6px rgba(216, 111, 88, 0.35);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob-frame {
+      transition: none !important;
+    }
+    .slide-item {
+      transition: opacity 0.5s ease !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  function initHeroSlideshow() {
+    const container = document.getElementById("hero-blob-container");
+    if (!container) return;
+
+    const slides = container.querySelectorAll(".slide-item");
+    const dots = document.querySelectorAll(".indicator-dot");
+    const totalSlides = slides.length;
+    if (totalSlides < 2) return;
+
+    let currentIndex = 0;
+    let intervalId: number | undefined;
+    let isHovered = false;
+
+    function showSlide(nextIndex: number) {
+      if (nextIndex === currentIndex) return;
+
+      // Deactivate current
+      slides[currentIndex]?.classList.remove("active");
+      dots[currentIndex]?.classList.remove("active");
+      dots[currentIndex]?.setAttribute("aria-selected", "false");
+
+      // Activate next
+      currentIndex = nextIndex;
+      slides[currentIndex]?.classList.add("active");
+      dots[currentIndex]?.classList.add("active");
+      dots[currentIndex]?.setAttribute("aria-selected", "true");
+
+      // Morph container shape on every swap!
+      if (container) container.setAttribute("data-shape", String(currentIndex % 5));
+    }
+
+    function nextSlide() {
+      if (isHovered) return;
+      showSlide((currentIndex + 1) % totalSlides);
+    }
+
+    function startInterval() {
+      clearInterval(intervalId);
+      intervalId = window.setInterval(nextSlide, 4500);
+    }
+
+    // Pause on hover
+    container.addEventListener("mouseenter", () => {
+      isHovered = true;
+    });
+    container.addEventListener("mouseleave", () => {
+      isHovered = false;
+    });
+
+    // Dot clicks
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        const target = Number(dot.getAttribute("data-target"));
+        if (!isNaN(target)) {
+          showSlide(target);
+          startInterval(); // reset timer
+        }
+      });
+    });
+
+    // Start autoplay loop
+    startInterval();
+  }
+
+  // Run on initial load and Astro navigation
+  initHeroSlideshow();
+  document.addEventListener("astro:after-swap", initHeroSlideshow);
+</script>

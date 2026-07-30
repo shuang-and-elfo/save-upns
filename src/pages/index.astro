@@ -11,6 +11,7 @@ import CooperativeCallout from "../components/CooperativeCallout.astro";
 import TestimonialCloud from "../components/TestimonialCloud.astro";
 import PhotoCutout from "../components/PhotoCutout.astro";
 import FloatingIllustration from "../components/FloatingIllustration.astro";
+import HeroBlobSlideshow from "../components/HeroBlobSlideshow.astro";
 
 const featuredTeachers = getAllActiveTeachers().slice(0, 3);
 const featuredTraditions = TRADITIONS.slice(0, 2);
@@ -43,15 +44,7 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
       </div>
 
       <div class="hero-media-col">
-        <PhotoCutout
-          src="play.jpg"
-          alt="Candid photograph of children engaged in outdoor play on the sunny UPNS playground"
-          variant="blob"
-          aspectRatio="4:3"
-          rotate={2}
-          doodle="sun"
-          badgeText="Est. 1966"
-        />
+        <HeroBlobSlideshow />
       </div>
     </div>
   </section>

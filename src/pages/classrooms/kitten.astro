@@ -64,7 +64,6 @@ const galleryPhotos = [
   {/* CLASSROOM HERO */}
   <header class="room-hero">
     <FloatingIllustration src="kitten.png" position="top-right" size="lg" rotate={10} />
-    <FloatingIllustration src="snail.png" position="bottom-left" size="md" rotate={-8} />
     <div class="container hero-grid">
       <div class="hero-text">
         <h1 class="room-title">{room.name}</h1>
@@ -107,6 +106,7 @@ const galleryPhotos = [
 
   {/* MEET OUR KITTEN ROOM TEACHERS */}
   <section class="teachers-section" aria-labelledby="teachers-heading">
+    <FloatingIllustration src="snail.png" position="top-right" size="md" rotate={12} />
     <div class="container">
       <SectionIntro
         badge="Educators"
@@ -244,6 +244,8 @@ const galleryPhotos = [
   .teachers-section {
     padding: 5rem 0;
     background: var(--color-paper-white);
+    position: relative;
+    overflow: hidden;
   }
 
   .teachers-grid {
