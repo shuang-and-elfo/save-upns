@@ -1,5 +1,6 @@
 ---
 import DoodleIllustration from "./DoodleIllustration.astro";
+import { withBase } from "../utils/url";
 
 export interface Props {
   src: string;
@@ -46,7 +47,7 @@ const rotationStyle = rotate ? `transform: rotate(${rotate}deg);` : "";
 
   <div class="image-frame">
     <img
-      src={`/images/${src}`}
+      src={withBase(`/images/${src}`)}
       alt={alt}
       class="photo-img"
       loading="lazy"

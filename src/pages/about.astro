@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../utils/url";
 import { SITE_CONFIG } from "../content/site";
 import { getAllActiveTeachers } from "../content/teachers";
 import SectionIntro from "../components/SectionIntro.astro";
@@ -179,7 +180,7 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
           Discover what a monthly classroom workday looks like and how families contribute to our cooperative community.
         </p>
       </div>
-      <a href="/co-op-life/" class="btn-explore-coop">
+      <a href={withBase("/co-op-life/")} class="btn-explore-coop">
         <span>Explore Co-op Life</span>
         <span>→</span>
       </a>

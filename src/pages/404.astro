@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import DoodleIllustration from "../components/DoodleIllustration.astro";
 import FloatingIllustration from "../components/FloatingIllustration.astro";
+import { withBase } from "../utils/url";
 ---
 
 <BaseLayout
@@ -23,11 +24,11 @@ import FloatingIllustration from "../components/FloatingIllustration.astro";
       </p>
 
       <div class="not-found-actions">
-        <a href="/" class="btn-home">
+        <a href={withBase("/")} class="btn-home">
           <span>Return to Homepage</span>
           <span>♥</span>
         </a>
-        <a href="/classrooms/" class="btn-secondary">
+        <a href={withBase("/classrooms/")} class="btn-secondary">
           <span>See Our Classrooms</span>
           <span>→</span>
         </a>

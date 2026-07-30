@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../utils/url";
 import { CLASSROOMS } from "../content/classrooms";
 import { getAllActiveTeachers } from "../content/teachers";
 import { TRADITIONS } from "../content/traditions";
@@ -34,11 +35,11 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
         </p>
 
         <div class="hero-cta-group">
-          <a href="/visit/" class="btn-primary-hero">
+          <a href={withBase("/visit/")} class="btn-primary-hero">
             <span>Come Visit UPNS</span>
             <span>♥</span>
           </a>
-          <a href="/classrooms/" class="btn-secondary-link">
+          <a href={withBase("/classrooms/")} class="btn-secondary-link">
             <span>See Our Classrooms</span>
             <span>→</span>
           </a>
@@ -135,7 +136,7 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
       </div>
 
       <div class="view-all-row">
-        <a href="/about/#team" class="view-all-link">
+        <a href={withBase("/about/#team")} class="view-all-link">
           <span>Meet our full teaching team and board</span>
           <span>→</span>
         </a>
@@ -166,7 +167,7 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
               rotate={index === 0 ? -2 : 2}
             />
             <div class="tradition-card-info">
-              <h3><a href={`/traditions/#${tradition.slug}`}>{tradition.title} ({tradition.season})</a></h3>
+              <h3><a href={withBase(`/traditions/#${tradition.slug}`)}>{tradition.title} ({tradition.season})</a></h3>
               <p>{tradition.shortDescription}</p>
             </div>
           </div>
@@ -174,7 +175,7 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
       </div>
 
       <div class="view-all-row">
-        <a href="/traditions/" class="view-all-link">
+        <a href={withBase("/traditions/")} class="view-all-link">
           <span>Explore all UPNS School Traditions</span>
           <span>→</span>
         </a>

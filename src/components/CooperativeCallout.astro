@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../utils/url";
+
 export interface Props {
   title?: string;
   subtitle?: string;
@@ -23,7 +25,7 @@ const {
     </div>
 
     <div class="callout-footer">
-      <a href="/co-op-life/" class="coop-btn">
+      <a href={withBase("/co-op-life/")} class="coop-btn">
         <span>Explore Member Responsibilities & Co-op Life</span>
         <span>→</span>
       </a>

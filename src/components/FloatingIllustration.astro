@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../utils/url";
+
 export interface Props {
   src: string;
   alt?: string;
@@ -41,7 +43,8 @@ const sizeMap: Record<string, string> = {
 };
 
 const width = sizeMap[size] || "280px";
-const imgUrl = src.startsWith("/") ? src : `/images/${src}`;
+const imgPath = src.startsWith("/") ? src : `/images/${src}`;
+const imgUrl = withBase(imgPath);
 ---
 
 <div

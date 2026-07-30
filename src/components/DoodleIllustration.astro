@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../utils/url";
+
 export interface Props {
   name: string;
   size?: "sm" | "md" | "lg" | "xl" | "xxl";
@@ -69,7 +71,7 @@ const pngFile = pngMap[name] || "flower.png";
 ---
 
 <img
-  src={`/images/${pngFile}`}
+  src={withBase(`/images/${pngFile}`)}
   alt=""
   width={dimension}
   height={dimension}

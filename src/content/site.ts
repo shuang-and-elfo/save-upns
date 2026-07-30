@@ -1,3 +1,5 @@
+import { withBase } from "../utils/url";
+
 export interface NavItem {
   label: string;
   href: string;
@@ -67,21 +69,21 @@ export const SITE_CONFIG: SiteConfig = {
   },
   navigation: {
     main: [
-      { label: "About", href: "/about/" },
-      { label: "Classrooms", href: "/classrooms/" },
-      { label: "Co-op Life", href: "/co-op-life/" },
-      { label: "Traditions", href: "/traditions/" },
-      { label: "Visit Us", href: "/visit/" },
-      { label: "Apply", href: "/apply/", isPrimaryAction: true },
+      { label: "About", href: withBase("/about/") },
+      { label: "Classrooms", href: withBase("/classrooms/") },
+      { label: "Co-op Life", href: withBase("/co-op-life/") },
+      { label: "Traditions", href: withBase("/traditions/") },
+      { label: "Visit Us", href: withBase("/visit/") },
+      { label: "Apply", href: withBase("/apply/"), isPrimaryAction: true },
     ],
     footer: [
-      { label: "About Us", href: "/about/" },
-      { label: "Our Classrooms", href: "/classrooms/" },
-      { label: "Co-op Life", href: "/co-op-life/" },
-      { label: "School Traditions", href: "/traditions/" },
-      { label: "Resources & Policies", href: "/resources/" },
-      { label: "Visit & Contact", href: "/visit/" },
-      { label: "Apply & Tuition", href: "/apply/" },
+      { label: "About Us", href: withBase("/about/") },
+      { label: "Our Classrooms", href: withBase("/classrooms/") },
+      { label: "Co-op Life", href: withBase("/co-op-life/") },
+      { label: "School Traditions", href: withBase("/traditions/") },
+      { label: "Resources & Policies", href: withBase("/resources/") },
+      { label: "Visit & Contact", href: withBase("/visit/") },
+      { label: "Apply & Tuition", href: withBase("/apply/") },
     ],
   },
 };

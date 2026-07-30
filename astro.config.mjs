@@ -2,7 +2,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://upns.info',
+  site: 'https://shuang-and-elfo.github.io',
+  base: '/upns-website',
   output: 'static',
   integrations: [sitemap()],
   vite: {

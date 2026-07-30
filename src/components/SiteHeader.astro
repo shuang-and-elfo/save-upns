@@ -1,6 +1,7 @@
 ---
 import { SITE_CONFIG } from "../content/site";
 import MobileNavigation from "./MobileNavigation.astro";
+import { withBase } from "../utils/url";
 
 const currentPath = Astro.url.pathname;
 ---
@@ -8,9 +9,9 @@ const currentPath = Astro.url.pathname;
 <header class="site-header" role="banner">
   <div class="header-container">
     {/* Brand Logo & Tagline */}
-    <a href="/" class="brand-link" aria-label="UPNS Preschool Home">
+    <a href={withBase("/")} class="brand-link" aria-label="UPNS Preschool Home">
       <img
-        src="/images/logo.png"
+        src={withBase("/images/logo.png")}
         alt="University Parents Nursery School (UPNS) Logo"
         class="header-brand-logo"
       />
