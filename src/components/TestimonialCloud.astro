@@ -1,0 +1,305 @@
+---
+const TESTIMONIALS = [
+  {
+    quote:
+      "UPNS has been the most wonderful experience for our family. Emma has blossomed into a confident, curious little girl. The teachers truly know each child as an individual, and the co-op community has become like a second family.",
+    author: "Sarah & Mike T.",
+    role: "Parents of Emma, Dolphin Room",
+  },
+  {
+    quote:
+      "Being a co-op parent was something we were unsure about at first, but it turned out to be the best part. We get to see Noah's world firsthand, and the community of families we've met is incredible.",
+    author: "James & Linda C.",
+    role: "Parents of Noah, Kangaroo Room",
+  },
+  {
+    quote:
+      "The Kitten Room was perfect for Arya's gentle transition into school. The teachers were so patient and nurturing. UPNS's cooperative model means I always know exactly what's happening in the classroom.",
+    author: "Priya M.",
+    role: "Parent of Arya, Kitten Room",
+  },
+];
+---
+
+<section class="testimonial-cloud-section" aria-label="Reviews of Happy Parents">
+  <div class="container">
+    <div class="testimonial-wrapper">
+      {/* Main Cloud Blob Container */}
+      <div class="cloud-container">
+        <h3 class="handwritten-title">Reviews of Happy Parents</h3>
+
+        <div class="carousel-viewport" id="testimonial-viewport" aria-live="polite">
+          {TESTIMONIALS.map((t, idx) => (
+            <div
+              class={`testimonial-slide ${idx === 0 ? "active" : ""}`}
+              data-index={idx}
+              role="group"
+              aria-label={`Testimonial ${idx + 1} of ${TESTIMONIALS.length}`}
+            >
+              <blockquote class="quote-body">
+                <p class="quote-text">"{t.quote}"</p>
+                <cite class="quote-author">
+                  <strong>{t.author}</strong>
+                  <span>{t.role}</span>
+                </cite>
+              </blockquote>
+            </div>
+          ))}
+        </div>
+
+        {/* Carousel Navigation Buttons */}
+        <div class="carousel-controls">
+          <button
+            type="button"
+            class="nav-btn prev-btn"
+            id="testi-prev"
+            aria-label="Previous parent review"
+          >
+            <span>←</span>
+          </button>
+
+          <div class="dots-container" role="tablist">
+            {TESTIMONIALS.map((_, idx) => (
+              <button
+                type="button"
+                class={`dot-btn ${idx === 0 ? "active" : ""}`}
+                data-dot={idx}
+                role="tab"
+                aria-selected={idx === 0 ? "true" : "false"}
+                aria-label={`Show quote ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            class="nav-btn next-btn"
+            id="testi-next"
+            aria-label="Next parent review"
+          >
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function initTestimonialCarousel() {
+      const slides = document.querySelectorAll(".testimonial-slide");
+      const dots = document.querySelectorAll(".dot-btn");
+      const prevBtn = document.getElementById("testi-prev");
+      const nextBtn = document.getElementById("testi-next");
+
+      if (!slides.length || !prevBtn || !nextBtn) return;
+
+      let current = 0;
+      const count = slides.length;
+
+      function showSlide(index: number) {
+        current = (index + count) % count;
+        slides.forEach((s, idx) => {
+          s.classList.toggle("active", idx === current);
+        });
+        dots.forEach((d, idx) => {
+          const isActive = idx === current;
+          d.classList.toggle("active", isActive);
+          d.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+      }
+
+      prevBtn.addEventListener("click", () => showSlide(current - 1));
+      nextBtn.addEventListener("click", () => showSlide(current + 1));
+
+      dots.forEach((dot, idx) => {
+        dot.addEventListener("click", () => showSlide(idx));
+      });
+    }
+
+    // Initialize on load and on Astro navigation
+    initTestimonialCarousel();
+    document.addEventListener("astro:page-load", initTestimonialCarousel);
+  </script>
+</section>
+
+<style>
+  .testimonial-cloud-section {
+    padding: 4.5rem 0 5.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonial-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Cloud Blob Container */
+  .cloud-container {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 65% 35% 55% 45% / 50% 60% 40% 50%;
+    padding: 4.5rem 3.5rem 3.5rem;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    min-height: 420px;
+  }
+
+  /* Section Subtitle Style */
+  .handwritten-title {
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--color-leaf-green, #5f8753);
+    margin: 0 0 1.75rem;
+    display: block;
+  }
+
+  .carousel-viewport {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .testimonial-slide {
+    display: none;
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .testimonial-slide.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .quote-body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .quote-text {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--color-text, #35483c);
+    margin: 0 0 1.75rem;
+  }
+
+  .quote-author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-style: normal;
+  }
+
+  .quote-author strong {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-leaf-green, #5f8753);
+  }
+
+  .quote-author span {
+    font-size: 0.95rem;
+    color: var(--color-text-muted, #5f7065);
+    font-weight: 500;
+  }
+
+  /* Carousel Navigation Controls */
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .nav-btn {
+    background: #ffffff;
+    border: 2px solid var(--color-border, #f2ead6);
+    color: var(--color-text, #35483c);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .nav-btn:hover {
+    background: var(--color-leaf-green, #82a878);
+    border-color: var(--color-leaf-green, #82a878);
+    color: #ffffff;
+    transform: scale(1.06);
+  }
+
+  .dots-container {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .dot-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(95, 135, 83, 0.25);
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    padding: 0;
+  }
+
+  .dot-btn:hover {
+    background: rgba(95, 135, 83, 0.6);
+  }
+
+  .dot-btn.active {
+    background: var(--color-leaf-green, #5f8753);
+    transform: scale(1.25);
+  }
+
+  @media (max-width: 768px) {
+    .cloud-container {
+      padding: 3.5rem 1.75rem 2.5rem;
+      border-radius: 40px;
+    }
+
+    .handwritten-title {
+      font-size: 1.85rem;
+    }
+
+    .quote-text {
+      font-size: 1.25rem;
+    }
+  }
+</style>

@@ -1,0 +1,329 @@
+---
+import { SITE_CONFIG } from "../content/site";
+import MobileNavigation from "./MobileNavigation.astro";
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header" role="banner">
+  <div class="header-container">
+    {/* Brand Logo & Tagline */}
+    <a href="/" class="brand-link" aria-label="UPNS Preschool Home">
+      <img
+        src="/images/logo.png"
+        alt="University Parents Nursery School (UPNS) Logo"
+        class="header-brand-logo"
+      />
+    </a>
+
+    {/* Desktop Navigation */}
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <ul class="nav-list">
+        {SITE_CONFIG.navigation.main.map((item) => {
+          const isActive =
+            currentPath === item.href ||
+            (item.href !== "/" && currentPath.startsWith(item.href));
+
+          if (item.isPrimaryAction) {
+            return (
+              <li class="nav-item">
+                <a
+                  href={item.href}
+                  class="apply-btn"
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  <span>{item.label}</span>
+                  <span class="btn-heart">♥</span>
+                </a>
+              </li>
+            );
+          }
+
+          return (
+            <li class="nav-item">
+              <a
+                href={item.href}
+                class={`nav-link ${isActive ? "active" : ""}`}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    {/* Mobile Hamburger Button */}
+    <button
+      type="button"
+      id="mobile-menu-toggle"
+      class="mobile-toggle"
+      aria-expanded="false"
+      aria-controls="mobile-navigation"
+      aria-label="Open navigation menu"
+    >
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+
+  {/* Mobile Drawer */}
+  <MobileNavigation currentPath={currentPath} />
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-paper-white, #fffcf6);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+    will-change: transform;
+  }
+
+  .site-header.header-hidden {
+    transform: translateY(-100%);
+  }
+
+  .site-header.header-scrolled {
+    box-shadow: 0 4px 20px rgba(53, 72, 60, 0.08);
+  }
+
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.4rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--color-text, #35483c);
+    transition: transform 0.2s ease;
+    margin-right: 3.5rem;
+  }
+
+  .brand-link:hover {
+    transform: scale(1.02);
+  }
+
+  .header-brand-logo {
+    height: 86px;
+    width: auto;
+    max-width: 400px;
+    object-fit: contain;
+    display: block;
+    transform: scale(1.5);
+    transform-origin: left center;
+    transition: transform 0.2s ease;
+  }
+
+  @media (max-width: 768px) {
+    .brand-link {
+      margin-right: 2rem;
+    }
+    .header-brand-logo {
+      height: 58px;
+      max-width: 280px;
+      transform: scale(1.5);
+      transform-origin: left center;
+    }
+  }
+
+  /* Desktop Nav */
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text, #35483c);
+    text-decoration: none;
+    padding: 0.4rem 0.2rem;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-tomato, #d86f58);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--color-yellow, #f2c65a);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.25s ease;
+  }
+
+  .nav-link.active::after,
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Visually Distinct but Friendly Apply Button */
+  .apply-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.55rem 1.15rem;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(216, 111, 88, 0.25);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 0.2s ease;
+    border: 2px solid #ffffff;
+  }
+
+  .apply-btn:hover {
+    background: #c75c45;
+    transform: translateY(-2px) scale(1.04);
+  }
+
+  .btn-heart {
+    color: var(--color-yellow, #f2c65a);
+    font-size: 0.85rem;
+  }
+
+  /* Mobile Toggle */
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 38px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+  }
+
+  .hamburger-line {
+    width: 100%;
+    height: 3px;
+    background: var(--color-text, #35483c);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 900px) {
+    .desktop-nav {
+      display: none;
+    }
+    .mobile-toggle {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  // Minimal Vanilla JS for mobile hamburger menu
+  function setupMobileNav() {
+    const toggleBtn = document.getElementById("mobile-menu-toggle");
+    const drawer = document.getElementById("mobile-navigation");
+    const closeBtn = document.getElementById("mobile-menu-close");
+
+    if (!toggleBtn || !drawer) return;
+
+    function openMenu() {
+      drawer?.setAttribute("aria-hidden", "false");
+      drawer?.classList.add("open");
+      toggleBtn?.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeMenu() {
+      drawer?.setAttribute("aria-hidden", "true");
+      drawer?.classList.remove("open");
+      toggleBtn?.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
+
+    toggleBtn.addEventListener("click", openMenu);
+    closeBtn?.addEventListener("click", closeMenu);
+
+    // Close on backdrop click
+    drawer.addEventListener("click", (e) => {
+      if (e.target === drawer) closeMenu();
+    });
+
+    // Close on ESC key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && drawer.classList.contains("open")) {
+        closeMenu();
+      }
+    });
+  }
+
+  setupMobileNav();
+
+  function setupScrollHeader() {
+    const header = document.querySelector(".site-header");
+    if (!header) return;
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > 20) {
+              header.classList.add("header-scrolled");
+            } else {
+              header.classList.remove("header-scrolled");
+            }
+
+            if (currentScrollY > 80 && currentScrollY > lastScrollY + 5) {
+              header.classList.add("header-hidden");
+            } else if (currentScrollY < lastScrollY - 5 || currentScrollY <= 50) {
+              header.classList.remove("header-hidden");
+            }
+
+            lastScrollY = currentScrollY;
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+  }
+
+  setupScrollHeader();
+</script>

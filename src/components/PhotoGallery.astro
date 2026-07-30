@@ -1,0 +1,101 @@
+---
+import PhotoCutout from "./PhotoCutout.astro";
+
+export interface GalleryPhoto {
+  src: string;
+  alt: string;
+  caption?: string;
+  variant?: "tape" | "blob" | "cutout" | "scrapbook" | "rounded";
+  doodle?: any;
+  rotate?: number;
+}
+
+export interface Props {
+  photos: GalleryPhoto[];
+  layout?: "grid" | "scrapbook" | "row";
+  class?: string;
+}
+
+const {
+  photos,
+  layout = "scrapbook",
+  class: className = "",
+} = Astro.props;
+---
+
+<div class={`photo-gallery layout-${layout} ${className}`} role="region" aria-label="Photo gallery">
+  <div class="gallery-inner">
+    {photos.map((photo, index) => {
+      // Create slight scrapbook alternating rotations if not specified
+      const autoRotate = photo.rotate !== undefined 
+        ? photo.rotate 
+        : (index % 2 === 0 ? -1.5 : 2);
+
+      return (
+        <div class="gallery-item">
+          <PhotoCutout
+            src={photo.src}
+            alt={photo.alt}
+            caption={photo.caption}
+            variant={photo.variant || "scrapbook"}
+            aspectRatio="4:3"
+            doodle={photo.doodle}
+            rotate={autoRotate}
+          />
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  .photo-gallery {
+    width: 100%;
+    margin: 2rem 0;
+  }
+
+  /* Scrapbook Layout: Asymmetric, breathable arrangement */
+  .layout-scrapbook .gallery-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem 1.8rem;
+    align-items: center;
+  }
+
+  .layout-scrapbook .gallery-item:nth-child(even) {
+    transform: translateY(14px);
+  }
+
+  /* Grid Layout */
+  .layout-grid .gallery-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Row Layout (Swipeable on mobile) */
+  .layout-row .gallery-inner {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .layout-row .gallery-item {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
+  }
+
+  @media (max-width: 768px) {
+    .layout-scrapbook .gallery-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .layout-scrapbook .gallery-item:nth-child(even) {
+      transform: none;
+    }
+  }
+</style>

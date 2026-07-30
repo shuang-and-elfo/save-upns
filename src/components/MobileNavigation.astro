@@ -1,0 +1,191 @@
+---
+import { SITE_CONFIG } from "../content/site";
+import DoodleIllustration from "./DoodleIllustration.astro";
+
+export interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<div
+  id="mobile-navigation"
+  class="mobile-drawer-backdrop"
+  aria-hidden="true"
+  role="dialog"
+  aria-label="Mobile menu"
+>
+  <nav class="mobile-drawer" aria-label="Mobile primary navigation">
+    <div class="drawer-header">
+      <div class="drawer-brand">
+        <DoodleIllustration name="sun" size="sm" color="var(--color-tomato)" />
+        <span>{SITE_CONFIG.shortName} Navigation</span>
+      </div>
+      <button
+        type="button"
+        id="mobile-menu-close"
+        class="close-btn"
+        aria-label="Close navigation menu"
+      >
+        ✕
+      </button>
+    </div>
+
+    <ul class="mobile-nav-list">
+      {SITE_CONFIG.navigation.main.map((item) => {
+        const isActive =
+          currentPath === item.href ||
+          (item.href !== "/" && currentPath.startsWith(item.href));
+
+        return (
+          <li class="mobile-nav-item">
+            <a
+              href={item.href}
+              class={`mobile-nav-link ${isActive ? "active" : ""} ${
+                item.isPrimaryAction ? "mobile-apply-btn" : ""
+              }`}
+              aria-current={isActive ? "page" : undefined}
+            >
+              <span>{item.label}</span>
+              {item.isPrimaryAction && <span class="btn-heart">♥</span>}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+
+    <div class="drawer-footer">
+      <p class="drawer-address">{SITE_CONFIG.contact.address}</p>
+      <a href={`tel:${SITE_CONFIG.contact.phone}`} class="drawer-phone">
+        {SITE_CONFIG.contact.phone}
+      </a>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .mobile-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: rgba(53, 72, 60, 0.45);
+    backdrop-filter: blur(4px);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-drawer-backdrop.open {
+    display: block;
+    opacity: 1;
+  }
+
+  .mobile-drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 85%;
+    max-width: 340px;
+    background: var(--color-paper-white, #fffcf6);
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-drawer-backdrop.open .mobile-drawer {
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .drawer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text, #35483c);
+  }
+
+  .close-btn {
+    background: var(--color-cream, #fff9ee);
+    border: 1px solid var(--color-border, #f2ead6);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+    color: var(--color-text, #35483c);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text, #35483c);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link.active {
+    background: var(--color-cream, #fff9ee);
+    color: var(--color-tomato, #d86f58);
+  }
+
+  .mobile-apply-btn {
+    margin-top: 0.75rem;
+    background: var(--color-tomato, #d86f58) !important;
+    color: #ffffff !important;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(216, 111, 88, 0.25);
+  }
+
+  .drawer-footer {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #5f7065);
+    line-height: 1.4;
+  }
+
+  .drawer-phone {
+    display: inline-block;
+    margin-top: 0.4rem;
+    color: var(--color-tomato, #d86f58);
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>

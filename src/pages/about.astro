@@ -1,0 +1,427 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE_CONFIG } from "../content/site";
+import { getAllActiveTeachers } from "../content/teachers";
+import SectionIntro from "../components/SectionIntro.astro";
+import PhotoCutout from "../components/PhotoCutout.astro";
+import TeacherProfile from "../components/TeacherProfile.astro";
+import DoodleIllustration from "../components/DoodleIllustration.astro";
+import FloatingIllustration from "../components/FloatingIllustration.astro";
+
+const allTeachers = getAllActiveTeachers();
+const adminTeachers = allTeachers.filter((t) => t.classroom === "all");
+const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
+---
+
+<BaseLayout
+  title="About UPNS"
+  description="Learn about the history, philosophy, teaching team, and cooperative community of University Parents Nursery School (UPNS) in Los Angeles."
+>
+  {/* HERO HEADER */}
+  <header class="page-header">
+    <FloatingIllustration src="school.png" position="top-right" size="lg" rotate={10} />
+    <FloatingIllustration src="flower.png" position="bottom-left" size="md" rotate={-8} />
+    <div class="container">
+      <div class="hero-organic-box">
+        <h1 class="page-title">A neighborhood cooperative since 1966.</h1>
+        <p class="page-desc">
+          University Parents Nursery School (UPNS) is a parent-participation
+          preschool dedicated to whole-child development, learning through play,
+          and fostering genuine partnership between families and educators.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  {/* STORY & HISTORY */}
+  <section class="story-section" aria-labelledby="history-heading">
+    <div class="container">
+      <div class="story-content-clean">
+        <SectionIntro
+          badge="Our History"
+          title="From UCLA student housing to a thriving Los Angeles community."
+          align="center"
+          doodle="sun"
+        />
+
+        <div class="history-prose">
+          <p class="story-p">
+            UPNS has a rich history dating back to <strong>1966</strong> when a group of parents residing in UCLA Family Student Housing recognized the need for a collaborative nursery school. Over the decades, our cooperative community has evolved and grown, moving to our current location on Sepulveda Boulevard in 1996.
+          </p>
+          <p class="story-p">
+            While UPNS was founded by UCLA families and continues to proudly serve UCLA students, staff, and faculty, we warmly welcome non-UCLA affiliated families from across Los Angeles. In 1998, UPNS achieved accreditation from the National Association for the Education of Young Children (NAEYC), honoring our commitment to early childhood excellence.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* PHILOSOPHY & THE FIVE SELVES */}
+  <section class="philosophy-section" aria-labelledby="philosophy-heading">
+    <div class="container">
+      <SectionIntro
+        badge="Our Philosophy"
+        title="Play-based learning for the whole child."
+        subtitle="At UPNS, we believe that early childhood is a time for active discovery, creative expression, and emotional security, not academic pressure."
+        doodle="handprints"
+        align="center"
+      />
+
+      <div class="selves-grid">
+        {SITE_CONFIG.fiveSelves.map((selfString, idx) => {
+          const [title, desc] = selfString.split(" — ");
+          const icons = [
+            "social-self",
+            "emotional-self",
+            "physical-self",
+            "creative-self",
+            "cognitive-self",
+          ];
+          return (
+            <div class="self-card">
+              <div class="self-icon-wrap">
+                <DoodleIllustration
+                  name={icons[idx % icons.length] as any}
+                  size="xxl"
+                  color="var(--color-tomato)"
+                />
+              </div>
+              <h3 class="self-title">{title}</h3>
+              <p class="self-desc">{desc}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  {/* LARGE GROUP TEACHER PHOTOGRAPH */}
+  <section class="team-photo-section" id="team" aria-labelledby="team-heading">
+    <div class="container">
+      <SectionIntro
+        badge="Our Teachers"
+        title="Meet our dedicated teaching team."
+        subtitle="Our educators are experienced early childhood professionals who partner closely with co-oping parents every day."
+        doodle="heart"
+        align="center"
+      />
+
+      {/* Prominent, personal large group photo frame */}
+      <div class="group-photo-container">
+        <PhotoCutout
+          src="teachers-all.jpg"
+          alt="Warm, candid group photograph of the entire UPNS teaching team gathered together at school"
+          variant="scrapbook"
+          aspectRatio="16:9"
+          rotate={1}
+          caption="Our UPNS teaching team and educators"
+          badgeText="Our Team"
+        />
+      </div>
+
+      {/* Admin Row: First row only has 2 cards (Director & Admin Manager) */}
+      <div class="teachers-admin-grid">
+        {adminTeachers.map((teacher) => (
+          <TeacherProfile teacher={teacher} />
+        ))}
+      </div>
+
+      {/* Classroom Teachers: Kitten class teachers start on the second row */}
+      <div class="teachers-full-grid">
+        {classroomTeachers.map((teacher) => (
+          <TeacherProfile teacher={teacher} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* STAFF ROLES & BOARD GOVERNANCE (MIGRATED FROM OLD WEBSITE) */}
+  <section class="governance-section" aria-labelledby="governance-heading">
+    <div class="container governance-grid">
+      <div class="gov-col">
+        <h2 id="governance-heading" class="gov-title">
+          Roles of School Staff
+        </h2>
+        <p class="gov-body">
+          The staff of the school consists of a Director, Assistant Director/Head Teacher, Teachers, Teaching Assistants, and the Office Administrator. The Director is the professional head of the school, responsible for all matters concerning the children and daily operation.
+        </p>
+        <p class="gov-body">
+          The Assistant Director, Teachers, and Teaching Assistants have challenging jobs: planning the daily program for children and helping parents gain new insights into early childhood. The Office Administrator is responsible for smooth operations and works closely with the Director.
+        </p>
+        <p class="gov-body">
+          Our staff furthers member education through classroom observation, participation, and guest speakers at Parent Education Meetings. The Director provides ongoing parent orientation throughout the school year.
+        </p>
+      </div>
+
+      <div class="gov-col board-col">
+        <h2 class="gov-title">Board of Directors</h2>
+        <p class="gov-body">
+          Each year the membership elects officers to serve as the Board of Directors. As the overall policy-making body, the Board administers school affairs consistent with our Articles of Incorporation and Constitution.
+        </p>
+        <p class="gov-body">
+          Board Members act not as individuals, but as representatives of the membership at large. Each member considers decisions in terms of what is good for the whole group and takes a long view of the future of UPNS.
+        </p>
+        <div class="board-note-box">
+          <p>
+            <strong>Open Board Meetings:</strong> Board Meetings are open to all school members, and each family’s vote carries equal weight.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* CO-OP LIFE CALLOUT */}
+  <div class="container">
+    <section class="coop-link-banner">
+      <div class="banner-text">
+        <h2>Want to learn more about parent participation?</h2>
+        <p>
+          Discover what a monthly classroom workday looks like and how families contribute to our cooperative community.
+        </p>
+      </div>
+      <a href="/co-op-life/" class="btn-explore-coop">
+        <span>Explore Co-op Life</span>
+        <span>→</span>
+      </a>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: 6rem 0 7rem;
+    background: linear-gradient(180deg, var(--color-paper-white) 0%, var(--color-cream) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-organic-box {
+    position: relative;
+    max-width: 860px;
+    margin: 1.5rem auto 2rem;
+    padding: 5rem 4rem;
+    background: #ffffff;
+    border: none;
+    border-radius: 60% 40% 50% 70% / 55% 65% 45% 55%;
+    box-shadow: none;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 1.25rem;
+  }
+
+  .page-desc {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .hero-organic-box {
+      padding: 3.25rem 1.75rem;
+      border-radius: 55% 45% 50% 65% / 50% 60% 45% 55%;
+    }
+  }
+
+  /* Story Section */
+  .story-section {
+    padding: 5rem 0;
+  }
+
+  .story-content-clean {
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .history-prose {
+    margin-top: 1.5rem;
+  }
+
+  .story-p {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  /* Philosophy */
+  .philosophy-section {
+    padding: 5.5rem 0;
+    background: var(--color-paper-white);
+  }
+
+  .selves-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1080px;
+    margin: 2.5rem auto 0;
+  }
+
+  .self-card {
+    flex: 0 1 calc(33.333% - 1.35rem);
+    min-width: 270px;
+    max-width: 330px;
+    background: #ffffff;
+    border: 2px solid var(--color-border);
+    border-radius: 28px;
+    padding: 2.25rem 1.75rem;
+    text-align: center;
+    box-shadow: var(--shadow-natural);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .self-icon-wrap {
+    height: 220px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .self-title {
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .self-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* Team Photo Section */
+  .team-photo-section {
+    padding: 5.5rem 0;
+  }
+
+  .group-photo-container {
+    margin: 0 auto 4rem;
+    max-width: 1000px;
+  }
+
+  .teachers-admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 780px;
+    margin: 0 auto 2.5rem;
+    gap: 2.5rem;
+  }
+
+  .teachers-full-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+
+  /* Governance Section */
+  .governance-section {
+    padding: 5rem 0;
+    background: #fffcf6;
+  }
+
+  .governance-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3.5rem;
+  }
+
+  .gov-title {
+    font-size: 1.85rem;
+    margin: 0 0 1rem;
+  }
+
+  .gov-body {
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .board-note-box {
+    background: var(--color-cream);
+    border-left: 4px solid var(--color-leaf-green);
+    padding: 1.1rem 1.35rem;
+    border-radius: 0 16px 16px 0;
+    margin-top: 1.5rem;
+  }
+
+  .board-note-box p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  /* Co-op Banner */
+  .coop-link-banner {
+    background: var(--color-text);
+    color: #ffffff;
+    border-radius: 28px;
+    padding: 2.5rem 3rem;
+    margin: 4rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .banner-text h2 {
+    font-size: 1.85rem;
+    color: #ffffff;
+    margin: 0 0 0.5rem;
+  }
+
+  .banner-text p {
+    font-size: 1.05rem;
+    color: #cedad1;
+    margin: 0;
+  }
+
+  .btn-explore-coop {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-yellow);
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 0.9rem 1.75rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-explore-coop:hover {
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .governance-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .teachers-admin-grid,
+    .teachers-full-grid {
+      grid-template-columns: 1fr;
+    }
+    .self-card {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+    .page-title {
+      font-size: 2.3rem;
+    }
+  }
+</style>

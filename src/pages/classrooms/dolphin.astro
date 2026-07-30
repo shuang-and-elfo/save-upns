@@ -1,0 +1,330 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getClassroomBySlug } from "../../content/classrooms";
+import { getTeachersByClassroom } from "../../content/teachers";
+import SectionIntro from "../../components/SectionIntro.astro";
+import TeacherProfile from "../../components/TeacherProfile.astro";
+import DailySchedule from "../../components/DailySchedule.astro";
+import PhotoGallery from "../../components/PhotoGallery.astro";
+import DoodleIllustration from "../../components/DoodleIllustration.astro";
+import FloatingIllustration from "../../components/FloatingIllustration.astro";
+
+const room = getClassroomBySlug("dolphin")!;
+const teachers = getTeachersByClassroom("dolphin");
+
+const galleryPhotos = [
+  {
+    src: "music_class.jpg",
+    alt: "Children in the Dolphin Room participating in interactive music and rhythm class",
+    caption: "Interactive music and rhythm explorations",
+    variant: "rounded" as const,
+    doodle: "dolphin",
+  },
+  {
+    src: "kat-outdoor.jpg",
+    alt: "Children climbing and exploring on the outdoor playground in the Dolphin Room",
+    caption: "Active outdoor climbing and playground adventures",
+    variant: "tape" as const,
+    doodle: "stars",
+  },
+];
+---
+
+<BaseLayout
+  title={`${room.name} (${room.ageRange})`}
+  description={room.shortDescription}
+>
+  {/* CLASSROOM HERO */}
+  <header class="room-hero">
+    <FloatingIllustration src="dolphin.png" position="top-right" size="lg" rotate={12} />
+    <FloatingIllustration src="paint-brush.png" position="bottom-left" size="md" rotate={-6} />
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <div class="title-doodle-row">
+          <DoodleIllustration
+            name="dolphin"
+            size="lg"
+            color="var(--color-tomato)"
+          />
+          <h1 class="room-title">{room.name}</h1>
+        </div>
+        <p class="room-age-subtitle">{room.ageRange}</p>
+
+        <p class="room-tagline">{room.tagline}</p>
+
+        <p class="room-desc">
+          {room.longDescription}
+        </p>
+
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-label">Verified Age Range</span>
+          <span class="stat-value">{room.ageRange}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Classroom Ratio & Setup</span>
+          <span class="stat-value">{room.ratioNote}</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {/* ENVIRONMENT GALLERY */}
+  <section class="gallery-section" aria-labelledby="gallery-heading">
+    <div class="container">
+      <SectionIntro
+        badge="Classroom Environment"
+        title="Sustained projects, confidence, and empathy."
+        subtitle="The Dolphin Room offers rich literacy and science materials, group discussion circles, and collaborative play setups."
+        doodle="sun"
+        align="center"
+      />
+
+      <PhotoGallery photos={galleryPhotos} layout="scrapbook" />
+    </div>
+  </section>
+
+  {/* MEET OUR DOLPHIN ROOM TEACHERS */}
+  <section class="teachers-section" aria-labelledby="teachers-heading">
+    <div class="container">
+      <SectionIntro
+        badge="Educators"
+        title={`Meet our ${room.name} Teachers`}
+        subtitle="Our Dolphin Room teachers Sulamithe Ello, Yadira Montes, and Kareem Smith nurture self-advocacy and social confidence as children prepare for kindergarten."
+        doodle="heart"
+        align="center"
+      />
+
+      <div class="teachers-grid">
+        {teachers.map((teacher) => (
+          <TeacherProfile teacher={teacher} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* HOW TEACHERS SUPPORT THIS STAGE & PARENT EXPECTATIONS */}
+  <section class="support-section" aria-labelledby="support-heading">
+    <div class="container support-grid">
+      <div class="support-col">
+        <span class="section-tag">Developmental Care</span>
+        <h2 id="support-heading" class="support-title">
+          How Teachers Support 4- & 5-Year-Olds
+        </h2>
+        <ul class="support-list">
+          {room.teacherSupport.map((item) => (
+            <li>
+              <span class="bullet" aria-hidden="true">♥</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="support-col coop-col">
+        <span class="section-tag">Parent Participation</span>
+        <h2 class="support-title">Co-op Expectations in the Dolphin Room</h2>
+        <p class="coop-text">
+          {room.parentCoopExpectations}
+        </p>
+        <div class="coop-note">
+          <p>
+            <strong>Kindergarten Readiness Naturally:</strong> We prepare children for elementary school through strong social-emotional skills, independence, and a love of learning, without corporate drill sheets.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* DAILY SCHEDULE */}
+  <section class="schedule-section">
+    <div class="container">
+      <DailySchedule schedule={room.schedule} roomName={room.name} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .room-hero {
+    padding: 3.5rem 0 4.5rem;
+    background: linear-gradient(180deg, var(--color-paper-white) 0%, var(--color-cream) 100%);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .title-doodle-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .room-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .room-age-subtitle {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-tomato);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0.25rem 0 0.75rem;
+  }
+
+  .room-tagline {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-tomato);
+    margin: 0 0 1.25rem;
+  }
+
+  .room-desc {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    margin: 0 0 1.5rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: #ffffff;
+    border: 2px solid var(--color-border);
+    border-radius: 20px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow-natural);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .stat-value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .gallery-section {
+    padding: 5rem 0;
+  }
+
+  .teachers-section {
+    padding: 5rem 0;
+    background: var(--color-paper-white);
+  }
+
+  .teachers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  .support-section {
+    padding: 5rem 0;
+  }
+
+  .support-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3.5rem;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: var(--color-yellow);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .support-title {
+    font-size: 1.85rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .support-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .support-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 1.02rem;
+    color: var(--color-text);
+    line-height: 1.55;
+  }
+
+  .bullet {
+    color: var(--color-tomato);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .coop-text {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    margin: 0 0 1.5rem;
+  }
+
+  .coop-note {
+    background: var(--color-cream);
+    border-left: 4px solid var(--color-leaf-green);
+    padding: 1.1rem 1.35rem;
+    border-radius: 0 16px 16px 0;
+  }
+
+  .coop-note p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .schedule-section {
+    padding: 4rem 0 5rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero-grid,
+    .support-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .teachers-grid {
+      grid-template-columns: 1fr;
+    }
+    .room-title {
+      font-size: 2.4rem;
+    }
+  }
+</style>

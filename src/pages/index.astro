@@ -1,0 +1,438 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { CLASSROOMS } from "../content/classrooms";
+import { getAllActiveTeachers } from "../content/teachers";
+import { TRADITIONS } from "../content/traditions";
+import SectionIntro from "../components/SectionIntro.astro";
+import ClassroomPreview from "../components/ClassroomPreview.astro";
+import TeacherProfile from "../components/TeacherProfile.astro";
+import CooperativeCallout from "../components/CooperativeCallout.astro";
+import TestimonialCloud from "../components/TestimonialCloud.astro";
+import PhotoCutout from "../components/PhotoCutout.astro";
+import FloatingIllustration from "../components/FloatingIllustration.astro";
+
+const featuredTeachers = getAllActiveTeachers().slice(0, 3);
+const featuredTraditions = TRADITIONS.slice(0, 2);
+---
+
+<BaseLayout
+  title="Home"
+  description="University Parents Nursery School (UPNS) is a cooperative parent-participation preschool in Los Angeles serving UCLA and community families."
+>
+  {/* HERO SECTION */}
+  <section class="hero-section" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div class="hero-text-col">
+        <h1 id="hero-title" class="hero-title">
+          A little school with a big community.
+        </h1>
+
+        <p class="hero-desc">
+          UPNS is a warm, parent-participation cooperative preschool in Los
+          Angeles where children learn naturally through play, and families
+          become part of a caring neighborhood school community.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="/visit/" class="btn-primary-hero">
+            <span>Come Visit UPNS</span>
+            <span>♥</span>
+          </a>
+          <a href="/classrooms/" class="btn-secondary-link">
+            <span>See Our Classrooms</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-media-col">
+        <PhotoCutout
+          src="play.jpg"
+          alt="Candid photograph of children engaged in outdoor play on the sunny UPNS playground"
+          variant="blob"
+          aspectRatio="4:3"
+          rotate={2}
+          doodle="sun"
+          badgeText="Est. 1966"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* A SHORT INTRODUCTION TO UPNS */}
+  <section class="intro-section" aria-labelledby="intro-heading">
+    <FloatingIllustration src="snail.png" position="bottom-left" size="md" rotate={-6} />
+    <div class="container">
+      <div class="intro-content-clean">
+        <SectionIntro
+          badge="Welcome to UPNS"
+          title="Where children and parents grow together."
+          subtitle="Founded in 1966 by UCLA families, UPNS has grown into a cherished neighborhood preschool open to both UCLA and non-UCLA community families."
+          align="center"
+          doodle="house"
+        />
+        <p class="intro-body">
+          We believe in nurturing the <strong>whole child</strong> through our
+          developmental, play-based approach. At UPNS, children explore sand and
+          water play, open-ended art, storytelling, music, and garden
+          discoveries. Rather than commercial academic drills, our classrooms
+          honor natural curiosity and emotional resilience.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* OUR THREE CLASSROOMS */}
+  <section class="classrooms-section" aria-labelledby="classrooms-heading">
+    <div class="container">
+      <SectionIntro
+        badge="Our Classrooms"
+        title="Three developmental rooms, designed for childhood."
+        subtitle="Each classroom provides age-appropriate play environments, caring teachers, and a warm community of co-oping parents."
+        doodle="handprints"
+        align="center"
+      />
+
+      <div class="classrooms-grid">
+        {CLASSROOMS.map((room, index) => {
+          const variants: ("blob" | "cutout" | "rounded")[] = [
+            "blob",
+            "cutout",
+            "rounded",
+          ];
+          const rotateVals = [-1.5, 2, -2];
+          return (
+            <ClassroomPreview
+              classroom={room}
+              variant={variants[index % variants.length]}
+              rotate={rotateVals[index % rotateVals.length]}
+            />
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  {/* REVIEWS OF HAPPY PARENTS TESTIMONIAL CLOUD */}
+  <TestimonialCloud />
+
+  {/* MEET OUR TEACHERS PREVIEW */}
+  <section class="teachers-section" aria-labelledby="teachers-heading">
+    <FloatingIllustration src="leaves.png" position="top-left" size="md" rotate={10} />
+    <div class="container">
+      <SectionIntro
+        badge="Our Educators"
+        title="Experienced teachers who know your child."
+        subtitle="Our teaching team combines professional early childhood expertise with a genuine partnership with co-oping families."
+        doodle="heart"
+        align="center"
+      />
+
+      <div class="teachers-preview-grid">
+        {featuredTeachers.map((teacher) => (
+          <TeacherProfile teacher={teacher} />
+        ))}
+      </div>
+
+      <div class="view-all-row">
+        <a href="/about/#team" class="view-all-link">
+          <span>Meet our full teaching team and board</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* OUR TRADITIONS SCRAPBOOK GLIMPSE */}
+  <section class="traditions-preview-section" aria-labelledby="traditions-heading">
+    <FloatingIllustration src="tractor.png" position="bottom-right" size="md" rotate={-8} />
+    <div class="container">
+      <SectionIntro
+        badge="School Memories"
+        title="Traditions that bring families together."
+        subtitle="From our annual spring carnival to autumn field trips, UPNS traditions become lifelong family memories."
+        doodle="kite"
+        align="center"
+      />
+
+      <div class="traditions-grid">
+        {featuredTraditions.map((tradition, index) => (
+          <div class="tradition-card">
+            <PhotoCutout
+              src={tradition.coverPhoto}
+              alt={tradition.altText}
+              variant="tape"
+              aspectRatio="16:9"
+              rotate={index === 0 ? -2 : 2}
+            />
+            <div class="tradition-card-info">
+              <h3><a href={`/traditions/#${tradition.slug}`}>{tradition.title} ({tradition.season})</a></h3>
+              <p>{tradition.shortDescription}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="view-all-row">
+        <a href="/traditions/" class="view-all-link">
+          <span>Explore all UPNS School Traditions</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* CO-OP CALLOUT */}
+  <div class="container">
+    <CooperativeCallout />
+  </div>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero-section {
+    padding: 3.5rem 0 4.5rem;
+    background: linear-gradient(180deg, var(--color-paper-white) 0%, var(--color-cream) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-label {
+    background: var(--color-yellow);
+    color: var(--color-text);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.35rem 1rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+
+  .hero-title {
+    font-size: 3.25rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 1.25rem;
+    color: var(--color-text);
+    letter-spacing: -0.025em;
+  }
+
+  .hero-desc {
+    font-size: 1.2rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    margin: 0 0 2.25rem;
+    max-width: 540px;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .btn-primary-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-tomato);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.08rem;
+    padding: 0.95rem 2.2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(216, 111, 88, 0.3);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease;
+  }
+
+  .btn-primary-hero:hover {
+    background: #c75c45;
+    transform: translateY(-3px) scale(1.03);
+  }
+
+  .btn-secondary-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: none;
+    border-bottom: 2px solid var(--color-yellow);
+    padding-bottom: 0.15rem;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .btn-secondary-link:hover {
+    color: var(--color-tomato);
+    border-color: var(--color-tomato);
+  }
+
+  /* Intro Section */
+  .intro-section {
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro-content-clean {
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .intro-body {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    margin: 1.5rem 0 0;
+    text-align: center;
+  }
+
+  /* Classrooms Section */
+  .classrooms-section {
+    padding: 5.5rem 0;
+    background: var(--color-paper-white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .classrooms-section .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .classrooms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  /* Teachers Preview Section */
+  .teachers-section {
+    padding: 5.5rem 0;
+  }
+
+  .teachers-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+
+  .view-all-row {
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+
+  .view-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: var(--color-tomato);
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border: 2px solid var(--color-border);
+    border-radius: 999px;
+    background: #ffffff;
+    transition: all 0.2s ease;
+  }
+
+  .view-all-link:hover {
+    background: var(--color-cream);
+    transform: translateY(-2px);
+  }
+
+  /* Traditions preview */
+  .traditions-preview-section {
+    padding: 5rem 0;
+    background: #fffcf6;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .traditions-preview-section .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .traditions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+
+  .tradition-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .tradition-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tradition-card-info h3 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .tradition-card-info h3 a {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .tradition-card-info p {
+    font-size: 0.98rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .classrooms-grid,
+    .teachers-preview-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-grid,
+    .intro-grid,
+    .traditions-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .classrooms-grid,
+    .teachers-preview-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero-title {
+      font-size: 2.3rem;
+    }
+  }
+</style>

@@ -1,0 +1,197 @@
+---
+import DoodleIllustration from "./DoodleIllustration.astro";
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  primaryText?: string;
+  primaryHref?: string;
+  secondaryText?: string;
+  secondaryHref?: string;
+  class?: string;
+}
+
+const {
+  title = "Ready to visit or apply to UPNS?",
+  subtitle = "We invite prospective families to schedule a tour of our classrooms, meet our teaching team, and see our cooperative community in action.",
+  primaryText = "Apply to UPNS",
+  primaryHref = "/apply/",
+  secondaryText = "Schedule a Visit / Contact UPNS",
+  secondaryHref = "/visit/",
+  class: className = "",
+} = Astro.props;
+---
+
+<section
+  class={`application-cta ${className}`}
+  aria-labelledby="cta-heading"
+>
+  <div class="cta-decoration-left" aria-hidden="true">
+    <DoodleIllustration name="sun" size="lg" color="var(--color-yellow)" />
+  </div>
+  <div class="cta-decoration-right" aria-hidden="true">
+    <DoodleIllustration
+      name="handprints"
+      size="md"
+      color="var(--color-tomato)"
+    />
+  </div>
+
+  <div class="cta-content">
+    <h2 id="cta-heading" class="cta-title">{title}</h2>
+    <p class="cta-subtitle">{subtitle}</p>
+
+    <div class="cta-actions">
+      <a href={primaryHref} class="btn-primary">
+        <span>{primaryText}</span>
+        <span class="btn-icon">♥</span>
+      </a>
+
+      <a href={secondaryHref} class="btn-secondary">
+        <span>{secondaryText}</span>
+        <span class="btn-icon">→</span>
+      </a>
+    </div>
+
+    <p class="cta-note">
+      Have questions about co-op workdays or waitlist timing? Call us directly at{" "}
+      <strong>(310) 397-2735</strong> or email{" "}
+      <strong>upns@ucla.edu</strong>.
+    </p>
+  </div>
+</section>
+
+<style>
+  .application-cta {
+    position: relative;
+    background: var(--color-paper-white, #fffcf6);
+    border: 3px solid var(--color-border, #f2ead6);
+    border-radius: 36px;
+    padding: 3.5rem 2rem;
+    margin: 4rem 0;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(53, 72, 60, 0.05);
+  }
+
+  .cta-decoration-left {
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    opacity: 0.25;
+    transform: rotate(-10deg);
+    pointer-events: none;
+  }
+
+  .cta-decoration-right {
+    position: absolute;
+    bottom: 20px;
+    right: 28px;
+    opacity: 0.25;
+    transform: rotate(15deg);
+    pointer-events: none;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .cta-title {
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--color-text, #35483c);
+    margin: 0 0 0.75rem;
+    line-height: 1.2;
+  }
+
+  .cta-subtitle {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-text-muted, #5f7065);
+    margin: 0 0 2.25rem;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 0.9rem 2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(216, 111, 88, 0.3);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background: #c75c45;
+    transform: translateY(-3px) scale(1.03);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    color: var(--color-text, #35483c);
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 0.85rem 1.75rem;
+    border-radius: 999px;
+    border: 2px solid var(--color-border, #f2ead6);
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-text, #35483c);
+    transform: translateY(-2px);
+  }
+
+  .btn-icon {
+    font-size: 1rem;
+  }
+
+  .cta-note {
+    font-size: 0.9rem;
+    color: var(--color-text-muted, #5f7065);
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    .application-cta {
+      padding: 2.5rem 1.5rem;
+    }
+    .cta-title {
+      font-size: 1.8rem;
+    }
+    .cta-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

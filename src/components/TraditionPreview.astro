@@ -1,0 +1,226 @@
+---
+import type { Tradition } from "../content/traditions";
+import PhotoCutout from "./PhotoCutout.astro";
+
+export interface Props {
+  tradition: Tradition;
+  index?: number;
+  class?: string;
+}
+
+const { tradition, index = 0, class: className = "" } = Astro.props;
+
+const seasonMap: Record<string, string> = {
+  Spring: "spring.png",
+  Summer: "summer.png",
+  Autumn: "autumn.png",
+  Winter: "winter.png",
+};
+
+const doodleMap: Record<string, string> = {
+  Spring: "carnival-bunting",
+  Summer: "tent",
+  Autumn: "pumpkin",
+  Winter: "winter-lights",
+};
+
+const seasonPng = seasonMap[tradition.season] || "spring.png";
+const seasonDoodle = doodleMap[tradition.season] || "sun";
+---
+
+<article
+  class={`tradition-preview ${className}`}
+  aria-labelledby={`tradition-title-${tradition.id}`}
+>
+  <div class="season-sticker-pin" aria-hidden="true">
+    <img src={`/images/${seasonPng}`} alt={tradition.season} />
+  </div>
+  <div class="tradition-grid">
+    {/* Left Column: Scrapbook Photo or Collage */}
+    <div class="tradition-photo-col">
+      <PhotoCutout
+        src={tradition.coverPhoto}
+        alt={tradition.altText}
+        variant="scrapbook"
+        aspectRatio="16:9"
+        rotate={index % 2 === 0 ? -2 : 1.5}
+        doodle={seasonDoodle}
+      />
+      {tradition.galleryPhotos && tradition.galleryPhotos.length > 1 && (
+        <div class="tradition-subgallery">
+          {tradition.galleryPhotos.slice(1).map((photoSrc, idx) => (
+            <div class="subgallery-item">
+              <PhotoCutout
+                src={photoSrc}
+                alt={`${tradition.title} snapshot ${idx + 2}`}
+                variant={idx % 2 === 0 ? "tape" : "cutout"}
+                aspectRatio="4:3"
+                rotate={idx % 2 === 0 ? 2 : -2}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {/* Right Column: Tradition Story */}
+    <div class="tradition-story-col">
+      <div class="season-tag-row">
+        <span class={`season-tag season-${tradition.season.toLowerCase()}`}>
+          {tradition.season}
+        </span>
+      </div>
+      <h3 id={`tradition-title-${tradition.id}`} class="tradition-title">
+        {tradition.title}
+      </h3>
+
+      <p class="tradition-desc">
+        {tradition.longDescription}
+      </p>
+
+      {tradition.parentQuote && (
+        <blockquote class="parent-quote">
+          <p class="quote-text">"{tradition.parentQuote.quote}"</p>
+          {tradition.parentQuote.author && (
+            <cite class="quote-author">{tradition.parentQuote.author}</cite>
+          )}
+        </blockquote>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .tradition-preview {
+    position: relative;
+    overflow: visible;
+    background: var(--color-paper-white, #fffcf6);
+    border: none;
+    border-radius: 28px;
+    padding: 3rem 2.5rem 2.5rem;
+    margin-bottom: 3.5rem;
+    box-shadow: 0 6px 20px rgba(53, 72, 60, 0.05);
+  }
+
+  .season-sticker-pin {
+    position: absolute;
+    top: -50px;
+    left: 20px;
+    width: 260px;
+    z-index: 10;
+    pointer-events: none;
+    transform: rotate(-6deg);
+    transition: transform 0.3s ease;
+  }
+
+  .season-sticker-pin img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
+  }
+
+  .tradition-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .tradition-subgallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .season-tag-row {
+    margin-bottom: 0.5rem;
+  }
+
+  .season-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.28rem 0.85rem;
+    border-radius: 999px;
+  }
+
+  .season-spring {
+    background: #e6f2dc;
+    color: #3b5a34;
+  }
+
+  .season-summer {
+    background: #fff3d1;
+    color: #7a5912;
+  }
+
+  .season-autumn {
+    background: #ffede8;
+    color: #9a3c26;
+  }
+
+  .season-winter {
+    background: #e6f4f8;
+    color: #2c5a6e;
+  }
+
+  .tradition-title {
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text, #35483c);
+    margin: 0 0 1rem;
+    line-height: 1.2;
+  }
+
+  .tradition-desc {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--color-text-muted, #5f7065);
+    margin: 0 0 1.5rem;
+  }
+
+  .parent-quote {
+    margin: 1rem 0 0;
+    padding: 1.25rem;
+    background: #ffffff;
+    border: 1px dashed var(--color-border, #f2ead6);
+    border-radius: 12px;
+    font-style: italic;
+  }
+
+  .quote-text {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--color-text, #35483c);
+    margin: 0 0 0.5rem;
+  }
+
+  .quote-author {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-style: normal;
+    color: var(--color-tomato, #d86f58);
+    text-align: right;
+  }
+
+  @media (max-width: 900px) {
+    .tradition-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .tradition-preview {
+      padding: 2.5rem 1.5rem 1.5rem;
+    }
+    .season-sticker-pin {
+      width: 200px;
+      top: -35px;
+      left: 16px;
+    }
+  }
+</style>

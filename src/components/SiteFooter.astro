@@ -1,0 +1,260 @@
+---
+import { SITE_CONFIG } from "../content/site";
+---
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-wave" aria-hidden="true"></div>
+
+  <div class="footer-container">
+    {/* Left Column: School Identity */}
+    <div class="footer-col brand-col">
+      <div class="footer-brand">
+        <img
+          src="/images/logo.png"
+          alt="University Parents Nursery School Logo"
+          class="footer-brand-logo"
+        />
+      </div>
+
+      <p class="footer-desc">
+        {SITE_CONFIG.description}
+      </p>
+
+      <div class="footer-accreditation">
+        <a
+          href={SITE_CONFIG.accreditation.naeycUrl || "https://www.naeyc.org/"}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="accred-badge-link"
+        >
+          {SITE_CONFIG.accreditation.naeyc} →
+        </a>
+        <a
+          href={SITE_CONFIG.accreditation.lacppnsUrl || "https://lacppns.org/"}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="accred-badge-link"
+        >
+          {SITE_CONFIG.accreditation.lacppns} →
+        </a>
+      </div>
+    </div>
+
+    {/* Center Column: Navigation & Classrooms */}
+    <div class="footer-col nav-col">
+      <h3 class="footer-heading">Explore UPNS</h3>
+      <ul class="footer-links">
+        <li><a href="/about/">About Our School</a></li>
+        <li><a href="/classrooms/">The Three Classrooms</a></li>
+        <li><a href="/co-op-life/">Co-op Life & Workdays</a></li>
+        <li><a href="/traditions/">School Traditions</a></li>
+      </ul>
+    </div>
+
+    {/* Right Column: Contact & Policies */}
+    <div class="footer-col contact-col">
+      <h3 class="footer-heading">Practical Information</h3>
+      <ul class="footer-contact-list">
+        <li>
+          <strong>Address:</strong>
+          <br />
+          <a
+            href={SITE_CONFIG.contact.mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="address-link"
+          >
+            {SITE_CONFIG.contact.address}
+          </a>
+        </li>
+        <li>
+          <strong>Phone:</strong>{" "}
+          <a href={`tel:${SITE_CONFIG.contact.phone}`}>
+            {SITE_CONFIG.contact.phone}
+          </a>
+        </li>
+        <li>
+          <strong>Email:</strong>{" "}
+          <a href={`mailto:${SITE_CONFIG.contact.email}`}>
+            {SITE_CONFIG.contact.email}
+          </a>
+        </li>
+        <li>
+          <strong>Hours:</strong>
+          <br />
+          <span>{SITE_CONFIG.contact.hours}</span>
+        </li>
+      </ul>
+
+      <div class="policy-links">
+        <a href="/resources/#health-safety">Health & Safety Policy</a>
+        <span>•</span>
+        <a href="/resources/#discipline">Discipline Policy</a>
+        <span>•</span>
+        <a href="/resources/#standing-rules">Standing Rules</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-copyright">
+    <p>
+      © {new Date().getFullYear()} University Parents Nursery School (UPNS). A parent-participation nonprofit cooperative preschool.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    background: var(--color-text, #35483c);
+    color: var(--color-paper-white, #fffcf6);
+    margin-top: 5rem;
+    padding-top: 3.5rem;
+  }
+
+  .footer-wave {
+    position: absolute;
+    top: -18px;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: radial-gradient(
+      circle at 12px 0,
+      transparent 10px,
+      var(--color-text, #35483c) 11px
+    );
+    background-size: 24px 18px;
+    background-repeat: repeat-x;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.2fr;
+    gap: 3rem;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .footer-brand-logo {
+    height: 152px;
+    width: auto;
+    max-width: 600px;
+    object-fit: contain;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #cedad1;
+    margin: 0;
+  }
+
+  .footer-accreditation {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-top: 0.5rem;
+  }
+
+  .accred-badge-link {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-yellow, #f2c65a);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+  }
+
+  .accred-badge-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+  .footer-heading {
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.5rem;
+    border-bottom: 2px solid var(--color-yellow, #f2c65a);
+    padding-bottom: 0.4rem;
+    display: inline-block;
+  }
+
+  .footer-links,
+  .footer-contact-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .footer-links a,
+  .footer-contact-list a {
+    color: #e2e8e3;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+  }
+
+  .footer-links a:hover,
+  .footer-contact-list a:hover {
+    color: var(--color-yellow, #f2c65a);
+    padding-left: 4px;
+  }
+
+  .footer-contact-list li {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: #cedad1;
+  }
+
+  .address-link {
+    display: inline-block;
+    margin-top: 0.2rem;
+    line-height: 1.4;
+  }
+
+  .policy-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.82rem;
+  }
+
+  .policy-links a {
+    color: var(--color-yellow, #f2c65a);
+    text-decoration: underline;
+  }
+
+  .footer-copyright {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 2.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: center;
+    font-size: 0.88rem;
+    color: #cedad1;
+  }
+
+  @media (max-width: 900px) {
+    .footer-container {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+</style>

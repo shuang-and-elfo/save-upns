@@ -1,0 +1,186 @@
+---
+import { SITE_CONFIG } from "../content/site";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title = `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
+  description = SITE_CONFIG.description,
+  ogImage = "/images/hero-playground.jpg",
+  canonicalUrl = Astro.url.href,
+} = Astro.props;
+
+const pageTitle = title.includes(SITE_CONFIG.shortName)
+  ? title
+  : `${title} | ${SITE_CONFIG.shortName} Preschool`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <link rel="apple-touch-icon" href="/images/logo.png" />
+
+    {/* Open Graph / Social Sharing Metadata */}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={new URL(ogImage, Astro.url.origin)} />
+    <meta property="og:site_name" content={SITE_CONFIG.name} />
+
+    {/* Google Fonts: Baloo Chettan 2 & Amatic SC (Kootingal title fonts) and DM Sans (Body) */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Baloo+Chettan+2:wght@500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <SiteHeader />
+
+    <main id="main-content" role="main">
+      <slot />
+    </main>
+
+    <SiteFooter />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    /* Suggested Token Foundations */
+    --color-cream: #fff9ee;
+    --color-paper-white: #fffcf6;
+    --color-text: #35483c;
+    --color-text-muted: #5f7065;
+    --color-leaf-green: #82a878;
+    --color-yellow: #f2c65a;
+    --color-tomato: #d86f58;
+    --color-sky-blue: #82afc1;
+    --color-lavender: #a796b7;
+    --color-border: #f2ead6;
+
+    /* Typography — Kootingal Preschool Title Font */
+    --font-display: "Baloo Chettan 2", "Baloo 2", cursive, sans-serif;
+    --font-hand: "Amatic SC", cursive, sans-serif;
+    --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, sans-serif;
+
+    /* Shadows */
+    --shadow-natural: 0 6px 16px rgba(53, 72, 60, 0.06),
+      0 2px 4px rgba(53, 72, 60, 0.03);
+    --shadow-deep: 0 16px 36px rgba(53, 72, 60, 0.12),
+      0 4px 10px rgba(53, 72, 60, 0.05);
+
+    /* Layout */
+    --max-content-width: 1200px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background-color: var(--color-cream);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    background: var(--color-text);
+    color: var(--color-paper-white);
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 700;
+    z-index: 1000;
+    text-decoration: none;
+    transition: top 0.2s ease;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  img,
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+    color: var(--color-text);
+    margin-top: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  p,
+  li,
+  span,
+  label,
+  blockquote,
+  .page-title,
+  .page-desc,
+  .hero-text,
+  .hero-title,
+  .hero-desc,
+  .section-intro {
+    position: relative;
+    z-index: 2;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>

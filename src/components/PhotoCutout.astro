@@ -1,0 +1,236 @@
+---
+import DoodleIllustration from "./DoodleIllustration.astro";
+
+export interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  variant?: "tape" | "blob" | "cutout" | "scrapbook" | "rounded";
+  aspectRatio?: "16:9" | "4:3" | "3:2" | "1:1";
+  doodle?: any;
+  rotate?: number;
+  class?: string;
+  badgeText?: string;
+}
+
+const {
+  src,
+  alt,
+  caption,
+  variant = "tape",
+  aspectRatio = "4:3",
+  doodle,
+  rotate = 0,
+  class: className = "",
+} = Astro.props;
+
+const aspectClassMap = {
+  "16:9": "aspect-16-9",
+  "4:3": "aspect-4-3",
+  "3:2": "aspect-3-2",
+  "1:1": "aspect-1-1",
+};
+
+const aspectClass = aspectClassMap[aspectRatio] || "aspect-4-3";
+const rotationStyle = rotate ? `transform: rotate(${rotate}deg);` : "";
+---
+
+<figure
+  class={`photo-cutout variant-${variant} ${aspectClass} ${className}`}
+  style={rotationStyle}
+>
+  {/* Paper tape top decoration for scrapbook and tape variants */}
+  {(variant === "tape" || variant === "scrapbook") && (
+    <div class="paper-tape" aria-hidden="true" />
+  )}
+
+  <div class="image-frame">
+    <img
+      src={`/images/${src}`}
+      alt={alt}
+      class="photo-img"
+      loading="lazy"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    />
+    <div class="photo-placeholder" role="img" aria-label={alt} style="display: none;">
+      <div class="placeholder-pattern" />
+      <div class="placeholder-content">
+        {doodle && (
+          <DoodleIllustration
+            name={doodle}
+            size="lg"
+            color="var(--color-primary)"
+            class="placeholder-doodle"
+          />
+        )}
+        <div class="placeholder-meta">
+          <span class="placeholder-filename">📷 {src}</span>
+          <p class="placeholder-description">{alt}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {caption && (
+    <figcaption class="photo-caption">
+      <span>{caption}</span>
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .photo-cutout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background: transparent;
+    box-sizing: border-box;
+  }
+
+  /* Aspect ratio containers */
+  .aspect-16-9 .image-frame {
+    aspect-ratio: 16 / 9;
+  }
+  .aspect-4-3 .image-frame {
+    aspect-ratio: 4 / 3;
+  }
+  .aspect-3-2 .image-frame {
+    aspect-ratio: 3 / 2;
+  }
+  .aspect-1-1 .image-frame {
+    aspect-ratio: 1 / 1;
+  }
+
+  .image-frame {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--color-cream, #fff9ee);
+    border: 8px solid var(--color-paper-white, #fffcf6);
+    box-shadow: var(--shadow-natural);
+  }
+
+  .photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Variants */
+  .variant-rounded .image-frame {
+    border-radius: 28px;
+    border: 6px solid var(--color-paper-white, #fffcf6);
+  }
+
+  .variant-cutout .image-frame {
+    border-radius: 12px 32px 18px 26px;
+    border: 10px solid var(--color-paper-white, #fffcf6);
+    box-shadow: 4px 6px 0px rgba(53, 72, 60, 0.15);
+  }
+
+  .variant-blob .image-frame {
+    border-radius: 60% 40% 50% 70% / 55% 65% 45% 55%;
+    border: 8px solid var(--color-paper-white, #fffcf6);
+  }
+
+  .variant-scrapbook .image-frame {
+    border-radius: 6px;
+    border: 12px solid #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Scrapbook paper tape effect */
+  .paper-tape {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 110px;
+    height: 32px;
+    background: rgba(242, 198, 90, 0.45);
+    border-left: 2px dashed rgba(53, 72, 60, 0.2);
+    border-right: 2px dashed rgba(53, 72, 60, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* Graceful placeholder styling */
+  .photo-placeholder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      135deg,
+      var(--color-cream, #fff9ee) 0%,
+      #f8f2e4 100%
+    );
+    padding: 1.5rem;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .placeholder-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      var(--color-leaf-green, #82a878) 0.8px,
+      transparent 0.8px
+    );
+    background-size: 18px 18px;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .placeholder-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 88%;
+  }
+
+  .placeholder-filename {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-tomato, #d86f58);
+    background: rgba(255, 255, 255, 0.85);
+    padding: 0.2rem 0.65rem;
+    border-radius: 6px;
+    border: 1px solid rgba(216, 111, 88, 0.3);
+    margin-bottom: 0.25rem;
+  }
+
+  .placeholder-description {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.4;
+    color: var(--color-text, #35483c);
+    font-style: italic;
+  }
+
+  .photo-caption {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    font-family: var(--font-body);
+    color: var(--color-text, #35483c);
+    text-align: center;
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo-cutout {
+      transition: none;
+    }
+  }
+</style>

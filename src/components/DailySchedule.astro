@@ -1,0 +1,206 @@
+---
+import type { ScheduleItem } from "../content/classrooms";
+import DoodleIllustration from "./DoodleIllustration.astro";
+
+export interface Props {
+  schedule: ScheduleItem[];
+  roomName: string;
+  class?: string;
+}
+
+const { schedule, roomName, class: className = "" } = Astro.props;
+
+function getIconForActivity(act: string): any {
+  const lower = act.toLowerCase();
+  if (lower.includes("drop") || lower.includes("arrival")) return "sun";
+  if (lower.includes("outside") || lower.includes("outdoor")) return "leaves";
+  if (lower.includes("snack") || lower.includes("lunch")) return "heart";
+  if (lower.includes("circle") || lower.includes("story")) return "stars";
+  if (lower.includes("art") || lower.includes("work") || lower.includes("inside"))
+    return "paintbrush";
+  if (lower.includes("nap")) return "snail";
+  return "sun";
+}
+---
+
+<section
+  class={`daily-schedule ${className}`}
+  aria-labelledby="schedule-heading"
+>
+  <div class="schedule-header">
+    <DoodleIllustration name="sun" size="sm" color="var(--color-yellow)" />
+    <h3 id="schedule-heading" class="schedule-title">
+      A Typical Day in the {roomName}
+    </h3>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="schedule-table">
+      <caption class="sr-only">
+        Daily schedule of activities for the {roomName}
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" class="th-time">Time</th>
+          <th scope="col" class="th-activity">Activity</th>
+        </tr>
+      </thead>
+      <tbody>
+        {schedule.map((item) => (
+          <tr class="schedule-row">
+            <td class="td-time">
+              <span class="time-text">{item.time}</span>
+            </td>
+            <td class="td-activity">
+              <div class="activity-cell">
+                <span class="activity-icon" aria-hidden="true">
+                  <DoodleIllustration
+                    name={getIconForActivity(item.activity)}
+                    size="sm"
+                    color="var(--color-leaf-green)"
+                  />
+                </span>
+                <div class="activity-text-wrap">
+                  <span class="activity-name">{item.activity}</span>
+                  {item.note && <span class="activity-note">{item.note}</span>}
+                </div>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+  .daily-schedule {
+    background: var(--color-paper-white, #fffcf6);
+    border: 3px solid var(--color-border, #f2ead6);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(53, 72, 60, 0.04);
+  }
+
+  .schedule-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .schedule-title {
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-text, #35483c);
+    margin: 0;
+    text-align: center;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  th {
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted, #5f7065);
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid var(--color-border, #f2ead6);
+  }
+
+  .schedule-row {
+    border-bottom: 1px solid var(--color-border, #f2ead6);
+    transition: background-color 0.15s ease;
+  }
+
+  .schedule-row:last-child {
+    border-bottom: none;
+  }
+
+  .schedule-row:hover {
+    background: var(--color-cream, #fff9ee);
+  }
+
+  .td-time {
+    padding: 0.9rem 1rem;
+    width: 32%;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .time-text {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-tomato, #d86f58);
+  }
+
+  .td-activity {
+    padding: 0.9rem 1rem;
+    vertical-align: middle;
+  }
+
+  .activity-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .activity-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .activity-text-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .activity-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text, #35483c);
+  }
+
+  .activity-note {
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #5f7065);
+  }
+
+  @media (max-width: 600px) {
+    .td-time {
+      width: 40%;
+    }
+    .daily-schedule {
+      padding: 1.25rem;
+    }
+  }
+</style>

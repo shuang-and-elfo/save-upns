@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DoodleIllustration from "../components/DoodleIllustration.astro";
+import FloatingIllustration from "../components/FloatingIllustration.astro";
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you are looking for may have been moved or updated during our website redesign."
+>
+  <section class="not-found-section">
+    <FloatingIllustration src="sun.png" position="top-right" size="lg" rotate={12} />
+    <FloatingIllustration src="flower.png" position="bottom-left" size="md" rotate={-10} />
+    <div class="container not-found-inner">
+      <DoodleIllustration
+        name="sun"
+        size="xl"
+        color="var(--color-yellow)"
+      />
+      <h1>Oops! We couldn’t find that page.</h1>
+      <p>
+        University Parents Nursery School has recently updated our website. The page you are looking for may have been moved or reorganized.
+      </p>
+
+      <div class="not-found-actions">
+        <a href="/" class="btn-home">
+          <span>Return to Homepage</span>
+          <span>♥</span>
+        </a>
+        <a href="/classrooms/" class="btn-secondary">
+          <span>See Our Classrooms</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found-section {
+    padding: 6rem 0;
+    text-align: center;
+  }
+
+  .not-found-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin: 0;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .not-found-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-tomato);
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.85rem 1.75rem;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(216, 111, 88, 0.25);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    border: 2px solid var(--color-border);
+    color: var(--color-text);
+    font-weight: 700;
+    padding: 0.85rem 1.75rem;
+    border-radius: 999px;
+    text-decoration: none;
+  }
+</style>

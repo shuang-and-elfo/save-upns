@@ -1,0 +1,137 @@
+---
+export interface Props {
+  src: string;
+  alt?: string;
+  size?: "sm" | "md" | "lg" | "xl";
+  position?:
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right"
+    | "center-left"
+    | "center-right";
+  rotate?: number;
+  opacity?: number;
+  class?: string;
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
+}
+
+const {
+  src,
+  alt = "",
+  size = "md",
+  position = "top-right",
+  rotate = 0,
+  opacity = 0.9,
+  class: className = "",
+  top,
+  bottom,
+  left,
+  right,
+} = Astro.props;
+
+const sizeMap: Record<string, string> = {
+  sm: "180px",
+  md: "280px",
+  lg: "380px",
+  xl: "480px",
+};
+
+const width = sizeMap[size] || "280px";
+const imgUrl = src.startsWith("/") ? src : `/images/${src}`;
+---
+
+<div
+  class={`floating-illustration float-${position} ${className}`}
+  style={`--float-width: ${width}; --float-rotate: ${rotate}deg; --float-opacity: ${opacity}; ${top ? `top: ${top};` : ""} ${bottom ? `bottom: ${bottom};` : ""} ${left ? `left: ${left};` : ""} ${right ? `right: ${right};` : ""}`}
+  aria-hidden="true"
+>
+  <img src={imgUrl} alt={alt} loading="lazy" />
+</div>
+
+<style>
+  .floating-illustration {
+    position: absolute;
+    width: var(--float-width);
+    height: auto;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    opacity: var(--float-opacity);
+    transform: rotate(var(--float-rotate));
+    animation: subtlePulse 5.5s ease-in-out infinite;
+    transition: transform 0.3s ease;
+  }
+
+  .floating-illustration img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.08));
+  }
+
+  .float-top-left {
+    top: 85px;
+    left: 6%;
+  }
+
+  .float-top-right {
+    top: 85px;
+    right: 6%;
+  }
+
+  .float-bottom-left {
+    bottom: 50px;
+    left: 6%;
+  }
+
+  .float-bottom-right {
+    bottom: 50px;
+    right: 6%;
+  }
+
+  .float-center-left {
+    top: 50%;
+    left: 2%;
+    transform: translateY(-50%) rotate(var(--float-rotate));
+    animation: subtlePulseCenter 5.5s ease-in-out infinite;
+  }
+
+  .float-center-right {
+    top: 50%;
+    right: 2%;
+    transform: translateY(-50%) rotate(var(--float-rotate));
+    animation: subtlePulseCenter 5.5s ease-in-out infinite;
+  }
+
+  @keyframes subtlePulse {
+    0%,
+    100% {
+      transform: rotate(var(--float-rotate)) scale(1);
+    }
+    50% {
+      transform: rotate(var(--float-rotate)) scale(1.06);
+    }
+  }
+
+  @keyframes subtlePulseCenter {
+    0%,
+    100% {
+      transform: translateY(-50%) rotate(var(--float-rotate)) scale(1);
+    }
+    50% {
+      transform: translateY(-50%) rotate(var(--float-rotate)) scale(1.06);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .floating-illustration {
+      opacity: 0.3;
+      transform: scale(0.65) rotate(var(--float-rotate));
+      animation: none;
+    }
+  }
+</style>

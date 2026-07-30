@@ -1,0 +1,360 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { COOP_LIFE_DATA } from "../content/resources";
+import SectionIntro from "../components/SectionIntro.astro";
+import DoodleIllustration from "../components/DoodleIllustration.astro";
+import PhotoCutout from "../components/PhotoCutout.astro";
+---
+
+<BaseLayout
+  title="Co-op Life & Member Responsibilities"
+  description="Discover what parent participation looks like at University Parents Nursery School (UPNS) in Los Angeles. Learn about classroom workdays, community cleaning days, and why families value our cooperative model."
+>
+  {/* HERO HEADER */}
+  <header class="coop-hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <h1 class="page-title">Sharing in your child’s school world.</h1>
+        <p class="page-desc">
+          {COOP_LIFE_DATA.intro}
+        </p>
+      </div>
+
+      <div class="hero-photo">
+        <PhotoCutout
+          src="birthday.jpg"
+          alt="UPNS children and families celebrating a school birthday and community gathering"
+          variant="scrapbook"
+          aspectRatio="4:3"
+          rotate={1.5}
+          doodle="sun"
+          caption="Celebrating birthdays, milestones, and community together"
+        />
+      </div>
+    </div>
+  </header>
+
+  {/* WHY FAMILIES VALUE THE CO-OP MODEL */}
+  <section class="value-section" aria-labelledby="value-heading">
+    <div class="container">
+      <SectionIntro
+        badge="The Co-op Difference"
+        title="Why families value a cooperative preschool"
+        subtitle="We don't join a co-op simply for lower tuition; we join to be active participants in our children's first social world and to build lifelong community."
+        doodle="heart"
+        align="center"
+      />
+
+      <div class="values-grid">
+        {COOP_LIFE_DATA.whyFamiliesValueCoop.map((point, idx) => {
+          const icons = ["sun", "heart", "leaves", "stars"];
+          return (
+            <div class="value-card">
+              <div class="value-icon">
+                <DoodleIllustration
+                  name={icons[idx % icons.length] as any}
+                  size="md"
+                  color="var(--color-tomato)"
+                />
+              </div>
+              <p class="value-text">{point}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  {/* WHAT PARENT PARTICIPATION LOOKS LIKE (APPROACHABLE SECTIONS) */}
+  <section class="responsibilities-section" aria-labelledby="resp-heading">
+    <div class="container">
+      <SectionIntro
+        badge="Member Responsibilities"
+        title="What parent participation looks like"
+        subtitle="Below is a clear, honest breakdown of the responsibilities every UPNS family commits to when joining our community."
+        doodle="handprints"
+        align="center"
+      />
+
+      <div class="resp-grid">
+        {COOP_LIFE_DATA.responsibilities.map((resp, idx) => {
+          const doodles = [
+            "coop-classroom",
+            "coop-meeting",
+            "coop-cleaning",
+            "coop-fundraising",
+          ];
+          return (
+            <article class="resp-card">
+              <div class="resp-header">
+                <div class="resp-icon-wrap">
+                  <DoodleIllustration
+                    name={doodles[idx % doodles.length] as any}
+                    size="xl"
+                    color="var(--color-text)"
+                  />
+                </div>
+                <div>
+                  <h3 class="resp-title">{resp.title}</h3>
+                </div>
+              </div>
+
+              <p class="resp-desc">{resp.description}</p>
+
+              <ul class="resp-details">
+                {resp.details.map((detail) => (
+                  <li>
+                    <span class="bullet" aria-hidden="true">•</span>
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  {/* FREQUENTLY ASKED QUESTIONS */}
+  <section class="faqs-section" aria-labelledby="faq-heading">
+    <div class="container">
+      <SectionIntro
+        badge="Co-op Questions"
+        title="Frequently Asked Questions"
+        subtitle="Honest answers to common questions from prospective co-op families."
+        doodle="heart"
+        align="center"
+      />
+
+      <div class="faq-grid">
+        {COOP_LIFE_DATA.faqs.map((faq) => (
+          <details class="faq-card">
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <span class="faq-toggle">▼</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .coop-hero {
+    padding: 4rem 0 4.5rem;
+    background: linear-gradient(180deg, var(--color-paper-white) 0%, var(--color-cream) 100%);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .page-title {
+    font-size: 3.1rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 1.25rem;
+  }
+
+  .page-desc {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    margin: 0 0 1.75rem;
+  }
+
+  /* Why Families Value Co-op */
+  .value-section {
+    padding: 5.5rem 0;
+    background: var(--color-paper-white);
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .value-card {
+    background: #ffffff;
+    border: 2px solid var(--color-border);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: var(--shadow-natural);
+  }
+
+  .value-icon {
+    margin-bottom: 1rem;
+  }
+
+  .value-text {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  /* Member Responsibilities */
+  .responsibilities-section {
+    padding: 5.5rem 0;
+  }
+
+  .resp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  .resp-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 1.5rem 1rem;
+    box-shadow: none;
+  }
+
+  .resp-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0;
+  }
+
+  .resp-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 160px;
+    height: 140px;
+    flex-shrink: 0;
+  }
+
+  .resp-title {
+    font-size: 1.4rem;
+    margin: 0 0 0.25rem;
+  }
+
+  .resp-desc {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0 0 1.25rem;
+  }
+
+  .resp-details {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .resp-details li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  .bullet {
+    color: var(--color-yellow);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+
+  /* FAQ Section */
+  .faqs-section {
+    padding: 5rem 0;
+    background: var(--color-paper-white);
+  }
+
+  .faq-grid {
+    max-width: 820px;
+    margin: 2rem auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-card {
+    background: #ffffff;
+    border: 2px solid var(--color-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .faq-card[open] {
+    box-shadow: var(--shadow-natural);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-toggle {
+    font-size: 0.85rem;
+    color: var(--color-tomato);
+    transition: transform 0.2s ease;
+  }
+
+  .faq-card[open] .faq-toggle {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .faq-answer p {
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .resp-grid,
+    .time-box {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .page-title {
+      font-size: 2.3rem;
+    }
+  }
+</style>

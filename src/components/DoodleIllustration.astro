@@ -1,0 +1,100 @@
+---
+export interface Props {
+  name: string;
+  size?: "sm" | "md" | "lg" | "xl" | "xxl";
+  color?: string;
+  class?: string;
+}
+
+const {
+  name,
+  size = "md",
+  class: className = "",
+} = Astro.props;
+
+const sizeMap: Record<string, number> = {
+  sm: 56,
+  md: 84,
+  lg: 120,
+  xl: 180,
+  xxl: 270,
+};
+
+const dimension = sizeMap[size] || 84;
+
+const pngMap: Record<string, string> = {
+  kitten: "kitten.png",
+  kangaroo: "kangaroo.png",
+  dolphin: "dolphin.png",
+  sun: "sun.png",
+  flower: "flower.png",
+  snail: "snail.png",
+  kite: "kite.png",
+  paintbrush: "paint-brush.png",
+  leaves: "leaves.png",
+  stars: "string-lights.png",
+  handprints: "paint-hands.png",
+  house: "school.png",
+  tent: "camping.png",
+  tractor: "tractor.png",
+  pumpkin: "autumn.png",
+  "carnival-bunting": "garland.png",
+  "winter-lights": "string-lights.png",
+  heart: "flower.png",
+  bonfire: "bonfire.png",
+  "string-lights": "string-lights.png",
+  "letter-blocks": "letter-blocks.png",
+  school: "school.png",
+  spring: "spring.png",
+  summer: "summer.png",
+  autumn: "autumn.png",
+  winter: "winter.png",
+  logo: "logo.png",
+  hanging: "hanging.png",
+  "social-self": "social_self.png",
+  "emotional-self": "emotional_self.png",
+  "physical-self": "physical_self.png",
+  "creative-self": "creative_self.png",
+  "cognitive-self": "cognitive_self.png",
+  "coop-classroom": "coop_assisting_classroom.png",
+  "coop-meeting": "coop_general_meeting.png",
+  "coop-cleaning": "coop_cleaning.png",
+  "coop-fundraising": "coop_fundraising.png",
+  phone: "phone.png",
+  message: "letter.png",
+  letter: "letter.png",
+};
+
+const pngFile = pngMap[name] || "flower.png";
+---
+
+<img
+  src={`/images/${pngFile}`}
+  alt=""
+  width={dimension}
+  height={dimension}
+  class={`doodle-illustration doodle-${name} ${className}`}
+  style={`width: ${dimension}px; height: auto; object-fit: contain; display: inline-block; vertical-align: middle;`}
+  loading="lazy"
+/>
+
+<style>
+  .doodle-illustration {
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .doodle-illustration:hover {
+    transform: rotate(-4deg) scale(1.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .doodle-illustration {
+      transition: none;
+    }
+    .doodle-illustration:hover {
+      transform: none;
+    }
+  }
+</style>

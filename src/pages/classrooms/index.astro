@@ -1,0 +1,194 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { CLASSROOMS } from "../../content/classrooms";
+import SectionIntro from "../../components/SectionIntro.astro";
+import ClassroomPreview from "../../components/ClassroomPreview.astro";
+import FloatingIllustration from "../../components/FloatingIllustration.astro";
+---
+
+<BaseLayout
+  title="Our Classrooms"
+  description="Discover the three developmental classrooms at UPNS Preschool: Kitten Room (18m–2y), Kangaroo Room (3–4y), and Dolphin Room (4–5y)."
+>
+  {/* HEADER */}
+  <header class="page-header">
+    <FloatingIllustration src="school.png" position="top-right" size="lg" rotate={10} />
+    <FloatingIllustration src="sun.png" position="bottom-left" size="md" rotate={-8} />
+    <div class="container header-content">
+      <h1 class="page-title">Three rooms, grown with care.</h1>
+      <p class="page-desc">
+        At UPNS, our classrooms are designed around natural milestones rather than rigid achievement tiers or commercial marketing labels. From our gentle Kitten Room for toddlers to our collaborative Dolphin Room for older preschoolers, each space offers open-ended play, caring educators, and active parent participation.
+      </p>
+    </div>
+  </header>
+
+  {/* CLASSROOMS LISTING */}
+  <section class="classrooms-list-section" aria-labelledby="rooms-heading">
+    <div class="container">
+      <SectionIntro
+        badge="Our Three Classrooms"
+        title="Explore our classrooms"
+        subtitle="Select any classroom below to see our teachers, typical daily schedules, photos, and developmental play focus."
+        doodle="sun"
+        align="center"
+      />
+
+      <div class="rooms-grid">
+        {CLASSROOMS.map((room, index) => {
+          const variants: ("blob" | "cutout" | "rounded")[] = [
+            "blob",
+            "cutout",
+            "rounded",
+          ];
+          const rotateVals = [-1.5, 2, -2];
+          return (
+            <ClassroomPreview
+              classroom={room}
+              variant={variants[index % variants.length]}
+              rotate={rotateVals[index % rotateVals.length]}
+            />
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  {/* HOW WE APPROACH EARLY LEARNING */}
+  <section class="approach-section" aria-labelledby="approach-heading">
+    <div class="container approach-grid">
+      <div class="approach-text">
+        <span class="page-badge">Our Approach</span>
+        <h2 id="approach-heading" class="approach-title">
+          No achievement tiers, no corporate drill sheets.
+        </h2>
+        <p class="approach-p">
+          We do not label any room "Most Popular" or treat early childhood as a race. Children move through our Kitten, Kangaroo, and Dolphin rooms as they develop socially and emotionally.
+        </p>
+        <p class="approach-p">
+          Teachers provide rich, hands-on environments where literacy, mathematical reasoning, and scientific discovery emerge naturally through block building, dramatic play, cooking, gardening, and storytelling.
+        </p>
+      </div>
+
+      <div class="approach-box">
+        <h3>🚽 Potty Training Policy Across Rooms</h3>
+        <p>
+          <strong>Kitten Room (18m–2y):</strong> Diapers and potty training are fully supported. No potty training required.
+        </p>
+        <p>
+          <strong>Kangaroo Room (3–4y):</strong> Potty training is REQUIRED prior to enrollment.
+        </p>
+        <p>
+          <strong>Dolphin Room (4–5y):</strong> Potty training is REQUIRED prior to enrollment.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: 4rem 0 3.5rem;
+    background: linear-gradient(180deg, var(--color-paper-white) 0%, var(--color-cream) 100%);
+    text-align: center;
+  }
+
+  .header-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 1.25rem;
+  }
+
+  .page-desc {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    margin: 0 0 2rem;
+  }
+
+  .classrooms-list-section {
+    padding: 5.5rem 0;
+  }
+
+  .rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+
+  .approach-section {
+    padding: 5rem 0;
+    background: var(--color-paper-white);
+  }
+
+  .approach-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .approach-text {
+    text-align: left;
+  }
+
+  .approach-title {
+    font-size: 2.2rem;
+    margin: 0 0 1rem;
+  }
+
+  .approach-p {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .approach-box {
+    background: #ffffff;
+    border: 3px solid var(--color-border);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: var(--shadow-natural);
+  }
+
+  .approach-box h3 {
+    font-size: 1.35rem;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .approach-box p {
+    font-size: 0.98rem;
+    line-height: 1.5;
+    margin: 0 0 0.85rem;
+    color: var(--color-text);
+  }
+
+  .approach-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .rooms-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .rooms-grid,
+    .approach-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .page-title {
+      font-size: 2.4rem;
+    }
+  }
+</style>

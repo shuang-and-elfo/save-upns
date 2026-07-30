@@ -1,0 +1,162 @@
+---
+import { SITE_CONFIG } from "../content/site";
+import DoodleIllustration from "./DoodleIllustration.astro";
+
+export interface Props {
+  showTuitionNote?: boolean;
+  class?: string;
+}
+
+const { showTuitionNote = true, class: className = "" } = Astro.props;
+---
+
+<aside
+  class={`practical-details ${className}`}
+  role="complementary"
+  aria-labelledby="practical-heading"
+>
+  <div class="practical-header">
+    <DoodleIllustration name="house" size="md" color="var(--color-tomato)" />
+    <div>
+      <span class="practical-tag">At a Glance</span>
+      <h3 id="practical-heading" class="practical-title">
+        UPNS Practical Facts
+      </h3>
+    </div>
+  </div>
+
+  <dl class="practical-list">
+    <div class="practical-item">
+      <dt>Address</dt>
+      <dd>
+        <a
+          href={SITE_CONFIG.contact.mapUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {SITE_CONFIG.contact.address}
+        </a>
+      </dd>
+    </div>
+
+    <div class="practical-item">
+      <dt>Hours of Operation</dt>
+      <dd>{SITE_CONFIG.contact.hours}</dd>
+    </div>
+
+    <div class="practical-item">
+      <dt>Phone & Email</dt>
+      <dd>
+        <a href={`tel:${SITE_CONFIG.contact.phone}`}>
+          {SITE_CONFIG.contact.phone}
+        </a>{" "}
+        •{" "}
+        <a href={`mailto:${SITE_CONFIG.contact.email}`}>
+          {SITE_CONFIG.contact.email}
+        </a>
+      </dd>
+    </div>
+
+    {showTuitionNote && (
+      <div class="practical-item">
+        <dt>Tuition & Fees Status</dt>
+        <dd class="tuition-placeholder-note">
+          <span>Application Fee: $50 (check, cash, or Zelle)</span>
+          <br />
+          <span>Enrollment Fee: $500 one-time non-refundable</span>
+          <br />
+          <strong>
+            Monthly Tuition: Contact office for current rates
+          </strong>
+        </dd>
+      </div>
+    )}
+
+    <div class="practical-item">
+      <dt>Who We Serve</dt>
+      <dd>
+        UCLA students, staff, and faculty, plus non-UCLA affiliated Los Angeles
+        community families.
+      </dd>
+    </div>
+  </dl>
+</aside>
+
+<style>
+  .practical-details {
+    background: var(--color-paper-white, #fffcf6);
+    border: 3px solid var(--color-border, #f2ead6);
+    border-radius: 24px;
+    padding: 1.75rem;
+    box-shadow: 0 4px 16px rgba(53, 72, 60, 0.05);
+  }
+
+  .practical-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .practical-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-tomato, #d86f58);
+  }
+
+  .practical-title {
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-text, #35483c);
+    margin: 0;
+  }
+
+  .practical-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .practical-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .practical-item dt {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted, #5f7065);
+  }
+
+  .practical-item dd {
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--color-text, #35483c);
+    margin: 0;
+  }
+
+  .practical-item a {
+    color: var(--color-tomato, #d86f58);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .practical-item a:hover {
+    text-decoration: underline;
+  }
+
+  .tuition-placeholder-note {
+    font-size: 0.92rem;
+  }
+
+</style>
