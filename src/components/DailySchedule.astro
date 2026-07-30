@@ -1,6 +1,5 @@
 ---
 import type { ScheduleItem } from "../content/classrooms";
-import DoodleIllustration from "./DoodleIllustration.astro";
 
 export interface Props {
   schedule: ScheduleItem[];
@@ -9,18 +8,6 @@ export interface Props {
 }
 
 const { schedule, roomName, class: className = "" } = Astro.props;
-
-function getIconForActivity(act: string): any {
-  const lower = act.toLowerCase();
-  if (lower.includes("drop") || lower.includes("arrival")) return "sun";
-  if (lower.includes("outside") || lower.includes("outdoor")) return "leaves";
-  if (lower.includes("snack") || lower.includes("lunch")) return "heart";
-  if (lower.includes("circle") || lower.includes("story")) return "stars";
-  if (lower.includes("art") || lower.includes("work") || lower.includes("inside"))
-    return "paintbrush";
-  if (lower.includes("nap")) return "snail";
-  return "sun";
-}
 ---
 
 <section
@@ -28,7 +15,6 @@ function getIconForActivity(act: string): any {
   aria-labelledby="schedule-heading"
 >
   <div class="schedule-header">
-    <DoodleIllustration name="sun" size="sm" color="var(--color-yellow)" />
     <h3 id="schedule-heading" class="schedule-title">
       A Typical Day in the {roomName}
     </h3>
@@ -53,13 +39,6 @@ function getIconForActivity(act: string): any {
             </td>
             <td class="td-activity">
               <div class="activity-cell">
-                <span class="activity-icon" aria-hidden="true">
-                  <DoodleIllustration
-                    name={getIconForActivity(item.activity)}
-                    size="sm"
-                    color="var(--color-leaf-green)"
-                  />
-                </span>
                 <div class="activity-text-wrap">
                   <span class="activity-name">{item.activity}</span>
                   {item.note && <span class="activity-note">{item.note}</span>}
@@ -79,22 +58,18 @@ function getIconForActivity(act: string): any {
     border: 3px solid var(--color-border, #f2ead6);
     border-radius: 24px;
     padding: 2rem;
+    max-width: 720px;
+    margin: 0 auto;
     box-shadow: 0 4px 16px rgba(53, 72, 60, 0.04);
   }
 
   .schedule-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 0.75rem;
     margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
+    text-align: center;
   }
 
   .schedule-title {
-    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
-    font-size: 1.6rem;
+    font-size: 1.65rem;
     font-weight: 700;
     color: var(--color-text, #35483c);
     margin: 0;
@@ -124,7 +99,7 @@ function getIconForActivity(act: string): any {
 
   th {
     text-align: left;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -143,12 +118,12 @@ function getIconForActivity(act: string): any {
   }
 
   .schedule-row:hover {
-    background: var(--color-cream, #fff9ee);
+    background-color: rgba(255, 255, 255, 0.6);
   }
 
   .td-time {
     padding: 0.9rem 1rem;
-    width: 32%;
+    width: 35%;
     white-space: nowrap;
     vertical-align: middle;
   }
@@ -167,26 +142,17 @@ function getIconForActivity(act: string): any {
   .activity-cell {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-  }
-
-  .activity-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
   }
 
   .activity-text-wrap {
     display: flex;
     flex-direction: column;
+    gap: 0.15rem;
   }
 
   .activity-name {
-    font-size: 1.05rem;
     font-weight: 600;
+    font-size: 0.98rem;
     color: var(--color-text, #35483c);
   }
 
@@ -201,6 +167,7 @@ function getIconForActivity(act: string): any {
     }
     .daily-schedule {
       padding: 1.25rem;
+      max-width: 100%;
     }
   }
 </style>
