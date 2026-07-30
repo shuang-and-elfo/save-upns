@@ -7,7 +7,6 @@ import SectionIntro from "../components/SectionIntro.astro";
 import PhotoCutout from "../components/PhotoCutout.astro";
 import TeacherProfile from "../components/TeacherProfile.astro";
 import DoodleIllustration from "../components/DoodleIllustration.astro";
-import FloatingIllustration from "../components/FloatingIllustration.astro";
 
 const allTeachers = getAllActiveTeachers();
 const adminTeachers = allTeachers.filter((t) => t.classroom === "all");
@@ -20,8 +19,6 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
 >
   {/* HERO HEADER */}
   <header class="page-header">
-    <FloatingIllustration src="school.png" position="top-right" size="lg" rotate={10} />
-    <FloatingIllustration src="flower.png" position="bottom-left" size="md" rotate={-8} />
     <div class="container">
       <div class="hero-organic-box">
         <h1 class="page-title">A neighborhood cooperative since 1966.</h1>
@@ -30,6 +27,15 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
           preschool dedicated to whole-child development, learning through play,
           and fostering genuine partnership between families and educators.
         </p>
+      </div>
+
+      {/* HISTORY TIMELINE ILLUSTRATION BELOW BUBBLE */}
+      <div class="hero-timeline-wrap">
+        <img
+          src={withBase("/images/illustrations/timeline.png")}
+          alt="UPNS history timeline from 1966 to present"
+          class="timeline-img"
+        />
       </div>
     </div>
   </header>
@@ -308,6 +314,19 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
     line-height: 1.65;
     color: var(--color-text-muted);
     margin: 0;
+  }
+
+  .hero-timeline-wrap {
+    max-width: 980px;
+    margin: 2.5rem auto 0;
+    text-align: center;
+  }
+
+  .timeline-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 24px rgba(53, 72, 60, 0.08));
   }
 
   @media (max-width: 768px) {
