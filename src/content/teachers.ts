@@ -26,7 +26,7 @@ export const TEACHERS: Teacher[] = [
     name: "Ana Flores",
     role: "Administration Manager",
     classroom: "all",
-    photo: "teacher-ana-flores.jpg",
+    photo: "teachers/ana.png",
     shortBio:
       "Ana helps families with enrollment, school paperwork, communication, and the many practical details that keep UPNS running smoothly.",
     displayOrder: 2,
@@ -37,7 +37,7 @@ export const TEACHERS: Teacher[] = [
     name: "Veronica Martell",
     role: "Kitten Room Teacher",
     classroom: "kitten",
-    photo: "teacher-veronica-martell.jpg",
+    photo: "teachers/veronica.png",
     shortBio:
       "Veronica helps our youngest children feel comfortable at school as they explore, build relationships, and become more independent in their daily routines.",
     displayOrder: 10,
@@ -48,7 +48,7 @@ export const TEACHERS: Teacher[] = [
     name: "Nahomi Romero",
     role: "Kitten Room Teacher",
     classroom: "kitten",
-    photo: "teacher-nahomi-romero.jpg",
+    photo: "teachers/nahomi.png",
     shortBio:
       "Nahomi enjoys making art and playing outside with the Kitten children while helping them feel comfortable and confident at school.",
     displayOrder: 11,

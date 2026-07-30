@@ -38,10 +38,10 @@ export interface SiteConfig {
 export const SITE_CONFIG: SiteConfig = {
   name: "University Parents Nursery School",
   shortName: "UPNS",
-  tagline: "A cooperative school with a big community.",
+  tagline: "Where hearts grow through play.",
   currentSchoolYear: "2026–2027",
   description:
-    "Since 1966, UPNS has been a place where children learn through play and parents take part in school life. Our families come from UCLA and neighborhoods across Los Angeles to learn, help, and grow together.",
+    "For 60 years, UPNS has been a place where children learn through play and parents take part in school life. Since 1966, our families have come from UCLA and neighborhoods across Los Angeles to learn, help, and grow together.",
   history:
     "UPNS began in 1966, when parents living in UCLA Family Student Housing came together to create a nursery school they could help shape and run. The school grew over the years and moved to its current Sepulveda Boulevard location in 1996.",
   mission:
