@@ -33,9 +33,6 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
   class={`tradition-preview ${className}`}
   aria-labelledby={`tradition-title-${tradition.id}`}
 >
-  <div class="season-sticker-pin" aria-hidden="true">
-    <img src={withBase(`/images/${seasonPng}`)} alt={tradition.season} />
-  </div>
   <div class="tradition-grid">
     {/* Left Column: Scrapbook Photo or Collage */}
     <div class="tradition-photo-col">
@@ -72,7 +69,10 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
         </span>
       </div>
       <h3 id={`tradition-title-${tradition.id}`} class="tradition-title">
-        {tradition.title}
+        <span>{tradition.title}</span>
+        <span class="season-sticker-inline" aria-hidden="true">
+          <img src={withBase(`/images/${seasonPng}`)} alt={tradition.season} />
+        </span>
       </h3>
 
       <p class="tradition-desc">
@@ -104,23 +104,26 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
     box-shadow: 0 6px 20px rgba(53, 72, 60, 0.05);
   }
 
-  .season-sticker-pin {
-    position: absolute;
-    top: -95px;
-    right: 25px;
-    left: auto;
-    width: 240px;
-    z-index: 10;
-    pointer-events: none;
+  .season-sticker-inline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: auto;
+    flex-shrink: 0;
     transform: rotate(6deg);
     transition: transform 0.3s ease;
   }
 
-  .season-sticker-pin img {
+  .season-sticker-inline img {
     width: 100%;
     height: auto;
     display: block;
-    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+  }
+
+  .tradition-preview:hover .season-sticker-inline {
+    transform: rotate(10deg) scale(1.08);
   }
 
   .tradition-grid {
@@ -178,6 +181,10 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
     color: var(--color-text, #35483c);
     margin: 0 0 1rem;
     line-height: 1.2;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
   .tradition-desc {
@@ -220,7 +227,7 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
     .tradition-preview {
       padding: 2.5rem 1.5rem 1.5rem;
     }
-    .season-sticker-pin {
+    .season-sticker-inline {
       display: none !important;
     }
   }
