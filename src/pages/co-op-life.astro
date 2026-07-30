@@ -47,7 +47,7 @@ import PhotoCutout from "../components/PhotoCutout.astro";
 
       <div class="values-grid">
         {COOP_LIFE_DATA.whyFamiliesValueCoop.map((point, idx) => {
-          const icons = ["sun", "flower", "leaves", "garland"];
+          const icons = ["sun", "flower", "leaves", "carnival-bunting"];
           return (
             <div class="value-card">
               <div class="value-icon">
@@ -205,9 +205,6 @@ import PhotoCutout from "../components/PhotoCutout.astro";
   .value-icon {
     width: 64px;
     height: 64px;
-    border-radius: 16px;
-    background: #fff9ee;
-    border: 2px solid var(--color-border);
     display: flex;
     align-items: center;
     justify-content: center;
