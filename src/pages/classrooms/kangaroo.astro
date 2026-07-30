@@ -6,7 +6,6 @@ import SectionIntro from "../../components/SectionIntro.astro";
 import TeacherProfile from "../../components/TeacherProfile.astro";
 import DailySchedule from "../../components/DailySchedule.astro";
 import PhotoGallery from "../../components/PhotoGallery.astro";
-import DoodleIllustration from "../../components/DoodleIllustration.astro";
 import FloatingIllustration from "../../components/FloatingIllustration.astro";
 
 const room = getClassroomBySlug("kangaroo")!;
@@ -61,14 +60,7 @@ const galleryPhotos = [
     <FloatingIllustration src="kite.png" position="bottom-left" size="md" rotate={12} />
     <div class="container hero-grid">
       <div class="hero-text">
-        <div class="title-doodle-row">
-          <DoodleIllustration
-            name="kangaroo"
-            size="lg"
-            color="var(--color-tomato)"
-          />
-          <h1 class="room-title">{room.name}</h1>
-        </div>
+        <h1 class="room-title">{room.name}</h1>
         <p class="room-age-subtitle">{room.ageRange}</p>
 
         <p class="room-tagline">{room.tagline}</p>
@@ -180,17 +172,10 @@ const galleryPhotos = [
     align-items: center;
   }
 
-  .title-doodle-row {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
   .room-title {
     font-size: 3.2rem;
     font-weight: 800;
-    margin: 0;
+    margin: 0 0 0.5rem;
     line-height: 1.1;
   }
 
