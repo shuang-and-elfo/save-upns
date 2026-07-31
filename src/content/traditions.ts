@@ -25,9 +25,9 @@ export const TRADITIONS: Tradition[] = [
       "The playground fills with handmade games, crafts, music, food, and families spending the day together.",
     longDescription:
       "Each spring, families, teachers, and alumni fill the playground for Family Fun Day. Parents create and run game booths, face painting, music, crafts, and a shared meal. For many children, it becomes one of their favorite school days of the year.",
-    coverPhoto: "carnival.jpg",
-    galleryPhotos: ["carnival.jpg", "carnival2.jpg", "carnival3.jpg"],
-    altText: "Children and families playing carnival games on the sunny UPNS playground.",
+    coverPhoto: "family-fun-day-2.jpg",
+    galleryPhotos: ["family-fun-day-2.jpg", "carnival.jpg", "carnival2.jpg"],
+    altText: "Children and families playing games on the sunny UPNS playground during Family Fun Day.",
     whatFamiliesEnjoy:
       "Children love the gentle hand-painted game booths and sensory crafts, while parents enjoy catching up with alumni families and celebrating the school year together.",
   },
@@ -40,8 +40,8 @@ export const TRADITIONS: Tradition[] = [
       "Families camp together for a weekend of tents, shared meals, campfires, outdoor play, and time with school friends.",
     longDescription:
       "For the summer camping trip, families set up tents near one another, share meals, explore outside, sing around the campfire, and watch the stars with school friends.",
-    coverPhoto: "camping.jpg",
-    galleryPhotos: ["camping.jpg"],
+    coverPhoto: "camping2.jpg",
+    galleryPhotos: ["camping2.jpg"],
     altText: "UPNS families and children camping together with tents under shaded trees.",
     whatFamiliesEnjoy:
       "Children experience the magic of camping alongside their classroom friends, while parents build lifelong friendships around the campfire after little ones fall asleep.",

@@ -114,7 +114,7 @@ export const TEACHERS: Teacher[] = [
     name: "Sulamithe Ello",
     role: "Dolphin Room Teacher",
     classroom: "dolphin",
-    photo: "teacher-sulamithe-ello.jpg",
+    photo: "teachers/sulamithe.png",
     shortBio:
       "Sulamithe listens closely to children’s questions and helps them develop their ideas through conversation, stories, play, and group projects.",
     displayOrder: 30,
@@ -125,7 +125,7 @@ export const TEACHERS: Teacher[] = [
     name: "Yadira Montes",
     role: "Dolphin Room Teacher",
     classroom: "dolphin",
-    photo: "teacher-yadira-montes.jpg",
+    photo: "teachers/yadira.png",
     shortBio:
       "Yadira helps older preschoolers speak up, listen to friends, solve problems together, and feel ready for their next school experience.",
     displayOrder: 31,

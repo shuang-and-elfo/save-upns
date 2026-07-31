@@ -36,6 +36,7 @@ export const CLASSROOMS: ClassroomInfo[] = [
       "The Kitten Room is for toddlers ages 18 months to 3 years. Teachers focus first on helping children feel safe and comfortable as they separate from parents and get used to school. Their days include water and sand, finger painting, blocks, stories, music, and time outside.",
     heroImage: "kitten4.jpg",
     galleryImages: [
+      "kat-outdoor.jpg",
       "kitten.jpg",
       "kitten2.jpg",
       "kitten3.jpg",
@@ -83,9 +84,10 @@ export const CLASSROOMS: ClassroomInfo[] = [
       "Kangaroo children spend their days pretending, building, painting, climbing, talking, and learning how to play through ideas and disagreements with friends.",
     longDescription:
       "Kangaroo children are full of ideas. They make up games, build together, paint, climb, and learn how to explain what they want, listen to friends, and work through disagreements. Teachers offer materials that children can use in many different ways.",
-    heroImage: "kat-outdoor.jpg",
+    heroImage: "kangaroo-outdoor.jpg",
     galleryImages: [
-      "kat-outdoor.jpg",
+      "kangaroo-outdoor.jpg",
+      "kangaroo-outdoor2.JPG",
       "kangaroo.jpg",
       "kangaroo2.jpg",
       "kan3.jpg",
@@ -128,8 +130,8 @@ export const CLASSROOMS: ClassroomInfo[] = [
       "Our oldest preschoolers take their ideas further through longer games, group projects, stories, outdoor challenges, and growing responsibility in the classroom.",
     longDescription:
       "Dolphin children are ready to take their ideas further. They create longer games together, ask lots of questions, and return to projects over several days. Teachers bring reading, writing, numbers, science, and problem-solving naturally into the children’s play.",
-    heroImage: "music_class.jpg",
-    galleryImages: ["music_class.jpg", "kat-outdoor.jpg", "kangaroo2.jpg"],
+    heroImage: "dolphin-class.jpg",
+    galleryImages: ["dolphin-class.jpg", "kangaroo2.jpg", "kangaroo.jpg"],
     pottyTrainingPolicy:
       "Potty training is REQUIRED for the Dolphin Room. The Dolphin Room is not equipped to change diapers.",
     teacherSupport: [

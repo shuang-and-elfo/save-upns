@@ -1,4 +1,6 @@
 ---
+import FloatingIllustration from "./FloatingIllustration.astro";
+
 const TESTIMONIALS = [
   {
     quote:
@@ -22,6 +24,12 @@ const TESTIMONIALS = [
 ---
 
 <section class="testimonial-cloud-section" aria-label="What Parents Say">
+  <FloatingIllustration
+    src="ladybug2.png"
+    position="center-right"
+    size="md"
+    rotate={12}
+  />
   <div class="container">
     <div class="testimonial-wrapper">
       {/* Main Cloud Blob Container */}
