@@ -26,7 +26,10 @@ const MIME_TYPES = {
 
 const server = http.createServer((req, res) => {
   try {
-    const urlPath = new URL(req.url, `http://${req.headers.host || "localhost"}`).pathname;
+    let urlPath = new URL(req.url, `http://${req.headers.host || "localhost"}`).pathname;
+    if (urlPath.startsWith("/upns-website")) {
+      urlPath = urlPath.slice("/upns-website".length) || "/";
+    }
     let filePath = path.join(DIST_DIR, urlPath);
 
     // Security check against directory traversal

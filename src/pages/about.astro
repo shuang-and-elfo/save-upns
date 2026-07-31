@@ -304,14 +304,16 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
     font-size: 3rem;
     font-weight: 800;
     line-height: 1.15;
-    margin: 0 0 1.25rem;
+    max-width: 80%;
+    margin: 0 auto 1.25rem;
   }
 
   .page-desc {
     font-size: 1.15rem;
     line-height: 1.65;
     color: var(--color-text-muted);
-    margin: 0;
+    max-width: 80%;
+    margin: 0 auto;
   }
 
   .hero-timeline-wrap {
@@ -355,6 +357,10 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
     .hero-organic-box {
       padding: 3rem 1.75rem;
       border-radius: 70% 30% 65% 35% / 35% 68% 32% 65%;
+    }
+    .page-title,
+    .page-desc {
+      max-width: 100%;
     }
   }
 

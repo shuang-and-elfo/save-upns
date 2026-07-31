@@ -1,6 +1,5 @@
 ---
 import { SITE_CONFIG } from "../content/site";
-import MobileNavigation from "./MobileNavigation.astro";
 import { withBase } from "../utils/url";
 
 const currentPath = Astro.url.pathname;
@@ -69,9 +68,6 @@ const currentPath = Astro.url.pathname;
       <span class="hamburger-line"></span>
     </button>
   </div>
-
-  {/* Mobile Drawer */}
-  <MobileNavigation currentPath={currentPath} />
 </header>
 
 <style>
@@ -250,46 +246,6 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <script>
-  // Minimal Vanilla JS for mobile hamburger menu
-  function setupMobileNav() {
-    const toggleBtn = document.getElementById("mobile-menu-toggle");
-    const drawer = document.getElementById("mobile-navigation");
-    const closeBtn = document.getElementById("mobile-menu-close");
-
-    if (!toggleBtn || !drawer) return;
-
-    function openMenu() {
-      drawer?.setAttribute("aria-hidden", "false");
-      drawer?.classList.add("open");
-      toggleBtn?.setAttribute("aria-expanded", "true");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeMenu() {
-      drawer?.setAttribute("aria-hidden", "true");
-      drawer?.classList.remove("open");
-      toggleBtn?.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
-    }
-
-    toggleBtn.addEventListener("click", openMenu);
-    closeBtn?.addEventListener("click", closeMenu);
-
-    // Close on backdrop click
-    drawer.addEventListener("click", (e) => {
-      if (e.target === drawer) closeMenu();
-    });
-
-    // Close on ESC key
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && drawer.classList.contains("open")) {
-        closeMenu();
-      }
-    });
-  }
-
-  setupMobileNav();
-
   function setupScrollHeader() {
     const header = document.querySelector(".site-header");
     if (!header) return;
