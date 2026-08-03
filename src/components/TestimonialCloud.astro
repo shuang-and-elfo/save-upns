@@ -63,7 +63,19 @@ const TESTIMONIALS = [
             id="testi-prev"
             aria-label="Previous parent review"
           >
-            <span>←</span>
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
           </button>
 
           <div class="dots-container" role="tablist">
@@ -85,7 +97,19 @@ const TESTIMONIALS = [
             id="testi-next"
             aria-label="Next parent review"
           >
-            <span>→</span>
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
           </button>
         </div>
       </div>
@@ -253,36 +277,47 @@ const TESTIMONIALS = [
     font-weight: 500;
   }
 
-  /* Carousel Navigation Controls */
+  /* Carousel Navigation Controls - Clean Coral/Tomato Arrow Icons without Circle Border */
   .carousel-controls {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.8rem;
     margin-top: 2.5rem;
   }
 
   .nav-btn {
-    background: #ffffff;
-    border: 2px solid var(--color-border, #f2ead6);
-    color: var(--color-text, #35483c);
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: var(--color-tomato, #d86f58);
+    padding: 0.35rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
-    font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s ease,
-      border-color 0.2s ease;
+    transition:
+      transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+      color 0.2s ease,
+      opacity 0.2s ease;
   }
 
-  .nav-btn:hover {
-    background: var(--color-leaf-green, #82a878);
-    border-color: var(--color-leaf-green, #82a878);
-    color: #ffffff;
-    transform: scale(1.06);
+  .nav-btn svg {
+    display: block;
+    width: 32px;
+    height: 32px;
+  }
+
+  .prev-btn:hover {
+    color: #c4563f;
+    transform: translateX(-4px) scale(1.15);
+  }
+
+  .next-btn:hover {
+    color: #c4563f;
+    transform: translateX(4px) scale(1.15);
+  }
+
+  .nav-btn:active {
+    transform: scale(0.92);
   }
 
   .dots-container {
