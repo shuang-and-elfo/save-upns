@@ -59,10 +59,19 @@ export const TEACHERS: Teacher[] = [
     name: "Lin Han",
     role: "Kitten Room Teacher",
     classroom: "kitten",
-    photo: "teacher-lin-han.jpg",
-    shortBio:
-      "Lin brings stories and play into the children’s day and helps toddlers connect with new friends and try things on their own.",
+    photo: "teachers/lin-han.jpg",
+    shortBio: "",
     displayOrder: 12,
+    active: true,
+  },
+  {
+    id: "annika",
+    name: "Annika",
+    role: "Kitten Room Teacher",
+    classroom: "kitten",
+    photo: "teachers/annika.jpg",
+    shortBio: "",
+    displayOrder: 13,
     active: true,
   },
   {

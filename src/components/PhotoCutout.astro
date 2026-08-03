@@ -63,6 +63,7 @@ const isVideo = src.endsWith(".mp4") || src.endsWith(".webm") || src.endsWith(".
         alt={alt}
         class="photo-img"
         loading="lazy"
+        decoding="async"
         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
       />
     )}

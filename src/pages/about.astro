@@ -9,8 +9,6 @@ import TeacherProfile from "../components/TeacherProfile.astro";
 import DoodleIllustration from "../components/DoodleIllustration.astro";
 
 const allTeachers = getAllActiveTeachers();
-const adminTeachers = allTeachers.filter((t) => t.classroom === "all");
-const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
 ---
 
 <BaseLayout
@@ -33,6 +31,8 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
           src={withBase("/images/timeline.png")}
           alt="UPNS history timeline from 1966 to present"
           class="timeline-img"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -211,16 +211,9 @@ const classroomTeachers = allTeachers.filter((t) => t.classroom !== "all");
         />
       </div>
 
-      {/* Admin Row: First row only has 2 cards (Director & Admin Manager) */}
-      <div class="teachers-admin-grid">
-        {adminTeachers.map((teacher) => (
-          <TeacherProfile teacher={teacher} />
-        ))}
-      </div>
-
-      {/* Classroom Teachers: Kitten class teachers start on the second row */}
+      {/* All Teachers: 3 teachers per row (Lorraine, Ana, Veronica, Nahomi, Lin Han, Annika, etc.) */}
       <div class="teachers-full-grid">
-        {classroomTeachers.map((teacher) => (
+        {allTeachers.map((teacher) => (
           <TeacherProfile teacher={teacher} />
         ))}
       </div>
