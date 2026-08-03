@@ -41,7 +41,7 @@ export const TRADITIONS: Tradition[] = [
     longDescription:
       "For the summer camping trip, families set up tents near one another, share meals, explore outside, sing around the campfire, and watch the stars with school friends.",
     coverPhoto: "camping2.jpg",
-    galleryPhotos: ["camping2.jpg"],
+    galleryPhotos: ["camping2.jpg", "camping.jpg", "bonfire.png"],
     altText: "UPNS families and children camping together with tents under shaded trees.",
     whatFamiliesEnjoy:
       "Children experience the magic of camping alongside their classroom friends, while parents build lifelong friendships around the campfire after little ones fall asleep.",
