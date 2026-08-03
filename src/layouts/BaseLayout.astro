@@ -219,7 +219,7 @@ const pageTitle = isHome
 
   /* Smooth Image Lazy Loading Transitions */
   img[loading="lazy"]:not(.doodle-illustration),
-  .photo-img,
+  img.photo-img,
   .full-bleed-photo,
   .slide-img,
   .timeline-img {
@@ -232,10 +232,11 @@ const pageTitle = isHome
   }
 
   img[loading="lazy"]:not(.doodle-illustration).is-loaded,
-  .photo-img.is-loaded,
+  img.photo-img.is-loaded,
   .full-bleed-photo.is-loaded,
   .slide-img.is-loaded,
-  .timeline-img.is-loaded {
+  .timeline-img.is-loaded,
+  video.photo-img {
     opacity: 1;
     filter: blur(0);
   }

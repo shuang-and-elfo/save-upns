@@ -50,6 +50,7 @@ const isVideo = src.endsWith(".mp4") || src.endsWith(".webm") || src.endsWith(".
     {isVideo ? (
       <video
         src={withBase(`/images/${src}`)}
+        poster={withBase(`/images/${src.replace(/\.(mp4|webm|mov)$/, "_poster.jpg")}`)}
         class="photo-img"
         autoplay
         loop
