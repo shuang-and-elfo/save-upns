@@ -15,7 +15,7 @@ export const TEACHERS: Teacher[] = [
     name: "Lorraine Smith-Jones",
     role: "School Director",
     classroom: "all",
-    photo: "teacher-director.jpg",
+    photo: "teachers/lorraine.jpg",
     shortBio:
       "Lorraine oversees the day-to-day life of UPNS, supports the teaching team, and helps families understand and take part in the co-op.",
     displayOrder: 1,
@@ -26,7 +26,7 @@ export const TEACHERS: Teacher[] = [
     name: "Ana Flores",
     role: "Administration Manager",
     classroom: "all",
-    photo: "teachers/ana.png",
+    photo: "teachers/ana.jpg",
     shortBio:
       "Ana helps families with enrollment, school paperwork, communication, and the many practical details that keep UPNS running smoothly.",
     displayOrder: 2,
@@ -37,7 +37,7 @@ export const TEACHERS: Teacher[] = [
     name: "Veronica Martell",
     role: "Kitten Room Teacher",
     classroom: "kitten",
-    photo: "teachers/veronica.png",
+    photo: "teachers/veronica.jpg",
     shortBio:
       "Veronica helps our youngest children feel comfortable at school as they explore, build relationships, and become more independent in their daily routines.",
     displayOrder: 10,
@@ -48,7 +48,7 @@ export const TEACHERS: Teacher[] = [
     name: "Nahomi Romero",
     role: "Kitten Room Teacher",
     classroom: "kitten",
-    photo: "teachers/nahomi.png",
+    photo: "teachers/nahomi.jpg",
     shortBio:
       "Nahomi enjoys making art and playing outside with the Kitten children while helping them feel comfortable and confident at school.",
     displayOrder: 11,
@@ -70,7 +70,7 @@ export const TEACHERS: Teacher[] = [
     name: "Brigitte Peistrup",
     role: "Kangaroo Room Teacher",
     classroom: "kangaroo",
-    photo: "teacher-brigitte-peistrup.jpg",
+    photo: "teachers/brigitte.jpg",
     shortBio:
       "Brigitte joins children in pretend play and building projects while helping them listen to one another and work through ideas together.",
     displayOrder: 20,
@@ -81,7 +81,7 @@ export const TEACHERS: Teacher[] = [
     name: "Maria Maldonado",
     role: "Kangaroo Room Teacher",
     classroom: "kangaroo",
-    photo: "teacher-maria-maldonado.jpg",
+    photo: "teachers/maria.jpg",
     shortBio:
       "Maria helps children build friendships through outdoor play and art and works closely with parents during their classroom days.",
     displayOrder: 21,
@@ -103,7 +103,7 @@ export const TEACHERS: Teacher[] = [
     name: "Kareem Smith",
     role: "Dolphin Room Teacher",
     classroom: "dolphin",
-    photo: "teacher-kareem-smith.jpg",
+    photo: "teachers/kareem.jpg",
     shortBio:
       "Kareem encourages children to move, explore, garden, and challenge themselves through outdoor play.",
     displayOrder: 32,
@@ -114,7 +114,7 @@ export const TEACHERS: Teacher[] = [
     name: "Sulamithe Ello",
     role: "Dolphin Room Teacher",
     classroom: "dolphin",
-    photo: "teachers/sulamithe.png",
+    photo: "teachers/sulamithe.jpg",
     shortBio:
       "Sulamithe listens closely to children’s questions and helps them develop their ideas through conversation, stories, play, and group projects.",
     displayOrder: 30,
@@ -125,7 +125,7 @@ export const TEACHERS: Teacher[] = [
     name: "Yadira Montes",
     role: "Dolphin Room Teacher",
     classroom: "dolphin",
-    photo: "teachers/yadira.png",
+    photo: "teachers/yadira.jpg",
     shortBio:
       "Yadira helps older preschoolers speak up, listen to friends, solve problems together, and feel ready for their next school experience.",
     displayOrder: 31,
