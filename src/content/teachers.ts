@@ -66,25 +66,14 @@ export const TEACHERS: Teacher[] = [
     active: true,
   },
   {
-    id: "annika",
-    name: "Annika",
+    id: "annika-peistrup",
+    name: "Annika Peistrup",
     role: "Kitten Room Teacher",
     classroom: "kitten",
     photo: "teachers/annika.jpg",
     shortBio:
-      "Annika creates a gentle, nurturing classroom space where young children feel comfortable expressing themselves and exploring through play.",
+      "Annika creates a warm, nurturing classroom space where young children feel comfortable expressing themselves and exploring through play.",
     displayOrder: 13,
-    active: true,
-  },
-  {
-    id: "coby",
-    name: "Coby",
-    role: "Preschool Teacher",
-    classroom: "all",
-    photo: "teachers/coby.jpg",
-    shortBio:
-      "Coby supports children across our classrooms with engaging play setups, outdoor movement, and creative learning activities.",
-    displayOrder: 14,
     active: true,
   },
   {
@@ -110,13 +99,13 @@ export const TEACHERS: Teacher[] = [
     active: true,
   },
   {
-    id: "regina-gutierrez",
-    name: "Regina Gutierrez",
+    id: "kobe-kubes",
+    name: "Kobe Kubes",
     role: "Kangaroo Room Teacher",
     classroom: "kangaroo",
-    photo: "teacher-regina-gutierrez.jpg",
+    photo: "teachers/coby.jpg",
     shortBio:
-      "Regina uses stories and hands-on play to help children talk about their feelings and work through problems with friends.",
+      "Kobe supports Kangaroo children with engaging play setups, outdoor movement, and creative learning activities.",
     displayOrder: 22,
     active: true,
   },
@@ -128,17 +117,6 @@ export const TEACHERS: Teacher[] = [
     photo: "teachers/kareem.jpg",
     shortBio:
       "Kareem encourages children to move, explore, garden, and challenge themselves through outdoor play.",
-    displayOrder: 32,
-    active: true,
-  },
-  {
-    id: "sulamithe-ello",
-    name: "Sulamithe Ello",
-    role: "Dolphin Room Teacher",
-    classroom: "dolphin",
-    photo: "teachers/sulamithe.jpg",
-    shortBio:
-      "Sulamithe listens closely to children’s questions and helps them develop their ideas through conversation, stories, play, and group projects.",
     displayOrder: 30,
     active: true,
   },

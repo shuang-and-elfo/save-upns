@@ -79,6 +79,18 @@ const pageTitle = isHome
 
     <SiteFooter />
     <MobileNavigation currentPath={Astro.url.pathname} />
+
+    <!-- Lightbox Modal for Tappable Classroom & Site Photos -->
+    <div id="image-lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" tabindex="-1">
+      <div class="lightbox-overlay"></div>
+      <div class="lightbox-card">
+        <button type="button" class="lightbox-close" aria-label="Close modal">&times;</button>
+        <div class="lightbox-media">
+          <img id="lightbox-img" src="" alt="" class="lightbox-image" />
+        </div>
+      </div>
+    </div>
+
     <script>
       function initLazyImages() {
         const images = document.querySelectorAll<HTMLImageElement>(
@@ -99,9 +111,71 @@ const pageTitle = isHome
         });
       }
 
+      function initLightbox() {
+        const modal = document.getElementById("image-lightbox-modal");
+        const modalImg = document.getElementById("lightbox-img") as HTMLImageElement;
+        const closeBtn = document.querySelector(".lightbox-close");
+        const overlay = document.querySelector(".lightbox-overlay");
+
+        if (!modal || !modalImg) return;
+
+        function openLightbox(src: string, alt: string) {
+          if (!modalImg || !modal) return;
+          modalImg.src = src;
+          modalImg.alt = alt;
+          modal.setAttribute("aria-hidden", "false");
+          modal.classList.add("is-open");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeLightbox() {
+          if (!modal) return;
+          modal.setAttribute("aria-hidden", "true");
+          modal.classList.remove("is-open");
+          document.body.style.overflow = "";
+          setTimeout(() => {
+            if (modalImg) modalImg.src = "";
+          }, 300);
+        }
+
+        document.querySelectorAll("[data-lightbox-src]").forEach((el) => {
+          el.addEventListener("click", (e) => {
+            e.preventDefault();
+            const src = el.getAttribute("data-lightbox-src");
+            const alt = el.getAttribute("aria-label") || "";
+            if (src) openLightbox(src, alt);
+          });
+
+          el.addEventListener("keydown", (e: any) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              const src = el.getAttribute("data-lightbox-src");
+              const alt = el.getAttribute("aria-label") || "";
+              if (src) openLightbox(src, alt);
+            }
+          });
+        });
+
+        if (closeBtn) closeBtn.addEventListener("click", closeLightbox);
+        if (overlay) overlay.addEventListener("click", closeLightbox);
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modal.classList.contains("is-open")) {
+            closeLightbox();
+          }
+        });
+      }
+
       initLazyImages();
-      window.addEventListener("load", initLazyImages);
-      document.addEventListener("astro:page-load", initLazyImages);
+      initLightbox();
+      window.addEventListener("load", () => {
+        initLazyImages();
+        initLightbox();
+      });
+      document.addEventListener("astro:page-load", () => {
+        initLazyImages();
+        initLightbox();
+      });
     </script>
   </body>
 </html>
@@ -239,6 +313,103 @@ const pageTitle = isHome
   video.photo-img {
     opacity: 1;
     filter: blur(0);
+  }
+
+  /* Lightbox Modal */
+  .lightbox-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .lightbox-modal.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 42, 34, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .lightbox-card {
+    position: relative;
+    z-index: 10;
+    max-width: 90vw;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--color-paper-white, #fffcf6);
+    padding: 1rem;
+    border-radius: 20px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+    transform: scale(0.92);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .lightbox-modal.is-open .lightbox-card {
+    transform: scale(1);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-tomato, #d86f58);
+    color: #fff;
+    border: 3px solid #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .lightbox-close:hover {
+    transform: scale(1.1);
+    background: #c25943;
+  }
+
+  .lightbox-media {
+    max-width: 100%;
+    max-height: 75vh;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  .lightbox-image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 85vw;
+    max-height: 75vh;
+    object-fit: contain;
+  }
+
+  .lightbox-caption {
+    margin: 0.75rem 0 0.25rem;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text, #35483c);
+    text-align: center;
   }
 
   @media (prefers-reduced-motion: reduce) {

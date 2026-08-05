@@ -7,6 +7,7 @@ import TeacherProfile from "../../components/TeacherProfile.astro";
 import DailySchedule from "../../components/DailySchedule.astro";
 import PhotoGallery from "../../components/PhotoGallery.astro";
 import FloatingIllustration from "../../components/FloatingIllustration.astro";
+import { withBase } from "../../utils/url";
 
 const room = getClassroomBySlug("dolphin")!;
 const teachers = getTeachersByClassroom("dolphin");
@@ -14,22 +15,22 @@ const teachers = getTeachersByClassroom("dolphin");
 const galleryPhotos = [
   {
     src: "dolphin-class.jpg",
-    alt: "Children in the Dolphin Room learning and playing together",
+    alt: "Children in the Dolphin Room learning and working on group projects",
     caption: "Engaging group projects and play",
     variant: "scrapbook" as const,
     doodle: "dolphin",
   },
   {
-    src: "kangaroo2.jpg",
-    alt: "Children building train tracks on the outdoor rug",
-    caption: "Building train tracks and exploring outdoors",
+    src: "kan4.jpg",
+    alt: "Preschool children exploring science and building activities",
+    caption: "Hands-on discovery and group learning",
     variant: "tape" as const,
     doodle: "stars",
   },
   {
-    src: "kangaroo.jpg",
-    alt: "Children engaging in outdoor courtyard activities",
-    caption: "Creative outdoor play and courtyard activities",
+    src: "kan5.jpg",
+    alt: "Children engaged in creative projects and classroom play",
+    caption: "Creative projects and classroom activities",
     variant: "scrapbook" as const,
     doodle: "sun",
   },
@@ -40,7 +41,8 @@ const galleryPhotos = [
   title={`${room.name} (${room.ageRange})`}
   description={room.shortDescription}
 >
-  {/* CLASSROOM HERO */}
+  <div class="classroom-page" style={`--custom-cursor: url('${withBase('/images/dolphin-cursor.png')}') 32 32, zoom-in;`}>
+    {/* CLASSROOM HERO */}
   <header class="room-hero">
     <FloatingIllustration src="dolphin.png" position="top-right" size="xl" rotate={12} opacity={1} />
     <div class="container hero-grid">
@@ -134,6 +136,7 @@ const galleryPhotos = [
       <DailySchedule schedule={room.schedule} roomName={room.name} />
     </div>
   </section>
+  </div>
 </BaseLayout>
 
 <style>

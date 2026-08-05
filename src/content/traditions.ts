@@ -71,7 +71,7 @@ export const TRADITIONS: Tradition[] = [
     longDescription:
       "Each autumn, children wear their favorite costumes for a cheerful, not-too-spooky parade around the school. Families gather along the route to wave, take photos, and enjoy treats together.",
     coverPhoto: "halloween.jpg",
-    galleryPhotos: ["halloween.jpg"],
+    galleryPhotos: ["halloween.jpg", "halloween2.jpg", "halloween3.jpg"],
     altText: "Children in festive costumes participating in the UPNS Halloween parade.",
     whatFamiliesEnjoy:
       "Toddlers and preschoolers beam with pride parading in their favorite costumes with classmates, and families love celebrating a safe, gentle Halloween experience together.",

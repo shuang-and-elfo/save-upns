@@ -38,8 +38,12 @@ const isVideo = src.endsWith(".mp4") || src.endsWith(".webm") || src.endsWith(".
 ---
 
 <figure
-  class={`photo-cutout variant-${variant} ${aspectClass} ${className}`}
+  class={`photo-cutout variant-${variant} ${aspectClass} ${className} ${isVideo ? "is-video-cutout" : ""}`}
   style={rotationStyle}
+  tabindex={isVideo ? undefined : "0"}
+  role={isVideo ? undefined : "button"}
+  aria-label={isVideo ? undefined : `View enlarged photo: ${alt}`}
+  data-lightbox-src={isVideo ? undefined : withBase(`/images/${src}`)}
 >
   {/* Paper tape top decoration for scrapbook and tape variants */}
   {(variant === "tape" || variant === "scrapbook") && (
@@ -102,6 +106,19 @@ const isVideo = src.endsWith(".mp4") || src.endsWith(".webm") || src.endsWith(".
     margin: 0;
     background: transparent;
     box-sizing: border-box;
+    cursor: var(--custom-cursor, zoom-in);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+
+  .photo-cutout:hover,
+  .photo-cutout:focus-visible {
+    transform: scale(1.035) rotate(0deg) !important;
+    z-index: 10;
+    outline: none;
+  }
+
+  .is-video-cutout {
+    cursor: default !important;
   }
 
   /* Aspect ratio containers */

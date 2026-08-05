@@ -18,6 +18,11 @@ const seasonMap: Record<string, string> = {
   Winter: "winter.png",
 };
 
+const customStickerMap: Record<string, string> = {
+  "underwood-farm-trip": "tractor.png",
+  "carnival": "kite.png",
+};
+
 const doodleMap: Record<string, string> = {
   Spring: "carnival-bunting",
   Summer: "tent",
@@ -25,7 +30,7 @@ const doodleMap: Record<string, string> = {
   Winter: "winter-lights",
 };
 
-const seasonPng = seasonMap[tradition.season] || "spring.png";
+const stickerPng = customStickerMap[tradition.id] || seasonMap[tradition.season] || "spring.png";
 const seasonDoodle = doodleMap[tradition.season] || "sun";
 ---
 
@@ -71,7 +76,7 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
       <h3 id={`tradition-title-${tradition.id}`} class="tradition-title">
         <span>{tradition.title}</span>
         <span class="season-sticker-inline" aria-hidden="true">
-          <img src={withBase(`/images/${seasonPng}`)} alt={tradition.season} />
+          <img src={withBase(`/images/${stickerPng}`)} alt={tradition.title} />
         </span>
       </h3>
 

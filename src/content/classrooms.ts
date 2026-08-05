@@ -31,9 +31,9 @@ export const CLASSROOMS: ClassroomInfo[] = [
     animal: "kitten",
     tagline: "A warm first step into school.",
     shortDescription:
-      "Our youngest children explore water, sand, paint, blocks, stories, and outdoor play while getting comfortable with teachers and their first school routines.",
+      "Our youngest children explore water, sand, paint, blocks, and outdoor play. Teachers guide toddlers through smooth school transitions and partner with parents on potty training at your child’s pace.",
     longDescription:
-      "The Kitten Room is for toddlers ages 18 months to 3 years. Teachers focus first on helping children feel safe and comfortable as they separate from parents and get used to school. Their days include water and sand, finger painting, blocks, stories, music, and time outside.",
+      "The Kitten Room is a cozy first step into school for toddlers ages 18 months to 3 years. Starting preschool is a big milestone! In the Kitten Room, potty training is NOT required for enrollment. Our teachers actively support toddlers in diapers, guide families through smooth morning transitions, and partner with parents on potty training when your child shows readiness.",
     heroImage: "kitten-thumbnail.jpg",
     galleryImages: [
       "kitten-thumbnail.jpg",
@@ -43,14 +43,15 @@ export const CLASSROOMS: ClassroomInfo[] = [
       "kitten-wagon.jpg",
       "kitten-birthday.jpg",
       "kitten-art.jpg",
+      "kitten-leaves.jpg",
     ],
     pottyTrainingPolicy:
-      "Potty training is NOT required to enroll in the Kitten Room. Our teachers actively support children in diapers and partner with parents on potty training when your child shows readiness.",
+      "Potty training is NOT required to enroll in the Kitten Room. Our teachers actively support toddlers in diapers, assist with potty training routines when your child shows readiness, and guide families through a smooth, supportive transition into school.",
     teacherSupport: [
-      "Comfort and reassurance during arrival and separation",
-      "Patient help with diapers, toileting, and everyday care routines",
-      "Plenty of hands-on play with water, dough, music, paint, and other materials",
-      "Help learning to play near other children, wait, share space, and connect",
+      "Warm separation support and individualized care to help toddlers transition comfortably into school",
+      "Patient, active help with potty training, toilet routines, and diapers in close partnership with parents",
+      "Comforting daily routines during arrival, snacks, sensory play, circle time, and outdoor play",
+      "Plenty of hands-on sensory exploration with water, sand, playdough, paint, music, and story time",
     ],
     parentCoopExpectations:
       "On classroom workdays, parents help comfort children, supervise play, support snack and lunch, and help keep the room calm and organized.",

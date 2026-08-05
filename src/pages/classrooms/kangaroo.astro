@@ -7,6 +7,7 @@ import TeacherProfile from "../../components/TeacherProfile.astro";
 import DailySchedule from "../../components/DailySchedule.astro";
 import PhotoGallery from "../../components/PhotoGallery.astro";
 import FloatingIllustration from "../../components/FloatingIllustration.astro";
+import { withBase } from "../../utils/url";
 
 const room = getClassroomBySlug("kangaroo")!;
 const teachers = getTeachersByClassroom("kangaroo");
@@ -21,8 +22,8 @@ const galleryPhotos = [
   },
   {
     src: "kangaroo2.jpg",
-    alt: "Child building wooden train tracks on the outdoor rug in the Kangaroo Room",
-    caption: "Building train tracks and exploring outdoors",
+    alt: "Child building wooden train tracks inside the Kangaroo Room classroom",
+    caption: "Building train tracks and indoor play",
     variant: "tape" as const,
     doodle: "sun",
   },
@@ -54,7 +55,8 @@ const galleryPhotos = [
   title={`${room.name} (${room.ageRange})`}
   description={room.shortDescription}
 >
-  {/* CLASSROOM HERO */}
+  <div class="classroom-page" style={`--custom-cursor: url('${withBase('/images/kangaroo-cursor.png')}') 32 32, zoom-in;`}>
+    {/* CLASSROOM HERO */}
   <header class="room-hero">
     <FloatingIllustration src="kangaroo.png" position="top-right" size="xl" rotate={-8} opacity={1} />
     <div class="container hero-grid">
@@ -148,6 +150,7 @@ const galleryPhotos = [
       <DailySchedule schedule={room.schedule} roomName={room.name} />
     </div>
   </section>
+  </div>
 </BaseLayout>
 
 <style>

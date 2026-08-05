@@ -7,13 +7,14 @@ import TeacherProfile from "../../components/TeacherProfile.astro";
 import DailySchedule from "../../components/DailySchedule.astro";
 import PhotoGallery from "../../components/PhotoGallery.astro";
 import FloatingIllustration from "../../components/FloatingIllustration.astro";
+import { withBase } from "../../utils/url";
 
 const room = getClassroomBySlug("kitten")!;
 const teachers = getTeachersByClassroom("kitten");
 
 const galleryPhotos = [
   {
-    src: "kat-outdoor.jpg",
+    src: "kitten-outdoor.jpg",
     alt: "Toddlers exploring outdoor play in the Kitten Room yard",
     caption: "Outdoor exploration in our sunny yard",
     variant: "scrapbook" as const,
@@ -21,45 +22,52 @@ const galleryPhotos = [
   },
   {
     src: "kitten.jpg",
-    alt: "Toddlers exploring sensory play tables in the Kitten Room",
-    caption: "Sensory table exploration in our sunny yard",
+    alt: "Toddlers creating and displaying their colorful artwork in the Kitten Room",
+    caption: "Artwork exhibition and creative discoveries",
     variant: "tape" as const,
     doodle: "flower",
   },
   {
     src: "kitten2.jpg",
-    alt: "Soft floor cushions and low wooden bookshelves in the Kitten Room",
-    caption: "Our cozy indoor reading and story corner",
+    alt: "Cozy indoor reading corner with books and floor cushions in the Kitten Room",
+    caption: "Reading and story time",
     variant: "scrapbook" as const,
     doodle: "sun",
   },
   {
     src: "kitten3.jpg",
-    alt: "Toddlers building with blocks and toys in the Kitten Room",
-    caption: "Gentle morning play and building blocks",
+    alt: "Toddlers creating and playing with playdough in the Kitten Room",
+    caption: "Playdough exploration and morning play",
     variant: "tape" as const,
     doodle: "kitten",
   },
   {
     src: "kitten4.jpg",
-    alt: "Children playing outdoors in the Kitten Room yard",
-    caption: "Outdoor sandbox and gardening fun",
+    alt: "Children easel painting and exploring art in the Kitten Room",
+    caption: "Art, easel painting, and creative fun",
     variant: "scrapbook" as const,
     doodle: "snail",
   },
   {
     src: "kitten-5.jpg",
-    alt: "Toddlers enjoying music and movement in the Kitten Room",
-    caption: "Music, movement, and finger painting",
+    alt: "Toddlers dancing and enjoying music in the Kitten Room",
+    caption: "Dancing, music, and joyful movement",
     variant: "tape" as const,
     doodle: "flower",
   },
   {
     src: "kitten-6.jpg",
-    alt: "Kitten Room children connecting with teachers and friends",
-    caption: "Connecting with teachers and peers",
+    alt: "Toddlers playing with sand and eggs in the Kitten Room",
+    caption: "Sensory sand play and egg discovery",
     variant: "scrapbook" as const,
     doodle: "sun",
+  },
+  {
+    src: "kitten-leaves.jpg",
+    alt: "Toddlers exploring leaves and nature in the Kitten Room",
+    caption: "Nature, leaves, and outdoor discovery",
+    variant: "tape" as const,
+    doodle: "snail",
   },
 ];
 ---
@@ -68,7 +76,8 @@ const galleryPhotos = [
   title={`${room.name} (${room.ageRange})`}
   description={room.shortDescription}
 >
-  {/* CLASSROOM HERO */}
+  <div class="classroom-page" style={`--custom-cursor: url('${withBase('/images/kitten-cursor.png')}') 32 32, zoom-in;`}>
+    {/* CLASSROOM HERO */}
   <header class="room-hero">
     <FloatingIllustration src="kitten.png" position="top-right" size="xl" rotate={10} opacity={1} />
     <div class="container hero-grid">
@@ -82,7 +91,7 @@ const galleryPhotos = [
         <p class="room-tagline">{room.tagline}</p>
 
         <p class="room-desc">
-          {room.longDescription}
+          The Kitten Room is a cozy first step into school for toddlers ages 18 months to 3 years. Starting preschool is a big milestone! In the Kitten Room, <strong>potty training is NOT required for enrollment</strong>. Our teachers actively support toddlers in diapers, guide families through smooth morning transitions, and partner with parents on potty training when your child shows readiness.
         </p>
       </div>
     </div>
@@ -93,7 +102,7 @@ const galleryPhotos = [
     <div class="container">
       <SectionIntro
         badge="Classroom Environment"
-        title="A comfortable space for first school experiences."
+        title="A cozy, happy spot for your little one’s first school steps."
         subtitle="The room includes low shelves, cozy places to sit, sensory activities, and easy access to outdoor play."
         doodle="sun"
         align="center"
@@ -162,6 +171,7 @@ const galleryPhotos = [
       <DailySchedule schedule={room.schedule} roomName={room.name} />
     </div>
   </section>
+  </div>
 </BaseLayout>
 
 <style>
