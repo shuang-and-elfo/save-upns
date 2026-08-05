@@ -32,6 +32,21 @@ export const TRADITIONS: Tradition[] = [
       "Children love the gentle hand-painted game booths and sensory crafts, while parents enjoy catching up with alumni families and celebrating the school year together.",
   },
   {
+    id: "underwood-farm-trip",
+    title: "Underwood Farm Trip",
+    slug: "underwood-farm-trip",
+    season: "Spring",
+    shortDescription:
+      "A beloved spring field trip where children and families visit Underwood Family Farms to ride tractors, pick produce, and meet farm animals.",
+    longDescription:
+      "Each spring, UPNS families head to Underwood Family Farms for an outdoor field trip. Children ride in tractor wagons across the fields, pick fresh vegetables and fruit, visit the farm animals, and share a picnic lunch together in the fresh farm air.",
+    coverPhoto: "farm_trip.jpg",
+    galleryPhotos: ["farm_trip.jpg", "farm_trip2.jpg", "farm_trip3.jpg"],
+    altText: "UPNS children and families enjoying a spring field trip at Underwood Family Farms.",
+    whatFamiliesEnjoy:
+      "Children love picking their own produce straight from the fields and riding the tractor wagons, while families enjoy a fun, memorable day outdoors together.",
+  },
+  {
     id: "summer-camping-trip",
     title: "Family Camping Trip",
     slug: "summer-camping-trip",

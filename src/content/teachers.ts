@@ -60,7 +60,8 @@ export const TEACHERS: Teacher[] = [
     role: "Kitten Room Teacher",
     classroom: "kitten",
     photo: "teachers/lin-han.jpg",
-    shortBio: "",
+    shortBio:
+      "Lin brings stories and play into the children’s day and helps toddlers connect with new friends and try things on their own.",
     displayOrder: 12,
     active: true,
   },
@@ -70,8 +71,20 @@ export const TEACHERS: Teacher[] = [
     role: "Kitten Room Teacher",
     classroom: "kitten",
     photo: "teachers/annika.jpg",
-    shortBio: "",
+    shortBio:
+      "Annika creates a gentle, nurturing classroom space where young children feel comfortable expressing themselves and exploring through play.",
     displayOrder: 13,
+    active: true,
+  },
+  {
+    id: "coby",
+    name: "Coby",
+    role: "Preschool Teacher",
+    classroom: "all",
+    photo: "teachers/coby.jpg",
+    shortBio:
+      "Coby supports children across our classrooms with engaging play setups, outdoor movement, and creative learning activities.",
+    displayOrder: 14,
     active: true,
   },
   {
