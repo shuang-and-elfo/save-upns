@@ -129,8 +129,8 @@ export const CLASSROOMS: ClassroomInfo[] = [
       "Our oldest preschoolers take their ideas further through longer games, group projects, stories, outdoor challenges, and growing responsibility in the classroom.",
     longDescription:
       "Dolphin children are ready to take their ideas further. They create longer games together, ask lots of questions, and return to projects over several days. Teachers bring reading, writing, numbers, science, and problem-solving naturally into the children’s play.",
-    heroImage: "dolphin-class.jpg",
-    galleryImages: ["dolphin-class.jpg", "kangaroo2.jpg", "kangaroo.jpg"],
+    heroImage: "dolphin-thumbnail.jpg",
+    galleryImages: ["dolphin-thumbnail.jpg", "dolphin-outdoor.jpg"],
     pottyTrainingPolicy:
       "Potty training is REQUIRED for the Dolphin Room. The Dolphin Room is not equipped to change diapers.",
     teacherSupport: [
