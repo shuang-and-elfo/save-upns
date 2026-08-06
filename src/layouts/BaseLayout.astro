@@ -13,18 +13,100 @@ export interface Props {
 }
 
 const {
-  title = `${SITE_CONFIG.name} | ${SITE_CONFIG.tagline}`,
+  title = "Home",
   description = SITE_CONFIG.description,
   ogImage = "/images/hero-playground.jpg",
   canonicalUrl = Astro.url.href,
 } = Astro.props;
 
-const isHome = title === "Home" || Astro.url.pathname === "/" || Astro.url.pathname === import.meta.env.BASE_URL;
+const isHome = title === "Home" || Astro.url.pathname === "/" || Astro.url.pathname === "" || Astro.url.pathname === import.meta.env.BASE_URL;
 const pageTitle = isHome
-  ? "UPNS"
+  ? "University Parents Nursery School (UPNS) | Cooperative Preschool in Los Angeles"
   : title.includes(SITE_CONFIG.shortName)
     ? title
-    : `${title} | ${SITE_CONFIG.shortName} Preschool`;
+    : `${title} | UPNS Cooperative Preschool Los Angeles`;
+
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, "") : "https://upns.info";
+const fullOgImageUrl = ogImage.startsWith("http") ? ogImage : `${siteUrl}${withBase(ogImage)}`;
+
+const schemaOrgData = {
+  "@context": "https://schema.org",
+  "@type": ["Preschool", "ChildCare", "EducationalOrganization"],
+  "@id": "https://upns.info/#organization",
+  "name": "University Parents Nursery School",
+  "alternateName": ["UPNS", "UPNS Preschool", "University Parents Nursery School (UPNS)"],
+  "url": "https://upns.info/",
+  "logo": "https://upns.info/images/logo.png",
+  "image": "https://upns.info/images/hero-playground.jpg",
+  "description": SITE_CONFIG.description,
+  "foundingDate": "1966",
+  "telephone": "+1-310-397-2735",
+  "email": "upns@ucla.edu",
+  "priceRange": "$$",
+  "isAccessibleForFree": false,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3233 S. Sepulveda Blvd. Suite 200",
+    "addressLocality": "Los Angeles",
+    "addressRegion": "CA",
+    "postalCode": "90034",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.015024,
+    "longitude": -118.422998
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "17:00"
+    }
+  ],
+  "sameAs": [
+    "https://www.naeyc.org/",
+    "https://lacppns.org/"
+  ],
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Families with toddlers and preschool children aged 18 months to 5 years (UCLA and Los Angeles community)"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Classroom Programs",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "EducationalOccupationalProgram",
+          "name": "Kitten Room (Toddler Program)",
+          "description": "Nurturing environment for toddlers aged 18 months to 3 years focusing on sensory discovery and gentle separations.",
+          "timeToComplete": "P1Y"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "EducationalOccupationalProgram",
+          "name": "Kangaroo Room (Preschool Program)",
+          "description": "Program for 3 to 4 year olds expanding their social world through dramatic play and outdoor building.",
+          "timeToComplete": "P1Y"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "EducationalOccupationalProgram",
+          "name": "Dolphin Room (Pre-Kindergarten Program)",
+          "description": "Pre-K classroom for 4 to 5 year olds fostering independence, social problem-solving, and kindergarten readiness.",
+          "timeToComplete": "P1Y"
+        }
+      }
+    ]
+  }
+};
 ---
 
 <!doctype html>
@@ -34,19 +116,39 @@ const pageTitle = isHome
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/png" href={withBase("/images/fabicon.png")} />
     <link rel="shortcut icon" href={withBase("/favicon.png")} />
     <link rel="apple-touch-icon" href={withBase("/images/fabicon.png")} />
 
-    {/* Open Graph / Social Sharing Metadata */}
+    {/* Local SEO & Geographic Metadata for Los Angeles */}
+    <meta name="geo.region" content="US-CA" />
+    <meta name="geo.placename" content="Los Angeles" />
+    <meta name="geo.position" content="34.015024;-118.422998" />
+    <meta name="ICBM" content="34.015024, -118.422998" />
+    <meta name="keywords" content="UPNS, University Parents Nursery School, cooperative preschool Los Angeles, West LA preschool, UCLA preschool, parent participation nursery school, toddler program Los Angeles, play-based preschool 90034, Culver City preschool, Palms preschool, Mar Vista preschool, NAEYC accredited preschool" />
+
+    {/* Open Graph / Facebook Metadata */}
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content={SITE_CONFIG.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={new URL(ogImage, Astro.url.origin)} />
-    <meta property="og:site_name" content={SITE_CONFIG.name} />
+    <meta property="og:image" content={fullOgImageUrl} />
+    <meta property="og:image:alt" content="University Parents Nursery School (UPNS) - Children learning and growing through play" />
+
+    {/* Twitter Cards Metadata */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImageUrl} />
+    <meta name="twitter:image:alt" content="University Parents Nursery School (UPNS)" />
+
+    {/* Schema.org Structured Data (JSON-LD) */}
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(schemaOrgData)} />
 
     {/* Google Fonts: Baloo Chettan 2 & Amatic SC (Kootingal title fonts) and DM Sans (Body) */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />

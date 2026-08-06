@@ -1,0 +1,6 @@
+# robots.txt for https://upns.info/
+User-agent: *
+Allow: /
+
+# Sitemap Index
+Sitemap: https://upns.info/sitemap-index.xml
