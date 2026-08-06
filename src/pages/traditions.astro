@@ -2,6 +2,45 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { TRADITIONS } from "../content/traditions";
 import TraditionPreview from "../components/TraditionPreview.astro";
+import { withBase } from "../utils/url";
+
+const traditionStickers: Record<string, { src: string; side: "left" | "right"; rotate: number; top: string; size: string }> = {
+  "carnival": {
+    src: "kite.png",
+    side: "right",
+    rotate: 12,
+    top: "4%",
+    size: "260px",
+  },
+  "underwood-farm-trip": {
+    src: "tractor.png",
+    side: "left",
+    rotate: -10,
+    top: "10%",
+    size: "290px",
+  },
+  "summer-camping-trip": {
+    src: "bonfire.png",
+    side: "right",
+    rotate: 8,
+    top: "12%",
+    size: "260px",
+  },
+  "halloween-parade": {
+    src: "autumn.png",
+    side: "left",
+    rotate: -12,
+    top: "8%",
+    size: "260px",
+  },
+  "winter-wonderland": {
+    src: "winter.png",
+    side: "right",
+    rotate: 10,
+    top: "6%",
+    size: "290px",
+  },
+};
 ---
 
 <BaseLayout
@@ -21,11 +60,25 @@ import TraditionPreview from "../components/TraditionPreview.astro";
 
   {/* TRADITIONS SCRAPBOOK LISTING */}
   <section class="traditions-list-section" aria-labelledby="scrapbook-heading">
-    <div class="container">
+    <div class="container traditions-container">
       <div class="scrapbook-stack">
-        {TRADITIONS.map((tradition, idx) => (
-          <TraditionPreview tradition={tradition} index={idx} />
-        ))}
+        {TRADITIONS.map((tradition, idx) => {
+          const sticker = traditionStickers[tradition.id];
+          return (
+            <div class="tradition-item-wrapper" id={tradition.slug}>
+              {sticker && (
+                <div
+                  class={`page-sticker sticker-${sticker.side}`}
+                  style={`--sticker-size: ${sticker.size}; --sticker-rotate: ${sticker.rotate}deg; --sticker-top: ${sticker.top};`}
+                  aria-hidden="true"
+                >
+                  <img src={withBase(`/images/${sticker.src}`)} alt="" loading="lazy" />
+                </div>
+              )}
+              <TraditionPreview tradition={tradition} index={idx} />
+            </div>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -73,12 +126,89 @@ import TraditionPreview from "../components/TraditionPreview.astro";
 
   .traditions-list-section {
     padding: 1.5rem 0 5.5rem;
+    position: relative;
+    overflow: visible;
+  }
+
+  .traditions-container {
+    position: relative;
+    overflow: visible;
   }
 
   .scrapbook-stack {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 3.5rem;
+  }
+
+  .tradition-item-wrapper {
+    position: relative;
+    overflow: visible;
+  }
+
+  .page-sticker {
+    position: absolute;
+    top: var(--sticker-top, 8%);
+    width: var(--sticker-size, 260px);
+    height: auto;
+    z-index: 10;
+    pointer-events: none;
+    user-select: none;
+    transform: rotate(var(--sticker-rotate, 0deg));
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: subtleFloat 6s ease-in-out infinite;
+  }
+
+  .page-sticker img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 14px 28px rgba(53, 72, 60, 0.18));
+  }
+
+  .sticker-left {
+    left: -120px;
+  }
+
+  .sticker-right {
+    right: -120px;
+  }
+
+  @keyframes subtleFloat {
+    0%,
+    100% {
+      transform: rotate(var(--sticker-rotate, 0deg)) translateY(0) scale(1);
+    }
+    50% {
+      transform: rotate(var(--sticker-rotate, 0deg)) translateY(-10px) scale(1.04);
+    }
+  }
+
+  @media (max-width: 1440px) {
+    .sticker-left {
+      left: -70px;
+    }
+    .sticker-right {
+      right: -70px;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .page-sticker {
+      width: calc(var(--sticker-size, 260px) * 0.75);
+    }
+    .sticker-left {
+      left: -35px;
+    }
+    .sticker-right {
+      right: -35px;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .page-sticker {
+      display: none;
+    }
   }
 
   .community-note-section {

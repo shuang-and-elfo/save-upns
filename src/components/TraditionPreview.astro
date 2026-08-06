@@ -1,7 +1,6 @@
 ---
 import type { Tradition } from "../content/traditions";
 import PhotoCutout from "./PhotoCutout.astro";
-import { withBase } from "../utils/url";
 
 export interface Props {
   tradition: Tradition;
@@ -11,19 +10,6 @@ export interface Props {
 
 const { tradition, index = 0, class: className = "" } = Astro.props;
 
-const seasonMap: Record<string, string> = {
-  Spring: "spring.png",
-  Summer: "summer.png",
-  Autumn: "autumn.png",
-  Winter: "winter.png",
-};
-
-const customStickerMap: Record<string, string> = {
-  "underwood-farm-trip": "tractor.png",
-  "carnival": "kite.png",
-  "summer-camping-trip": "bonfire.png",
-};
-
 const doodleMap: Record<string, string> = {
   Spring: "carnival-bunting",
   Summer: "tent",
@@ -31,7 +17,6 @@ const doodleMap: Record<string, string> = {
   Winter: "winter-lights",
 };
 
-const stickerPng = customStickerMap[tradition.id] || seasonMap[tradition.season] || "spring.png";
 const seasonDoodle = doodleMap[tradition.season] || "sun";
 ---
 
@@ -76,10 +61,7 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
       </div>
 
       <h3 id={`tradition-title-${tradition.id}`} class="tradition-title">
-        <span>{tradition.title}</span>
-        <span class="season-sticker-inline" aria-hidden="true">
-          <img src={withBase(`/images/${stickerPng}`)} alt={tradition.title} />
-        </span>
+        {tradition.title}
       </h3>
 
       <p class="tradition-desc">
@@ -189,39 +171,11 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
 
   .tradition-title {
     font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
-    font-size: 2.1rem;
+    font-size: 2.2rem;
     font-weight: 700;
     color: var(--color-text, #35483c);
     margin: 0 0 0.75rem;
     line-height: 1.2;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
-  .season-sticker-inline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 90px;
-    height: 90px;
-    flex-shrink: 0;
-    transform: rotate(6deg);
-    transition: transform 0.3s ease;
-    margin-left: 0.25rem;
-  }
-
-  .season-sticker-inline img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
-  }
-
-  .tradition-preview:hover .season-sticker-inline {
-    transform: rotate(10deg) scale(1.08);
   }
 
   .tradition-desc {
