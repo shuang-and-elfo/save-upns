@@ -21,7 +21,7 @@ const {
 
 const isHome = title === "Home" || Astro.url.pathname === "/" || Astro.url.pathname === "" || Astro.url.pathname === import.meta.env.BASE_URL;
 const pageTitle = isHome
-  ? "University Parents Nursery School (UPNS) | Cooperative Preschool in Los Angeles"
+  ? "University Parents Nursery School (UPNS) | Play-Based Co-op Preschool in Los Angeles"
   : title.includes(SITE_CONFIG.shortName)
     ? title
     : `${title} | UPNS Cooperative Preschool Los Angeles`;
