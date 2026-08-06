@@ -91,7 +91,8 @@ const currentPath = Astro.url.pathname;
   .header-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0.4rem 1.5rem;
+    padding: 20px 1.5rem;
+    min-height: 94px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -112,25 +113,25 @@ const currentPath = Astro.url.pathname;
   }
 
   .header-brand-logo {
-    height: 86px;
+    height: 54px;
     width: auto;
-    max-width: 400px;
+    max-width: 240px;
     object-fit: contain;
     display: block;
-    transform: scale(1.5);
-    transform-origin: left center;
     transition: transform 0.2s ease;
   }
 
   @media (max-width: 768px) {
+    .header-container {
+      padding: 14px 1.25rem;
+      min-height: 72px;
+    }
     .brand-link {
-      margin-right: 2rem;
+      margin-right: 1.5rem;
     }
     .header-brand-logo {
-      height: 58px;
-      max-width: 280px;
-      transform: scale(1.5);
-      transform-origin: left center;
+      height: 44px;
+      max-width: 180px;
     }
   }
 

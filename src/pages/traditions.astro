@@ -86,25 +86,29 @@ import TraditionPreview from "../components/TraditionPreview.astro";
   }
 
   .community-box {
-    background: var(--color-text);
+    background: var(--color-text, #35483c);
     color: #ffffff;
     border-radius: 28px;
-    padding: 2.5rem 3rem;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    flex-wrap: wrap;
+    padding: 2.5rem 2.75rem;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: var(--shadow-natural);
+    box-sizing: border-box;
   }
 
   .note-text h2 {
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
     color: #ffffff;
-    font-size: 1.85rem;
-    margin: 0 0 0.5rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 0.6rem;
+    line-height: 1.15;
   }
 
   .note-text p {
     color: #cedad1;
-    font-size: 1.05rem;
+    font-size: 1.08rem;
     margin: 0;
     line-height: 1.6;
   }
@@ -114,7 +118,10 @@ import TraditionPreview from "../components/TraditionPreview.astro";
       font-size: 2.3rem;
     }
     .community-box {
-      padding: 2rem 1.5rem;
+      padding: 2rem 1.75rem;
+    }
+    .note-text h2 {
+      font-size: 1.75rem;
     }
   }
 </style>

@@ -21,16 +21,17 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
   title="Home"
   description="Founded in 1966, University Parents Nursery School (UPNS) is a cooperative parent-participation preschool in Los Angeles serving UCLA and community families."
 >
-  {/* HERO SECTION */}
+  {/* COMBINED HERO & WELCOME SECTION */}
   <section class="hero-section" aria-labelledby="hero-title">
-    <div class="container hero-grid">
+    <FloatingIllustration src="snail.png" position="bottom-left" size="sm" bottom="8px" left="24px" rotate={-6} />
+    <div class="container hero-container hero-grid">
       <div class="hero-text-col">
         <h1 id="hero-title" class="hero-title">
-          Where hearts grow through play.
+          Where children learn and grow through play.
         </h1>
 
         <p class="hero-desc">
-          For 60 years, UPNS has been a place where children learn through play and parents take part in school life. Since 1966, our families have come from UCLA and neighborhoods across Los Angeles to learn, help, and grow together.
+          At UPNS, children spend their days exploring through joyful play: building with sand and water, creating art, listening to stories, singing, gardening, and discovering the outdoors. As they explore, they naturally develop curiosity, learn to solve problems, express their thoughts and feelings, and build confidence with friends. For 60 years, our cooperative community of parents and teachers has worked hand in hand to make school a warm, familiar place that feels like home.
         </p>
 
         <div class="hero-cta-group">
@@ -43,25 +44,6 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
 
       <div class="hero-media-col">
         <HeroBlobSlideshow />
-      </div>
-    </div>
-  </section>
-
-  {/* A SHORT INTRODUCTION TO UPNS */}
-  <section class="intro-section" aria-labelledby="intro-heading">
-    <FloatingIllustration src="snail.png" position="bottom-left" size="md" rotate={-6} />
-    <div class="container">
-      <div class="intro-content-clean">
-        <SectionIntro
-          badge="Welcome to UPNS"
-          title="A school for children and a community for families."
-          subtitle="At UPNS, children learn by doing what young children do best: playing, creating, moving, asking questions, and spending time with friends. Parents are part of the school too, working alongside teachers and helping create the warm, familiar community our children grow up in."
-          align="center"
-          doodle="house"
-        />
-        <p class="intro-body">
-          Since 1966, generations of UCLA and neighborhood families have shared in the everyday work, and joy, of making UPNS feel like home.
-        </p>
       </div>
     </div>
   </section>
@@ -175,73 +157,63 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
 <style>
   /* Hero */
   .hero-section {
-    padding: 3.5rem 0 4.5rem;
+    padding: 4rem 0 5.5rem;
     background: linear-gradient(180deg, var(--color-paper-white) 0%, var(--color-cream) 100%);
     position: relative;
     overflow: hidden;
   }
 
+  .hero-container {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
   .hero-grid {
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
+    grid-template-columns: 1.05fr 1fr;
     gap: 3.5rem;
     align-items: center;
     position: relative;
     z-index: 2;
   }
 
-  .hero-badge-row {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .hero-label {
-    background: var(--color-yellow);
-    color: var(--color-text);
-    font-size: 0.85rem;
-    font-weight: 700;
-    padding: 0.35rem 1rem;
-    border-radius: 999px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  }
-
   .hero-title {
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
     font-size: 3.25rem;
     font-weight: 800;
-    line-height: 1.1;
+    line-height: 1.12;
     margin: 0 0 1.25rem;
-    color: var(--color-text);
+    color: var(--color-text, #35483c);
     letter-spacing: -0.025em;
+    max-width: 630px;
   }
 
   .hero-desc {
     font-size: 1.2rem;
-    line-height: 1.65;
-    color: var(--color-text-muted);
+    line-height: 1.75;
+    color: var(--color-text, #35483c);
     margin: 0 0 2.25rem;
-    max-width: 540px;
+    max-width: 630px;
   }
 
   .hero-cta-group {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
   .btn-primary-hero {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: var(--color-tomato);
+    background: var(--color-tomato, #d86f58);
     color: #ffffff;
     font-weight: 700;
-    font-size: 1.08rem;
-    padding: 0.95rem 2.2rem;
+    font-size: 1.1rem;
+    padding: 1rem 2.25rem;
     border-radius: 999px;
     text-decoration: none;
     box-shadow: 0 8px 20px rgba(216, 111, 88, 0.3);
@@ -251,29 +223,6 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
   .btn-primary-hero:hover {
     background: #c75c45;
     transform: translateY(-3px) scale(1.03);
-  }
-
-  /* Intro Section */
-  .intro-section {
-    padding: 6rem 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .intro-content-clean {
-    max-width: 820px;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-  }
-
-  .intro-body {
-    font-size: 1.08rem;
-    line-height: 1.7;
-    color: var(--color-text-muted);
-    margin: 1.5rem 0 0;
-    text-align: center;
   }
 
   /* Classrooms Section */
@@ -287,13 +236,18 @@ const featuredTraditions = TRADITIONS.slice(0, 2);
   .classrooms-section .container {
     position: relative;
     z-index: 2;
+    max-width: var(--max-content-width, 1200px);
+    margin: 0 auto;
+    width: 100%;
   }
 
   .classrooms-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.25rem;
+    margin: 2.5rem auto 0;
+    width: 100%;
+    justify-items: stretch;
   }
 
   /* Teachers Preview Section */

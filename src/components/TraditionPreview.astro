@@ -21,6 +21,7 @@ const seasonMap: Record<string, string> = {
 const customStickerMap: Record<string, string> = {
   "underwood-farm-trip": "tractor.png",
   "carnival": "kite.png",
+  "summer-camping-trip": "bonfire.png",
 };
 
 const doodleMap: Record<string, string> = {
@@ -35,18 +36,18 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
 ---
 
 <article
-  class={`tradition-preview ${className}`}
+  class={`tradition-preview ${index % 2 === 1 ? "is-reversed" : ""} ${className}`}
   aria-labelledby={`tradition-title-${tradition.id}`}
 >
   <div class="tradition-grid">
-    {/* Left Column: Scrapbook Photo or Collage */}
+    {/* Photo Column: Scrapbook Collage */}
     <div class="tradition-photo-col">
       <PhotoCutout
         src={tradition.coverPhoto}
         alt={tradition.altText}
         variant="scrapbook"
-        aspectRatio="16:9"
-        rotate={index % 2 === 0 ? -2 : 1.5}
+        aspectRatio="3:2"
+        rotate={index % 2 === 0 ? -1.5 : 1.5}
         doodle={seasonDoodle}
       />
       {tradition.galleryPhotos && tradition.galleryPhotos.length > 1 && (
@@ -57,7 +58,7 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
                 src={photoSrc}
                 alt={`${tradition.title} snapshot ${idx + 2}`}
                 variant={idx % 2 === 0 ? "tape" : "cutout"}
-                aspectRatio="4:3"
+                aspectRatio="3:2"
                 rotate={idx % 2 === 0 ? 2 : -2}
               />
             </div>
@@ -66,13 +67,14 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
       )}
     </div>
 
-    {/* Right Column: Tradition Story */}
+    {/* Story Column: Tradition Narrative & Family Highlight */}
     <div class="tradition-story-col">
       <div class="season-tag-row">
         <span class={`season-tag season-${tradition.season.toLowerCase()}`}>
           {tradition.season}
         </span>
       </div>
+
       <h3 id={`tradition-title-${tradition.id}`} class="tradition-title">
         <span>{tradition.title}</span>
         <span class="season-sticker-inline" aria-hidden="true">
@@ -83,6 +85,16 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
       <p class="tradition-desc">
         {tradition.longDescription}
       </p>
+
+      {tradition.whatFamiliesEnjoy && (
+        <div class="tradition-highlight-card">
+          <div class="highlight-header">
+            <span class="highlight-icon">♥</span>
+            <span class="highlight-title">Why families cherish this</span>
+          </div>
+          <p class="highlight-text">{tradition.whatFamiliesEnjoy}</p>
+        </div>
+      )}
 
       {tradition.parentQuote && (
         <blockquote class="parent-quote">
@@ -103,9 +115,8 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
     background: var(--color-paper-white, #fffcf6);
     border: none;
     border-radius: 28px;
-    padding: 3rem 2.5rem 2.5rem;
-    margin-top: 2.5rem;
-    margin-bottom: 3.5rem;
+    padding: 2.75rem 2.75rem;
+    margin-bottom: 2.5rem;
     box-shadow: 0 6px 20px rgba(53, 72, 60, 0.05);
   }
 
@@ -113,12 +124,88 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
     margin-top: 0.5rem;
   }
 
+  .tradition-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .tradition-preview.is-reversed .tradition-photo-col {
+    order: 2;
+  }
+
+  .tradition-preview.is-reversed .tradition-story-col {
+    order: 1;
+  }
+
+  .tradition-subgallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .subgallery-item :global(.photo-cutout) {
+    margin: 0;
+  }
+
+  .season-tag-row {
+    margin-bottom: 0.65rem;
+  }
+
+  .season-tag {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.35rem 0.95rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+
+  .season-spring {
+    background: #e8efe6;
+    color: #3b5a34;
+  }
+
+  .season-summer {
+    background: #fdf3d7;
+    color: #8c6310;
+  }
+
+  .season-autumn {
+    background: #fcebe6;
+    color: #a8432a;
+  }
+
+  .season-winter {
+    background: #e4f0f6;
+    color: #275d73;
+  }
+
+  .tradition-title {
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: var(--color-text, #35483c);
+    margin: 0 0 0.75rem;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
   .season-sticker-inline {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 120px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
     flex-shrink: 0;
     transform: rotate(6deg);
     transition: transform 0.3s ease;
@@ -137,74 +224,53 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
     transform: rotate(10deg) scale(1.08);
   }
 
-  .tradition-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-
-  .tradition-subgallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1.25rem;
-    margin-top: 1.5rem;
-  }
-
-  .season-tag-row {
-    margin-bottom: 0.2rem;
-  }
-
-  .season-tag {
-    display: inline-block;
-    font-family: var(--font-hand, "Amatic SC", cursive, sans-serif);
-    font-size: 1.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    line-height: 1;
-  }
-
-  .season-spring {
-    color: #3b5a34;
-  }
-
-  .season-summer {
-    color: #7a5912;
-  }
-
-  .season-autumn {
-    color: #9a3c26;
-  }
-
-  .season-winter {
-    color: #2c5a6e;
-  }
-
-  .tradition-title {
-    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-text, #35483c);
-    margin: 0 0 1rem;
-    line-height: 1.2;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
   .tradition-desc {
     font-size: 1.05rem;
     line-height: 1.65;
     color: var(--color-text-muted, #5f7065);
-    margin: 0 0 1.5rem;
+    margin: 0 0 1rem;
+  }
+
+  .tradition-highlight-card {
+    background: #fff9ee;
+    border: 1.5px dashed var(--color-border, #f2ead6);
+    border-radius: 18px;
+    padding: 1.15rem 1.35rem;
+    margin-top: 1rem;
+  }
+
+  .highlight-header {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .highlight-icon {
+    color: var(--color-terracotta, #c66249);
+    font-size: 0.95rem;
+  }
+
+  .highlight-title {
+    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-text, #35483c);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .highlight-text {
+    font-size: 0.96rem;
+    line-height: 1.55;
+    color: var(--color-text-muted, #5f7065);
+    margin: 0;
   }
 
   .parent-quote {
     position: relative;
-    margin: 1.5rem 0 0;
-    padding: 1.5rem 1.75rem;
+    margin: 1.25rem 0 0;
+    padding: 1.25rem 1.5rem;
     background: linear-gradient(135deg, #fff9ee 0%, #fffdf8 100%);
     border: 1px solid var(--color-border, #f2ead6);
     border-left: 5px solid var(--color-tomato, #d86f58);
@@ -227,10 +293,10 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
   .quote-text {
     position: relative;
     z-index: 1;
-    font-size: 1.06rem;
-    line-height: 1.6;
+    font-size: 1.02rem;
+    line-height: 1.55;
     color: var(--color-text, #35483c);
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.5rem;
     font-style: italic;
   }
 
@@ -240,7 +306,7 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 700;
     font-style: normal;
     color: var(--color-tomato, #d86f58);
@@ -259,12 +325,18 @@ const seasonDoodle = doodleMap[tradition.season] || "sun";
       grid-template-columns: 1fr;
       gap: 2rem;
     }
+    .tradition-preview.is-reversed .tradition-photo-col {
+      order: 1;
+    }
+    .tradition-preview.is-reversed .tradition-story-col {
+      order: 2;
+    }
     .tradition-preview {
-      padding: 2.5rem 1.5rem 1.5rem;
+      padding: 2.25rem 1.5rem 1.5rem;
     }
     .season-sticker-inline {
-      width: 90px;
-      height: 90px;
+      width: 75px;
+      height: 75px;
     }
   }
 </style>

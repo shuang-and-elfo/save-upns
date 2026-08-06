@@ -36,19 +36,22 @@ const {
 <style>
   .cooperative-callout {
     position: relative;
+    max-width: 800px;
+    width: 100%;
+    margin: 3.5rem auto;
     background: var(--color-text, #35483c);
     border: none;
     border-radius: 28px;
-    padding: 2.25rem 2.5rem;
-    margin: 2.5rem 0;
+    padding: 2.5rem 2.75rem;
     overflow: hidden;
     box-shadow: var(--shadow-natural);
+    box-sizing: border-box;
   }
 
   .callout-inner {
     position: relative;
     z-index: 2;
-    max-width: 900px;
+    width: 100%;
     margin: 0 auto;
   }
 
@@ -70,7 +73,7 @@ const {
     line-height: 1.6;
     color: #cedad1;
     margin: 0 0 1.5rem 0;
-    max-width: 780px;
+    max-width: 100%;
   }
 
   .callout-footer {
