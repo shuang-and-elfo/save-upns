@@ -29,6 +29,7 @@ export default defineConfig({
     '/discipline-policy': '/resources'
   },
   build: {
-    format: 'directory'
+    format: 'directory',
+    assets: 'assets'
   }
 });
