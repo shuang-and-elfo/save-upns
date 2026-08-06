@@ -114,9 +114,9 @@ const slides = [
     opacity: 0;
     visibility: hidden;
     transform: scale(1.05);
-    transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1),
-                visibility 0.65s ease,
-                transform 2.7s ease-out;
+    transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.55s ease,
+                transform 2.0s ease-out;
     z-index: 1;
   }
 
@@ -179,7 +179,7 @@ const slides = [
 
     function startInterval() {
       clearInterval(intervalId);
-      intervalId = window.setInterval(nextSlide, 2700);
+      intervalId = window.setInterval(nextSlide, 2000);
     }
 
     // Pause on hover
@@ -190,7 +190,7 @@ const slides = [
       isHovered = false;
     });
 
-    // Start autoplay loop (2700ms - 40% faster!)
+    // Start autoplay loop (2000ms / 2s rotation)
     startInterval();
   }
 
