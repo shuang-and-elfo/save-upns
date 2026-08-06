@@ -24,41 +24,23 @@ export const COOP_LIFE_DATA = {
   responsibilities: [
     {
       title: "Classroom Workday",
-      timeCommitment: "",
       description:
-        "Once a month, a parent works in their child’s classroom from 8:30 AM to 12:30 PM. You follow the teacher’s lead, join children’s play, help with meals, and take care of small classroom tasks.",
-      details: [
-        "Families with multiple children enrolled work one additional session per month.",
-        "Members are responsible for arranging a substitute if unable to attend.",
-      ],
+        "Once a month from 8:30 AM to 12:30 PM, a parent helps in their child’s classroom by joining children in play, assisting with snacks and lunch, and supporting the daily schedule under the teacher’s guidance.",
     },
     {
       title: "Parent Education & General Meetings",
-      timeCommitment: "",
       description:
-        "One adult from each family attends General Membership Meetings for school updates, community decisions, and occasional parent-education speakers.",
-      details: [
-        "Members remain responsible for all school information shared at General Meetings.",
-      ],
+        "One adult from each family attends regular evening membership meetings to stay connected with school updates, participate in important community decisions, and hear from guest speakers on child development.",
     },
     {
       title: "School Cleaning OR Committee Role",
-      timeCommitment: "",
       description:
-        "Each family attends one Saturday cleaning session per quarter, from 8:00 AM to 10:00 AM, or takes on an approved committee role instead.",
-      details: [
-        "Committee roles (such as Room Parent or Event Coordinator) replace the Saturday cleaning obligation.",
-      ],
+        "Each family helps care for our campus during one Saturday morning cleaning session per quarter (8:00 AM–10:00 AM), or serves on a school committee such as Room Parent or Event Coordinator instead.",
     },
     {
       title: "Community Fundraising Support",
-      timeCommitment: "",
       description:
-        "Families help with annual fundraising, which pays for weekly music, dance, soccer, and Taekwondo classes and helps keep tuition lower.",
-      details: [
-        "Families participate in our annual school fundraisers and Family Fun Day.",
-        "Fundraising proceeds directly support weekly professional enrichment classes for all students.",
-      ],
+        "Families participate in annual community fundraisers and our spring Family Fun Day, which directly fund our weekly music, dance, soccer, and Taekwondo enrichment classes while helping keep tuition accessible.",
     },
   ] as CoopResponsibility[],
   faqs: [
