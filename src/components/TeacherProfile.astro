@@ -21,6 +21,7 @@ const { teacher, class: className = "" } = Astro.props;
       variant="rounded"
       aspectRatio="1:1"
       rotate={teacher.displayOrder % 2 === 0 ? -2 : 1.5}
+      expandable={false}
     />
   </div>
 

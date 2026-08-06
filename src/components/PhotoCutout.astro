@@ -12,6 +12,7 @@ export interface Props {
   rotate?: number;
   class?: string;
   badgeText?: string;
+  expandable?: boolean;
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   doodle,
   rotate = 0,
   class: className = "",
+  expandable = true,
 } = Astro.props;
 
 const aspectClassMap = {
@@ -35,15 +37,16 @@ const aspectClassMap = {
 const aspectClass = aspectClassMap[aspectRatio] || "aspect-4-3";
 const rotationStyle = rotate ? `transform: rotate(${rotate}deg);` : "";
 const isVideo = src.endsWith(".mp4") || src.endsWith(".webm") || src.endsWith(".mov");
+const isExpandable = expandable && !isVideo;
 ---
 
 <figure
-  class={`photo-cutout variant-${variant} ${aspectClass} ${className} ${isVideo ? "is-video-cutout" : ""}`}
+  class={`photo-cutout variant-${variant} ${aspectClass} ${className} ${isVideo ? "is-video-cutout" : ""} ${!isExpandable ? "not-expandable" : ""}`}
   style={rotationStyle}
-  tabindex={isVideo ? undefined : "0"}
-  role={isVideo ? undefined : "button"}
-  aria-label={isVideo ? undefined : `View enlarged photo: ${alt}`}
-  data-lightbox-src={isVideo ? undefined : withBase(`/images/${src}`)}
+  tabindex={isExpandable ? "0" : undefined}
+  role={isExpandable ? "button" : undefined}
+  aria-label={isExpandable ? `View enlarged photo: ${alt}` : undefined}
+  data-lightbox-src={isExpandable ? withBase(`/images/${src}`) : undefined}
 >
   {/* Paper tape top decoration for scrapbook and tape variants */}
   {(variant === "tape" || variant === "scrapbook") && (
@@ -117,8 +120,15 @@ const isVideo = src.endsWith(".mp4") || src.endsWith(".webm") || src.endsWith(".
     outline: none;
   }
 
-  .is-video-cutout {
+  .is-video-cutout,
+  .photo-cutout.not-expandable {
     cursor: default !important;
+  }
+
+  .photo-cutout.not-expandable:hover,
+  .photo-cutout.not-expandable:focus-visible {
+    transform: none !important;
+    z-index: 1;
   }
 
   /* Aspect ratio containers */
