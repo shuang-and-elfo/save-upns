@@ -110,6 +110,17 @@ export const TEACHERS: Teacher[] = [
     active: true,
   },
   {
+    id: "sulamithe-ello",
+    name: "Sulamithe Ello",
+    role: "Dolphin Room Teacher",
+    classroom: "dolphin",
+    photo: "teachers/sulamithe.jpg",
+    shortBio:
+      "Sulamithe listens closely to children’s questions and helps them develop their ideas through conversation, stories, play, and group projects.",
+    displayOrder: 30,
+    active: true,
+  },
+  {
     id: "kareem-smith",
     name: "Kareem Smith",
     role: "Dolphin Room Teacher",
@@ -117,7 +128,7 @@ export const TEACHERS: Teacher[] = [
     photo: "teachers/kareem.jpg",
     shortBio:
       "Kareem encourages children to move, explore, garden, and challenge themselves through outdoor play.",
-    displayOrder: 30,
+    displayOrder: 31,
     active: true,
   },
   {
@@ -128,7 +139,7 @@ export const TEACHERS: Teacher[] = [
     photo: "teachers/yadira.jpg",
     shortBio:
       "Yadira helps older preschoolers speak up, listen to friends, solve problems together, and feel ready for their next school experience.",
-    displayOrder: 31,
+    displayOrder: 32,
     active: true,
   },
 ];
