@@ -4,7 +4,7 @@ import { TRADITIONS } from "../content/traditions";
 import TraditionPreview from "../components/TraditionPreview.astro";
 import { withBase } from "../utils/url";
 
-const traditionStickers: Record<string, { src: string; side: "left" | "right"; rotate: number; top: string; size: string }> = {
+const traditionStickers: Record<string, { src: string; side: "left" | "right"; rotate: number; top: string; size: string; offsetLeft?: string; offsetRight?: string }> = {
   "carnival": {
     src: "kite.png",
     side: "right",
@@ -46,6 +46,7 @@ const traditionStickers: Record<string, { src: string; side: "left" | "right"; r
     rotate: -8,
     top: "calc(6% - 50px)",
     size: "260px",
+    offsetLeft: "-50px",
   },
 };
 ---
@@ -76,7 +77,7 @@ const traditionStickers: Record<string, { src: string; side: "left" | "right"; r
               {sticker && (
                 <div
                   class={`page-sticker sticker-${sticker.side}`}
-                  style={`--sticker-size: ${sticker.size}; --sticker-rotate: ${sticker.rotate}deg; --sticker-top: ${sticker.top};`}
+                  style={`--sticker-size: ${sticker.size}; --sticker-rotate: ${sticker.rotate}deg; --sticker-top: ${sticker.top}; ${sticker.offsetLeft ? `--sticker-offset-left: ${sticker.offsetLeft};` : ""} ${sticker.offsetRight ? `--sticker-offset-right: ${sticker.offsetRight};` : ""}`}
                   aria-hidden="true"
                 >
                   <img src={withBase(`/images/${sticker.src}`)} alt="" loading="lazy" />
@@ -174,11 +175,11 @@ const traditionStickers: Record<string, { src: string; side: "left" | "right"; r
   }
 
   .sticker-left {
-    left: -120px;
+    left: calc(-120px + var(--sticker-offset-left, 0px));
   }
 
   .sticker-right {
-    right: -120px;
+    right: calc(-120px + var(--sticker-offset-right, 0px));
   }
 
   @keyframes subtleFloat {
@@ -193,10 +194,10 @@ const traditionStickers: Record<string, { src: string; side: "left" | "right"; r
 
   @media (max-width: 1440px) {
     .sticker-left {
-      left: -70px;
+      left: calc(-70px + var(--sticker-offset-left, 0px));
     }
     .sticker-right {
-      right: -70px;
+      right: calc(-70px + var(--sticker-offset-right, 0px));
     }
   }
 
@@ -205,10 +206,10 @@ const traditionStickers: Record<string, { src: string; side: "left" | "right"; r
       width: calc(var(--sticker-size, 260px) * 0.75);
     }
     .sticker-left {
-      left: -35px;
+      left: calc(-35px + var(--sticker-offset-left, 0px));
     }
     .sticker-right {
-      right: -35px;
+      right: calc(-35px + var(--sticker-offset-right, 0px));
     }
   }
 
