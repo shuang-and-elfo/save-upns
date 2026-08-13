@@ -97,13 +97,13 @@ export const TRADITIONS: Tradition[] = [
     slug: "lunar-new-year",
     season: "Winter",
     shortDescription:
-      "A vibrant celebration where families decorate campus, share a community potluck, parade in traditional clothing, listen to festive music, and explore holiday stories and words.",
+      "Families decorate campus, share a festive potluck, parade in traditional clothing with paper lanterns, and explore cultural stories and music.",
     longDescription:
-      "Our school community comes together to celebrate Lunar New Year with colorful decorations, cultural music, and joyful shared traditions. Children and families come dressed in traditional clothing, join an energetic campus parade holding handcrafted paper lanterns, and share a festive community potluck. Throughout the celebration, children listen to music, read books about Lunar New Year, and learn new cultural words and greetings together.",
+      "Our school celebrates Lunar New Year with colorful decorations, festive music, and rich cultural traditions. Children and families dress in traditional clothing, march in a lively parade with handcrafted paper lanterns, and share a delicious community potluck while reading holiday books and learning new words.",
     coverPhoto: "lunar-new-year.jpg",
     galleryPhotos: ["lunar-new-year.jpg"],
     altText: "UPNS children gathered in traditional attire holding handcrafted paper lanterns outside the decorated classroom for Lunar New Year.",
     whatFamiliesEnjoy:
-      "Families love dressing up in traditional clothing, sharing authentic dishes at the potluck, and watching the children joyfully parade with their handmade lanterns while learning about cultural traditions.",
+      "Families love dressing in traditional attire, sharing dishes at the potluck, and cheering on the children as they parade with their handmade lanterns.",
   },
 ];
