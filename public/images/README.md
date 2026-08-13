@@ -41,7 +41,6 @@ To automatically link with the content definitions in `src/content/`, please nam
 - `teacher-brigitte-peistrup.jpg`
 - `teacher-maria-maldonado.jpg`
 - `teacher-regina-gutierrez.jpg`
-- `teacher-kareem-smith.jpg`
 - `teacher-sulamithe-ello.jpg`
 - `teacher-yadira-montes.jpg`
 

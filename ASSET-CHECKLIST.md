@@ -52,7 +52,6 @@ All teacher portraits should be candid, warm, and personal—photographed at sch
 | **Brigitte Peistrup** | `teacher-brigitte-peistrup.jpg` | Kangaroo Room Teacher | `1:1` (Square, 500×500px) | *"Portrait of UPNS Kangaroo Room Teacher Brigitte Peistrup outside."* |
 | **Maria Maldonado** | `teacher-maria-maldonado.jpg` | Kangaroo Room Teacher | `1:1` (Square, 500×500px) | *"Portrait of UPNS Kangaroo Room Teacher Maria Maldonado in the classroom."* |
 | **Regina Gutierrez** | `teacher-regina-gutierrez.jpg` | Kangaroo Room Teacher | `1:1` (Square, 500×500px) | *"Portrait of UPNS Kangaroo Room Teacher Regina Gutierrez in the classroom."* |
-| **Kareem Smith** | `teacher-kareem-smith.jpg` | Kangaroo Room Teacher | `1:1` (Square, 500×500px) | *"Portrait of UPNS Kangaroo Room Teacher Kareem Smith in the courtyard."* |
 | **Sulamithe Ello** | `teacher-sulamithe-ello.jpg` | Dolphin Room Teacher | `1:1` (Square, 500×500px) | *"Portrait of UPNS Dolphin Room Teacher Sulamithe Ello in the classroom."* |
 | **Yadira Montes** | `teacher-yadira-montes.jpg` | Dolphin Room Teacher | `1:1` (Square, 500×500px) | *"Portrait of UPNS Dolphin Room Teacher Yadira Montes in the classroom."* |
 | **[CONFIRM DIRECTOR]** | `teacher-director.jpg` | School Director | `1:1` (Square, 500×500px) | *"Portrait of the UPNS School Director."* |

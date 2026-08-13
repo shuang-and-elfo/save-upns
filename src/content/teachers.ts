@@ -121,17 +121,6 @@ export const TEACHERS: Teacher[] = [
     active: true,
   },
   {
-    id: "kareem-smith",
-    name: "Kareem Smith",
-    role: "Dolphin Room Teacher",
-    classroom: "dolphin",
-    photo: "teachers/kareem.jpg",
-    shortBio:
-      "Kareem encourages children to move, explore, garden, and challenge themselves through outdoor play.",
-    displayOrder: 31,
-    active: true,
-  },
-  {
     id: "yadira-montes",
     name: "Yadira Montes",
     role: "Dolphin Room Teacher",
@@ -139,7 +128,7 @@ export const TEACHERS: Teacher[] = [
     photo: "teachers/yadira.jpg",
     shortBio:
       "Yadira helps older preschoolers speak up, listen to friends, solve problems together, and feel ready for their next school experience.",
-    displayOrder: 32,
+    displayOrder: 31,
     active: true,
   },
 ];
