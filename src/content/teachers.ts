@@ -24,7 +24,7 @@ export const TEACHERS: Teacher[] = [
   {
     id: "ana-flores",
     name: "Ana Flores",
-    role: "Administration Manager",
+    role: "Office Administrator",
     classroom: "all",
     photo: "teachers/ana.jpg",
     shortBio:

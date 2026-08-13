@@ -29,7 +29,7 @@ export const TRADITIONS: Tradition[] = [
     galleryPhotos: ["family-fun-day-2.jpg", "carnival.jpg", "carnival2.jpg"],
     altText: "Children and families playing games on the sunny UPNS playground during Family Fun Day.",
     whatFamiliesEnjoy:
-      "Children love running in the races, trying every game booth, and checking the raffle board, while parents and alumni connect to support the school.",
+      "Families absolutely adore Family Fun Day because it’s a lively celebration that unites the whole community for a great cause, packed with exciting games and creative activities that kids can’t get enough of, while giving parents the perfect chance to mingle, laugh, and build lasting connections.",
   },
   {
     id: "underwood-farm-trip",

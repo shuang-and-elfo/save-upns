@@ -27,13 +27,13 @@ export const CLASSROOMS: ClassroomInfo[] = [
     id: "kitten",
     name: "Kitten Room",
     slug: "kitten",
-    ageRange: "18 months – 3 year olds",
+    ageRange: "18 months to 2.5 years old",
     animal: "kitten",
     tagline: "A warm first step into school.",
     shortDescription:
       "Our youngest children explore water, sand, paint, blocks, and outdoor play. Teachers guide toddlers through smooth school transitions and partner with parents on potty training at your child’s pace.",
     longDescription:
-      "The Kitten Room is a cozy first step into school for toddlers ages 18 months to 3 years. Starting preschool is a big milestone! In the Kitten Room, potty training is NOT required for enrollment. Our teachers actively support toddlers in diapers, guide families through smooth morning transitions, and partner with parents on potty training when your child shows readiness.",
+      "The Kitten Room is a cozy first step into school for toddlers ages 18 months to 2.5 years. Starting preschool is a big milestone! In the Kitten Room, potty training is NOT required for enrollment. Our teachers actively support toddlers in diapers, guide families through smooth morning transitions, and partner with parents on potty training when your child shows readiness.",
     heroImage: "kitten-thumbnail.jpg",
     galleryImages: [
       "kitten-thumbnail.jpg",
@@ -78,7 +78,7 @@ export const CLASSROOMS: ClassroomInfo[] = [
     id: "kangaroo",
     name: "Kangaroo Room",
     slug: "kangaroo",
-    ageRange: "3 – 4 year olds",
+    ageRange: "2.5 to 3.5 years old",
     animal: "kangaroo",
     tagline: "Big imaginations and growing friendships.",
     shortDescription:
@@ -122,7 +122,7 @@ export const CLASSROOMS: ClassroomInfo[] = [
     id: "dolphin",
     name: "Dolphin Room",
     slug: "dolphin",
-    ageRange: "4 – 5 year olds",
+    ageRange: "3.5 to 5 years old",
     animal: "dolphin",
     tagline: "Big questions, shared projects, and growing independence.",
     shortDescription:

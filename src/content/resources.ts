@@ -33,14 +33,14 @@ export const COOP_LIFE_DATA = {
         "One adult from each family attends regular evening membership meetings to stay connected with school updates, participate in important community decisions, and hear from guest speakers on child development.",
     },
     {
-      title: "School Cleaning OR Committee Role",
+      title: "School Cleaning",
       description:
-        "Each family helps care for our campus during one Saturday morning cleaning session per quarter (8:00 AM–10:00 AM), or serves on a school committee such as Room Parent or Event Coordinator instead.",
+        "Each family helps care for our campus during one Saturday morning cleaning session per quarter (8:00 AM–10:00 AM).",
     },
     {
       title: "Community Fundraising Support",
       description:
-        "Families participate in annual community fundraisers and our spring Family Fun Day, which directly fund our weekly music, dance, soccer, and Taekwondo enrichment classes while helping keep tuition accessible.",
+        "We host monthly fundraisers featuring a variety of exciting events to help raise funds for children’s enrichment programs, field trips like Underwood Farms, special events, and classroom supplies, all while working hard to keep tuition affordable for families.",
     },
   ] as CoopResponsibility[],
   faqs: [

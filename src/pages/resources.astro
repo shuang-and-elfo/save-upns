@@ -1,9 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { RESOURCES_POLICIES } from "../content/resources";
-import SectionIntro from "../components/SectionIntro.astro";
 import PolicyLink from "../components/PolicyLink.astro";
-import DoodleIllustration from "../components/DoodleIllustration.astro";
 import FloatingIllustration from "../components/FloatingIllustration.astro";
 ---
 
@@ -37,51 +35,6 @@ import FloatingIllustration from "../components/FloatingIllustration.astro";
         {RESOURCES_POLICIES.map((policy) => (
           <PolicyLink policy={policy} />
         ))}
-      </div>
-    </div>
-  </section>
-
-  {/* HANDBOOK & DOCUMENTS DOWNLOAD CARDS */}
-  <section class="docs-section" aria-labelledby="docs-heading">
-    <div class="container">
-      <SectionIntro
-        badge="Parent Handbooks & Forms"
-        title="Downloadable School Documents"
-        subtitle="Need a printable copy for your family records or pediatrician? Download official PDF forms and handbooks below."
-        doodle="house"
-        align="center"
-      />
-
-      <div class="docs-grid">
-        <div class="doc-card">
-          <DoodleIllustration name="sun" size="md" color="var(--color-tomato)" />
-          <h3>UPNS Parent Handbook (PDF)</h3>
-          <p>Complete guide to co-op workdays, daily routines, and school policies.</p>
-          <a href="mailto:upns@ucla.edu?subject=UPNS%20Parent%20Handbook%20Request" class="doc-btn">
-            <span>Request Handbook PDF</span>
-            <span>↓</span>
-          </a>
-        </div>
-
-        <div class="doc-card">
-          <DoodleIllustration name="heart" size="md" color="var(--color-leaf-green)" />
-          <h3>California Immunization Form</h3>
-          <p>Required State of California health & immunization verification form.</p>
-          <a href="mailto:upns@ucla.edu?subject=California%20Immunization%20Form%20Request" class="doc-btn">
-            <span>Request Form PDF</span>
-            <span>↓</span>
-          </a>
-        </div>
-
-        <div class="doc-card">
-          <DoodleIllustration name="house" size="md" color="var(--color-yellow)" />
-          <h3>UPNS Constitution & Bylaws</h3>
-          <p>Articles of incorporation and democratic governance bylaws.</p>
-          <a href="mailto:upns@ucla.edu?subject=UPNS%20Constitution%20and%20Bylaws%20Request" class="doc-btn">
-            <span>Request Bylaws PDF</span>
-            <span>↓</span>
-          </a>
-        </div>
       </div>
     </div>
   </section>
@@ -148,62 +101,6 @@ import FloatingIllustration from "../components/FloatingIllustration.astro";
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-  }
-
-  .docs-section {
-    padding: 5rem 0;
-    background: var(--color-paper-white);
-  }
-
-  .docs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .doc-card {
-    background: #ffffff;
-    border: 2px solid var(--color-border);
-    border-radius: 24px;
-    padding: 2rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    box-shadow: var(--shadow-natural);
-  }
-
-  .doc-card h3 {
-    font-size: 1.3rem;
-    margin: 0;
-  }
-
-  .doc-card p {
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    margin: 0 0 1.25rem;
-  }
-
-  .doc-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 700;
-    font-size: 0.92rem;
-    color: var(--color-text);
-    background: var(--color-cream);
-    padding: 0.65rem 1.35rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .doc-btn:hover {
-    background: #f8efe0;
-    transform: translateY(-2px);
   }
 
   @media (max-width: 768px) {
