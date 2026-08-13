@@ -91,4 +91,19 @@ export const TRADITIONS: Tradition[] = [
     whatFamiliesEnjoy:
       "Parents love watching their children perform with classmates, taking holiday photos with Santa, and sharing a delicious meal with other families.",
   },
+  {
+    id: "lunar-new-year",
+    title: "Lunar New Year",
+    slug: "lunar-new-year",
+    season: "Winter",
+    shortDescription:
+      "A vibrant celebration where families decorate campus, share a community potluck, parade in traditional clothing, listen to festive music, and explore holiday stories and words.",
+    longDescription:
+      "Our school community comes together to celebrate Lunar New Year with colorful decorations, cultural music, and joyful shared traditions. Children and families come dressed in traditional clothing, join an energetic campus parade holding handcrafted paper lanterns, and share a festive community potluck. Throughout the celebration, children listen to music, read books about Lunar New Year, and learn new cultural words and greetings together.",
+    coverPhoto: "lunar-new-year.jpg",
+    galleryPhotos: ["lunar-new-year.jpg"],
+    altText: "UPNS children gathered in traditional attire holding handcrafted paper lanterns outside the decorated classroom for Lunar New Year.",
+    whatFamiliesEnjoy:
+      "Families love dressing up in traditional clothing, sharing authentic dishes at the potluck, and watching the children joyfully parade with their handmade lanterns while learning about cultural traditions.",
+  },
 ];
