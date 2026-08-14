@@ -1,365 +1,568 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PetitionForm from "../components/PetitionForm.astro";
 import { withBase } from "../utils/url";
-import { CLASSROOMS } from "../content/classrooms";
-import { getAllActiveTeachers } from "../content/teachers";
-import { TRADITIONS } from "../content/traditions";
-import SectionIntro from "../components/SectionIntro.astro";
-import ClassroomPreview from "../components/ClassroomPreview.astro";
-import TeacherProfile from "../components/TeacherProfile.astro";
-import CooperativeCallout from "../components/CooperativeCallout.astro";
-import TestimonialCloud from "../components/TestimonialCloud.astro";
-import PhotoCutout from "../components/PhotoCutout.astro";
-import FloatingIllustration from "../components/FloatingIllustration.astro";
-import HeroBlobSlideshow from "../components/HeroBlobSlideshow.astro";
-
-const featuredTeachers = getAllActiveTeachers().slice(0, 3);
-const featuredTraditions = TRADITIONS.slice(0, 2);
 ---
 
-<BaseLayout
-  title="Home"
-  description="Founded in 1966, University Parents Nursery School (UPNS) is a NAEYC-accredited cooperative parent-participation preschool in Los Angeles serving UCLA and West LA community families with children ages 18 months to 5 years."
->
-  {/* COMBINED HERO & WELCOME SECTION */}
-  <section class="hero-section" aria-labelledby="hero-title">
-    <FloatingIllustration src="snail.png" position="bottom-left" size="sm" bottom="8px" left="24px" rotate={-6} />
-    <div class="container hero-container hero-grid">
-      <div class="hero-text-col">
-        <h1 id="hero-title" class="hero-title">
-          Where children learn and grow through play.
-        </h1>
+<BaseLayout>
+  <div class="petition-container">
 
-        <p class="hero-desc">
-          At UPNS, children spend their days exploring through joyful play—building with sand and water, creating art, singing, and discovering the outdoors. Through play, they naturally build confidence, curiosity, and lasting friendships. For 60 years, our parent-teacher cooperative has made school a warm, welcoming community that feels like home.
+    {/* ============================================================
+        1. OPENING / HERO: Explain what happened immediately
+        ============================================================ */}
+    <section class="petition-hero" aria-labelledby="hero-title">
+      <span class="hero-eyebrow">SAVE UPNS</span>
+      <h1 id="hero-title" class="hero-title">Help Keep UPNS Open</h1>
+
+      <div class="hero-lead-text">
+        <p class="lead-strong">
+          UCLA has asked University Parents Nursery School (UPNS) and its remaining Early Care and Education centers to close by summer 2027.
         </p>
-
-        <div class="hero-cta-group">
-          <a href={withBase("/visit/")} class="btn-primary-hero">
-            <span>Come Visit UPNS</span>
-            <span>♥</span>
-          </a>
-        </div>
+        <p>
+          For UCLA families, this would mean the loss of a significant part of the childcare network they have relied on for decades.
+        </p>
+        <p>
+          UPNS has served UCLA and neighborhood families since 1966. Unlike UCLA ECE, UPNS is an independent nonprofit cooperative: UCLA does not operate the school or employ its teachers. We are asking UCLA to work with UPNS to ensure that the school can continue beyond summer 2027 — either in its current location or, if that is not possible, at another suitable UCLA-supported site.
+        </p>
       </div>
 
-      <div class="hero-media-col">
-        <HeroBlobSlideshow />
+      <div class="hero-action-row">
+        <a href="#sign" class="hero-cta-btn">Sign the Petition</a>
+        <p class="hero-live-count" data-count-wrapper style="display: none;">
+          <strong data-signature-count></strong> people have signed
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  {/* OUR THREE CLASSROOMS */}
-  <section class="classrooms-section" aria-labelledby="classrooms-heading">
-    <div class="container">
-      <SectionIntro
-        badge="Our Classrooms"
-        title="Three classrooms for different stages of preschool."
-        subtitle="Each room is shaped around the children’s age and stage, with experienced teachers, plenty of time to play, and parents helping alongside the classroom team."
-        doodle="handprints"
-        align="center"
+    {/* ============================================================
+        2. ONE REAL WIDE UPNS PHOTOGRAPH
+        ============================================================ */}
+    <figure class="petition-featured-photo">
+      <img
+        src={withBase("/images/kan3.jpg")}
+        alt="Children, teachers, and parents gathered together in a circle playing with a colorful parachute at UPNS"
+        class="featured-photo-img"
+        width="1195"
+        height="896"
+        loading="eager"
       />
+      <figcaption class="featured-photo-caption">
+        UPNS has served UCLA and neighborhood families since 1966.
+      </figcaption>
+    </figure>
 
-      <div class="classrooms-grid">
-        {CLASSROOMS.map((room, index) => {
-          const variants: ("blob" | "cutout" | "rounded")[] = [
-            "blob",
-            "cutout",
-            "rounded",
-          ];
-          const rotateVals = [-1.5, 2, -2];
-          return (
-            <ClassroomPreview
-              classroom={room}
-              variant={variants[index % variants.length]}
-              rotate={rotateVals[index % rotateVals.length]}
-            />
-          );
-        })}
+    {/* ============================================================
+        3. WHY WE ARE ASKING UCLA TO RECONSIDER
+        ============================================================ */}
+    <section class="petition-editorial-section" aria-labelledby="why-heading">
+      <h2 id="why-heading" class="section-title">Why we are asking UCLA to reconsider</h2>
+
+      <div class="editorial-prose">
+        <p>
+          UPNS began in 1966, when parents living in UCLA Family Student Housing came together to create a cooperative preschool for their children. For sixty years, it has provided high-quality early childhood education while building a strong community among UCLA faculty, staff, students, and neighborhood families.
+        </p>
+        <p>
+          The possible loss of UPNS comes at a particularly difficult time. Fernald Child Care Center has already closed, and UCLA has now announced that its remaining Early Care and Education centers will close in summer 2027. UPNS and UCLA ECE are separate organizations, and we do not assume that the circumstances behind these decisions are the same. But the combined effect on families is significant: a major reduction in childcare options for people who work and study at UCLA.
+        </p>
+        <p>
+          Reliable, financially accessible, high-quality childcare is already difficult to find in Los Angeles. For faculty and staff with young children, access to childcare affects their ability to work, teach, conduct research, and build long-term careers at UCLA. It also affects UCLA’s ability to recruit and retain faculty and staff, particularly families relocating to Los Angeles without established childcare or family support networks. For student parents, dependable childcare can determine whether they are able to complete their degrees and participate fully in university life.
+        </p>
+        <p>
+          UPNS has helped UCLA meet this need through an unusually efficient model. UPNS is an independent nonprofit cooperative. UCLA does not operate the school or employ its teachers. The program is sustained through tuition, its teachers and staff, parent participation, fundraising, volunteer leadership, and the cooperative community.
+        </p>
+        <p>
+          At a moment when UCLA is losing other childcare capacity, preserving an established independent provider like UPNS is especially valuable.
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  {/* WHAT PARENTS SAY TESTIMONIAL CLOUD */}
-  <TestimonialCloud />
+    {/* ============================================================
+        4. OUR ASK: The single strong visual break
+        ============================================================ */}
+    <section class="petition-ask-card" aria-labelledby="ask-heading">
+      <h2 id="ask-heading" class="ask-card-title">What we are asking UCLA to do</h2>
 
-  {/* MEET OUR TEACHERS PREVIEW */}
-  <section class="teachers-section" aria-labelledby="teachers-heading">
-    <FloatingIllustration src="leaves.png" position="top-left" size="md" rotate={10} />
-    <div class="container">
-      <SectionIntro
-        badge="Our Educators"
-        title="Teachers who really get to know your child."
-        subtitle="Our teachers bring years of early-childhood experience and work closely with parents throughout the school day."
-        doodle="heart"
-        align="center"
-      />
+      <p class="ask-card-intro">
+        We understand that there may be facilities, operational, financial, or other considerations behind UCLA’s decision that have not yet been shared with the broader community. We are not asking UCLA to disregard those constraints, nor are we asking the university to take over or operate UPNS. We are asking UCLA to work with the school to identify a viable path forward.
+      </p>
 
-      <div class="teachers-preview-grid">
-        {featuredTeachers.map((teacher) => (
-          <TeacherProfile teacher={teacher} />
-        ))}
+      <ol class="ask-list">
+        <li class="ask-item">
+          <strong class="ask-item-title">1. Explore whether UPNS can remain in its current location beyond summer 2027.</strong>
+          <span class="ask-item-desc">If there is a feasible way for the school to remain, we ask UCLA to seriously consider it before closure becomes irreversible.</span>
+        </li>
+        <li class="ask-item">
+          <strong class="ask-item-title">2. If the current location cannot continue, actively help UPNS identify another suitable site.</strong>
+          <span class="ask-item-desc">Work with UPNS to identify a UCLA-owned, UCLA-controlled, or UCLA-supported location where the school can continue operating.</span>
+        </li>
+        <li class="ask-item">
+          <strong class="ask-item-title">3. Provide sufficient time and transition support for relocation.</strong>
+          <span class="ask-item-desc">A licensed preschool cannot simply move overnight. Site selection, approvals, facility adaptation, fundraising, and licensing all require time.</span>
+        </li>
+        <li class="ask-item">
+          <strong class="ask-item-title">4. Meet with UPNS leadership and families.</strong>
+          <span class="ask-item-desc">Meet with representatives of the UPNS Board, staff, parents, and UCLA-affiliated families so the community can better understand the decision and participate in exploring realistic alternatives.</span>
+        </li>
+      </ol>
+
+      <p class="ask-card-highlight">
+        If UPNS’s current home cannot continue, we ask UCLA to help it find a new one.
+      </p>
+    </section>
+
+    {/* ============================================================
+        5. EMOTIONAL ARGUMENT: Concentrated passage
+        ============================================================ */}
+    <section class="petition-emotional-passage">
+      <div class="editorial-prose">
+        <p>
+          The value of UPNS extends beyond the number of childcare spaces it provides. Its cooperative model asks parents to participate in classrooms, care for the school, support fundraising, and become part of one another’s lives. Many families arrive at UCLA and in Los Angeles without extended family nearby, and UPNS becomes an important source of community during the demanding years of raising young children.
+        </p>
+        <p>
+          Its teachers, traditions, relationships, and institutional knowledge have been built over decades. Once that community disappears, it will be extraordinarily difficult to recreate.
+        </p>
+        <p class="emotional-callout">
+          After sixty years of UPNS families building a community at UCLA, we hope UCLA will help make sure there is a sixty-first.
+        </p>
+      </div>
+    </section>
+
+    {/* ============================================================
+        6. FULL PETITION LETTER: Formal open letter
+        ============================================================ */}
+    <section class="petition-letter-section" aria-labelledby="letter-title">
+      <div class="letter-header">
+        <span class="letter-badge">Open Letter</span>
+        <h2 id="letter-title" class="letter-title">Petition to Preserve University Parents Nursery School</h2>
+        <p class="letter-recipient">
+          To UCLA Leadership and the Regents of the University of California:
+        </p>
       </div>
 
-      <div class="view-all-row">
-        <a href={withBase("/about/#team")} class="view-all-link">
-          <span>Meet our team</span>
-          <span>→</span>
-        </a>
+      <div class="letter-body">
+        <p>
+          We, the undersigned members of the UPNS and UCLA communities, respectfully ask UCLA to work with University Parents Nursery School (UPNS) to ensure that the school can continue operating beyond summer 2027.
+        </p>
+        <p>
+          UPNS has served UCLA and surrounding families since 1966, when parents living in UCLA Family Student Housing came together to create a cooperative preschool for their children. For sixty years, the school has provided high-quality early childhood education while building a strong community among faculty, staff, students, and neighborhood families. Today, UPNS remains an independent nonprofit cooperative. It employs its own teachers, manages its own program, and is sustained through tuition, parent participation, fundraising, and volunteer leadership. UCLA’s support in making space available to UPNS has allowed this partnership to continue for generations.
+        </p>
+        <p>
+          The possible loss of UPNS comes at a particularly difficult time for families at UCLA. Fernald Child Care Center has already closed, and UCLA has now announced that its remaining Early Care and Education centers will close in summer 2027. Although UPNS and UCLA ECE are separate organizations and the circumstances surrounding their closures may be different, the combined effect on families is significant: a major reduction in the childcare options available to people who work and study at UCLA.
+        </p>
+        <p>
+          Affordable, reliable, high-quality childcare is already difficult to find in Los Angeles. For faculty and staff with young children, access to childcare directly affects their ability to work, teach, conduct research, and remain at UCLA. It is also an important factor in UCLA’s ability to recruit new faculty and staff, particularly families relocating to Los Angeles without established childcare or family support networks. For student parents, dependable childcare can determine whether they are able to complete their degrees and participate fully in university life.
+        </p>
+        <p>
+          UPNS has helped UCLA meet this need through an unusually efficient model. UCLA does not operate the school or employ its staff. Instead, an independent nonprofit community provides the teachers, administration, fundraising, and day-to-day operation of the program. At a time when UCLA is losing other childcare capacity, preserving an established provider like UPNS is especially valuable.
+        </p>
+        <p>
+          We understand that there may be facilities, operational, financial, or other considerations behind UCLA’s decision that have not yet been shared with the broader community. We are not asking UCLA to disregard those constraints, nor are we asking the university to assume responsibility for operating UPNS. We are asking UCLA to work with the school to identify a viable path forward.
+        </p>
+        
+        <p class="letter-subintro">Specifically, we respectfully ask UCLA to:</p>
+        <ul class="letter-bullets">
+          <li>
+            <strong>Explore whether UPNS can remain in its current location beyond summer 2027</strong>, if there is a feasible way to do so.
+          </li>
+          <li>
+            <strong>If the current location cannot continue, actively work with UPNS to identify another suitable UCLA-owned, UCLA-controlled, or UCLA-supported site</strong> where the school can continue operating.
+          </li>
+          <li>
+            <strong>Provide sufficient time and transition support for a relocation</strong>, recognizing that identifying and preparing a licensed preschool site requires planning, approvals, fundraising, construction or adaptation, and licensing.
+          </li>
+          <li>
+            <strong>Meet with UPNS leadership, staff, parents, and UCLA-affiliated families before the closure becomes irreversible</strong>, so that the community can better understand the decision and participate in exploring realistic alternatives.
+          </li>
+        </ul>
+
+        <p>
+          The value of UPNS extends beyond the number of childcare spaces it provides. Its cooperative model asks parents to participate in classrooms, care for the school, attend meetings, support fundraising, and become part of one another’s lives. Many families come to UCLA and Los Angeles without extended family nearby, and UPNS becomes an important source of community and support during the demanding years of raising young children. Its teachers, traditions, relationships, and institutional knowledge have been built over decades and cannot easily be recreated once lost.
+        </p>
+        <p>
+          We recognize that institutions and facilities change over time, and we do not assume that UPNS must remain in exactly the same location forever. But a change in location should not require the disappearance of a sixty-year-old school. UPNS already has the educational program, teachers, leadership, nonprofit structure, families, and community necessary to continue serving UCLA. If its current home cannot continue, we ask UCLA to help it find a new one.
+        </p>
+        <p>
+          Preserving UPNS would support not only the families enrolled today, but also future UCLA faculty, staff, students, and families who will need reliable childcare in the years ahead. After sixty years of partnership between UPNS and the UCLA community, we respectfully ask the university to help ensure that this institution has a future.
+        </p>
+        <p class="letter-closing-demand">
+          We ask UCLA to work with UPNS to keep the school open beyond summer 2027, either at its current location or at a suitable new site.
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  {/* OUR TRADITIONS SCRAPBOOK GLIMPSE */}
-  <section class="traditions-preview-section" aria-labelledby="traditions-heading">
-    <FloatingIllustration src="tractor.png" position="bottom-right" size="md" rotate={-8} />
-    <div class="container">
-      <SectionIntro
-        badge="School Memories"
-        title="Traditions that bring families together."
-        subtitle="Throughout the year, UPNS families come together for games, trips, camping, seasonal celebrations, and plenty of shared memories."
-        doodle="kite"
-        align="center"
-      />
+    {/* ============================================================
+        7. SIGNING FORM: Action Network integration & Native form
+        ============================================================ */}
+    <PetitionForm />
 
-      <div class="traditions-grid">
-        {featuredTraditions.map((tradition, index) => (
-          <div class="tradition-card">
-            <PhotoCutout
-              src={tradition.coverPhoto}
-              alt={tradition.altText}
-              variant="tape"
-              aspectRatio="16:9"
-              rotate={index === 0 ? -2 : 2}
-            />
-            <div class="tradition-card-info">
-              <h3><a href={withBase(`/traditions/#${tradition.slug}`)}>{tradition.title} ({tradition.season})</a></h3>
-              <p>{tradition.shortDescription}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div class="view-all-row">
-        <a href={withBase("/traditions/")} class="view-all-link">
-          <span>Explore all UPNS School Traditions</span>
-          <span>→</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  {/* CO-OP CALLOUT */}
-  <div class="container">
-    <CooperativeCallout />
   </div>
 </BaseLayout>
 
 <style>
-  /* Hero */
-  .hero-section {
-    padding: 4rem 0 5.5rem;
-    background: linear-gradient(180deg, var(--color-paper-white) 0%, var(--color-cream) 100%);
-    position: relative;
-    overflow: hidden;
+  /* ============================================================
+     1. HERO SECTION STYLING
+     ============================================================ */
+  .petition-hero {
+    padding: 3.5rem 0 2rem;
   }
 
-  .hero-container {
-    max-width: 1180px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 1.75rem;
-  }
-
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.05fr 1fr;
-    gap: 2.25rem;
-    align-items: center;
-    position: relative;
-    z-index: 2;
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--color-tomato, #d86f58);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
   }
 
   .hero-title {
-    font-family: var(--font-display, "Baloo Chettan 2", "Baloo 2", cursive, sans-serif);
-    font-size: 3.25rem;
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 2.85rem;
     font-weight: 800;
     line-height: 1.12;
-    margin: 0 0 1.25rem;
-    color: var(--color-text, #35483c);
-    letter-spacing: -0.025em;
-    max-width: 630px;
+    color: var(--color-text, #233128);
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.02em;
   }
 
-  .hero-desc {
-    font-size: 1.2rem;
-    line-height: 1.75;
-    color: var(--color-text, #35483c);
-    margin: 0 0 2.25rem;
-    max-width: 630px;
-  }
-
-  .hero-cta-group {
+  .hero-lead-text {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hero-lead-text p {
+    margin: 0;
+  }
+
+  .lead-strong {
+    font-size: 1.22rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--color-text, #233128);
+  }
+
+  .hero-action-row {
+    margin-top: 1.85rem;
+    display: flex;
     align-items: center;
     gap: 1.25rem;
+    flex-wrap: wrap;
   }
 
-  .btn-primary-hero {
+  .hero-cta-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
     background: var(--color-tomato, #d86f58);
     color: #ffffff;
-    font-weight: 700;
-    font-size: 1.1rem;
-    padding: 1rem 2.25rem;
-    border-radius: 999px;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 1.08rem;
+    font-weight: 800;
     text-decoration: none;
-    box-shadow: 0 8px 20px rgba(216, 111, 88, 0.3);
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease;
+    padding: 0.85rem 1.85rem;
+    border-radius: 999px;
+    box-shadow: 0 3px 12px rgba(216, 111, 88, 0.28);
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
   }
 
-  .btn-primary-hero:hover {
-    background: #c75c45;
-    transform: translateY(-3px) scale(1.03);
+  .hero-cta-btn:hover {
+    background: var(--color-tomato-dark, #be533d);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(216, 111, 88, 0.35);
   }
 
-  /* Classrooms Section */
-  .classrooms-section {
-    padding: 5.5rem 0;
-    background: var(--color-paper-white);
-    position: relative;
-    overflow: hidden;
+  .hero-live-count {
+    font-size: 0.98rem;
+    color: var(--color-text-muted, #536459);
+    margin: 0;
   }
 
-  .classrooms-section .container {
-    position: relative;
-    z-index: 2;
-    max-width: var(--max-content-width, 1200px);
-    margin: 0 auto;
+  .hero-live-count strong {
+    color: var(--color-tomato, #d86f58);
+    font-weight: 800;
+  }
+
+  /* ============================================================
+     2. FEATURED REAL PHOTOGRAPH
+     ============================================================ */
+  .petition-featured-photo {
+    margin: 2.25rem 0 3.5rem;
+    padding: 0;
+  }
+
+  .featured-photo-img {
     width: 100%;
+    height: auto;
+    border-radius: 14px;
+    display: block;
+    box-shadow: 0 4px 20px rgba(35, 49, 40, 0.08);
   }
 
-  .classrooms-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2.25rem;
-    margin: 2.5rem auto 0;
-    width: 100%;
-    justify-items: stretch;
-  }
-
-  /* Teachers Preview Section */
-  .teachers-section {
-    position: relative;
-    overflow: hidden;
-    padding: 5.5rem 0;
-  }
-
-  .teachers-section .container {
-    position: relative;
-    z-index: 2;
-  }
-
-  .teachers-preview-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
-  }
-
-  .view-all-row {
-    margin-top: 2.5rem;
+  .featured-photo-caption {
+    font-size: 0.88rem;
+    color: var(--color-text-muted, #536459);
     text-align: center;
+    margin-top: 0.65rem;
+    font-style: italic;
   }
 
-  .view-all-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 700;
+  /* ============================================================
+     3. EDITORIAL PROSE
+     ============================================================ */
+  .petition-editorial-section {
+    margin: 2.5rem 0 3.5rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--color-text, #233128);
+    margin: 0 0 1.35rem;
+    letter-spacing: -0.015em;
+  }
+
+  .editorial-prose {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .editorial-prose p {
+    margin: 0;
+  }
+
+  /* ============================================================
+     4. WHAT WE ARE ASKING UCLA TO DO (THE HIGHLIGHTED CARD)
+     ============================================================ */
+  .petition-ask-card {
+    background: #fbf5ec;
+    border: 1.5px solid #ebdcc5;
+    border-radius: 18px;
+    padding: 2.5rem 2.25rem;
+    margin: 3.5rem 0;
+    box-shadow: 0 4px 18px rgba(45, 58, 49, 0.04);
+  }
+
+  .ask-card-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 1.95rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--color-text, #233128);
+    margin: 0 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .ask-card-intro {
     font-size: 1.02rem;
-    color: var(--color-tomato);
-    text-decoration: none;
-    padding: 0.7rem 1.5rem;
-    border: 2px solid var(--color-border);
-    border-radius: 999px;
-    background: #ffffff;
-    transition: all 0.2s ease;
+    line-height: 1.6;
+    color: var(--color-text, #233128);
+    margin: 0 0 1.75rem;
   }
 
-  .view-all-link:hover {
-    background: var(--color-cream);
-    transform: translateY(-2px);
-  }
-
-  /* Traditions preview */
-  .traditions-preview-section {
-    padding: 5rem 0;
-    background: #fffcf6;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .traditions-preview-section .container {
-    position: relative;
-    z-index: 2;
-  }
-
-  .traditions-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
-  }
-
-  .tradition-card {
+  .ask-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
   }
 
-  .tradition-card-info {
+  .ask-item {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.35rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #ebdcc5;
   }
 
-  .tradition-card-info h3 {
-    font-size: 1.5rem;
-    margin: 0;
+  .ask-item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
   }
 
-  .tradition-card-info h3 a {
-    text-decoration: none;
-    color: var(--color-text);
+  .ask-item-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--color-text, #233128);
   }
 
-  .tradition-card-info p {
+  .ask-item-desc {
     font-size: 0.98rem;
-    color: var(--color-text-muted);
+    line-height: 1.55;
+    color: var(--color-text-muted, #536459);
+  }
+
+  .ask-card-highlight {
+    margin: 1.75rem 0 0;
+    padding-top: 1.35rem;
+    border-top: 2px solid var(--color-tomato, #d86f58);
+    font-size: 1.12rem;
+    font-weight: 800;
+    line-height: 1.45;
+    color: var(--color-text, #233128);
+  }
+
+  /* ============================================================
+     5. EMOTIONAL PASSAGE
+     ============================================================ */
+  .petition-emotional-passage {
+    margin: 3rem 0;
+  }
+
+  .emotional-callout {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.5;
+    color: var(--color-text, #233128);
+    border-left: 3px solid var(--color-tomato, #d86f58);
+    padding-left: 1.15rem;
+    margin: 0.5rem 0 0;
+  }
+
+  /* ============================================================
+     6. FULL PETITION LETTER
+     ============================================================ */
+  .petition-letter-section {
+    background: #ffffff;
+    border: 1px solid var(--color-border, #ede4d3);
+    border-radius: 18px;
+    padding: 3rem 2.5rem;
+    margin: 4rem 0 2rem;
+    box-shadow: 0 4px 20px rgba(35, 49, 40, 0.04);
+  }
+
+  .letter-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #ebdcc5;
+  }
+
+  .letter-badge {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: #f7efe2;
+    color: var(--color-tomato, #d86f58);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+  }
+
+  .letter-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 1.85rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--color-text, #233128);
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .letter-recipient {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text, #233128);
     margin: 0;
   }
 
-  @media (max-width: 1024px) {
-    .classrooms-grid,
-    .teachers-preview-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  .letter-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    font-size: 1.02rem;
+    line-height: 1.68;
+    color: #2c3830;
   }
 
-  @media (max-width: 768px) {
-    .hero-grid,
-    .intro-grid,
-    .traditions-grid {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
+  .letter-body p {
+    margin: 0;
+  }
+
+  .letter-subintro {
+    font-weight: 700;
+    margin-top: 0.5rem;
+  }
+
+  .letter-bullets {
+    margin: 0;
+    padding-left: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .letter-bullets li {
+    line-height: 1.6;
+  }
+
+  .letter-closing-demand {
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1.5;
+    color: var(--color-text, #233128);
+    padding-top: 1rem;
+    border-top: 1px solid #ebdcc5;
+  }
+
+  /* ============================================================
+     RESPONSIVE ADJUSTMENTS
+     ============================================================ */
+  @media (max-width: 600px) {
+    .petition-hero {
+      padding: 2.25rem 0 1.5rem;
     }
-    .classrooms-grid,
-    .teachers-preview-grid {
-      grid-template-columns: 1fr;
-    }
+
     .hero-title {
-      font-size: 2.3rem;
+      font-size: 2.2rem;
+    }
+
+    .lead-strong {
+      font-size: 1.1rem;
+    }
+
+    .hero-action-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.85rem;
+    }
+
+    .hero-cta-btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .hero-live-count {
+      text-align: center;
+    }
+
+    .petition-ask-card {
+      padding: 1.75rem 1.25rem;
+      border-radius: 14px;
+    }
+
+    .ask-card-title {
+      font-size: 1.6rem;
+    }
+
+    .petition-letter-section {
+      padding: 2rem 1.25rem;
+      border-radius: 14px;
+    }
+
+    .letter-title {
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
     }
   }
 </style>

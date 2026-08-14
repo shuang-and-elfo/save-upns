@@ -24,12 +24,72 @@ const MIME_TYPES = {
   ".txt": "text/plain; charset=utf-8",
 };
 
-const server = http.createServer((req, res) => {
+let cachedCount = null;
+let lastFetched = 0;
+const CACHE_TTL_MS = 60 * 1000;
+
+const server = http.createServer(async (req, res) => {
   try {
     let urlPath = new URL(req.url, `http://${req.headers.host || "localhost"}`).pathname;
     if (urlPath.startsWith("/upns-website")) {
       urlPath = urlPath.slice("/upns-website".length) || "/";
     }
+
+    // Dynamic API endpoint for signatures
+    if (urlPath === "/api/signatures") {
+      const apiKey = process.env.ACTION_NETWORK_API_KEY;
+      const petitionId = process.env.ACTION_NETWORK_PETITION_ID;
+      const now = Date.now();
+
+      if (cachedCount !== null && now - lastFetched < CACHE_TTL_MS) {
+        res.writeHead(200, {
+          "Content-Type": "application/json",
+          "Cache-Control": "public, max-age=30",
+          "Access-Control-Allow-Origin": "*",
+        });
+        res.end(JSON.stringify({ total_signatures: cachedCount, cached: true }));
+        return;
+      }
+
+      if (!apiKey || !petitionId) {
+        res.writeHead(200, {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        });
+        res.end(JSON.stringify({ total_signatures: null, message: "Not configured" }));
+        return;
+      }
+
+      try {
+        const url = petitionId.startsWith("http")
+          ? petitionId
+          : `https://actionnetwork.org/api/v2/petitions/${petitionId}`;
+
+        const apiRes = await fetch(url, {
+          headers: { "OSDI-API-Token": apiKey, "Accept": "application/json" },
+        });
+        const data = await apiRes.json();
+        const count = data.total_signatures ?? data.total_submissions ?? null;
+        if (typeof count === "number") {
+          cachedCount = count;
+          lastFetched = now;
+        }
+        res.writeHead(200, {
+          "Content-Type": "application/json",
+          "Cache-Control": "public, max-age=30",
+          "Access-Control-Allow-Origin": "*",
+        });
+        res.end(JSON.stringify({ total_signatures: count }));
+      } catch (err) {
+        res.writeHead(200, {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        });
+        res.end(JSON.stringify({ total_signatures: cachedCount, error: err.message }));
+      }
+      return;
+    }
+
     let filePath = path.join(DIST_DIR, urlPath);
 
     // Security check against directory traversal

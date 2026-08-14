@@ -1,0 +1,229 @@
+---
+import { withBase } from "../utils/url";
+---
+
+<footer class="petition-footer" role="contentinfo">
+  <div class="footer-container">
+    <div class="footer-brand-line">
+      <img
+        src={withBase("/images/logo.png")}
+        alt="UPNS Logo"
+        class="footer-logo"
+        width="90"
+        height="48"
+      />
+      <span class="footer-brand-name">Save UPNS</span>
+    </div>
+
+    <p class="footer-mission">
+      A community-led effort supporting University Parents Nursery School.
+    </p>
+
+    <div class="footer-nav-links">
+      <a href="mailto:upns@ucla.edu?subject=Save%20UPNS%20Inquiry" class="footer-link">Contact</a>
+      <span class="footer-sep" aria-hidden="true">·</span>
+      <button type="button" id="privacy-link-btn" class="footer-link-btn">Privacy</button>
+    </div>
+
+    <p class="footer-disclaimer">
+      This campaign is community-led and is not operated by UCLA.
+    </p>
+  </div>
+
+  {/* Simple Privacy Modal */}
+  <div id="privacy-modal" class="privacy-modal" aria-hidden="true" role="dialog" style="display: none;">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Privacy Policy</h3>
+        <button type="button" id="close-privacy-btn" class="modal-close-btn" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          We respect your privacy. Contact information provided on the Save UPNS petition is used exclusively to demonstrate community support for University Parents Nursery School to UCLA leadership and decision-makers, and to send critical campaign updates regarding the school’s future.
+        </p>
+        <p>
+          We will never sell, rent, or commercialize your personal information. If you wish to have your name removed from the public petition record at any time, please contact us at <a href="mailto:upns@ucla.edu">upns@ucla.edu</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .petition-footer {
+    border-top: 1px solid var(--color-border, #f2ead6);
+    background: #faf6ee;
+    padding: 3.5rem 1.5rem 4.5rem;
+    margin-top: 5rem;
+    color: var(--color-text, #2d3a31);
+    text-align: center;
+  }
+
+  .footer-container {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .footer-brand-line {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .footer-logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.85;
+  }
+
+  .footer-brand-name {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-text, #2d3a31);
+  }
+
+  .footer-mission {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--color-text-muted, #5f7065);
+    margin: 0;
+  }
+
+  .footer-nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin: 0.25rem 0;
+  }
+
+  .footer-link,
+  .footer-link-btn {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text, #2d3a31);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .footer-link:hover,
+  .footer-link-btn:hover {
+    color: var(--color-tomato, #d86f58);
+  }
+
+  .footer-sep {
+    color: #b5a995;
+  }
+
+  .footer-disclaimer {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: #839287;
+    margin: 0.5rem 0 0;
+  }
+
+  /* Privacy Modal */
+  .privacy-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 40, 34, 0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-box {
+    position: relative;
+    z-index: 10;
+    background: #ffffff;
+    border-radius: 16px;
+    max-width: 520px;
+    width: 100%;
+    padding: 2rem;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    text-align: left;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .modal-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 1.35rem;
+    margin: 0;
+    color: var(--color-text, #2d3a31);
+  }
+
+  .modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: #888;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .modal-body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #444;
+  }
+
+  .modal-body a {
+    color: var(--color-tomato, #d86f58);
+  }
+</style>
+
+<script>
+  const privacyBtn = document.getElementById('privacy-link-btn');
+  const privacyModal = document.getElementById('privacy-modal');
+  const closeBtn = document.getElementById('close-privacy-btn');
+  const backdrop = privacyModal?.querySelector('.modal-backdrop');
+
+  if (privacyBtn && privacyModal) {
+    privacyBtn.addEventListener('click', () => {
+      privacyModal.style.display = 'flex';
+      privacyModal.setAttribute('aria-hidden', 'false');
+    });
+
+    const closeModal = () => {
+      privacyModal.style.display = 'none';
+      privacyModal.setAttribute('aria-hidden', 'true');
+    };
+
+    closeBtn?.addEventListener('click', closeModal);
+    backdrop?.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && privacyModal.style.display === 'flex') {
+        closeModal();
+      }
+    });
+  }
+</script>

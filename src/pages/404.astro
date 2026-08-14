@@ -1,40 +1,26 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import DoodleIllustration from "../components/DoodleIllustration.astro";
-import FloatingIllustration from "../components/FloatingIllustration.astro";
 import { withBase } from "../utils/url";
 ---
 
 <BaseLayout
-  title="Page Not Found"
-  description="The page you are looking for may have been moved or updated during our website redesign."
+  title="Page Not Found | Save UPNS"
+  description="The page you are looking for has been moved or updated."
 >
-  <section class="not-found-section">
-    <FloatingIllustration src="sun.png" position="top-right" size="lg" rotate={12} />
-    <FloatingIllustration src="flower.png" position="bottom-left" size="md" rotate={-10} />
-    <div class="container not-found-inner">
-      <DoodleIllustration
-        name="sun"
-        size="xl"
-        color="var(--color-yellow)"
-      />
-      <h1>Oops! We couldn’t find that page.</h1>
-      <p>
-        University Parents Nursery School has recently updated our website. The page you are looking for may have been moved or reorganized.
+  <div class="petition-container">
+    <section class="not-found-section">
+      <h1 class="not-found-title">Page Not Found</h1>
+      <p class="not-found-desc">
+        We have updated the Save UPNS website into a focused petition to keep our preschool open.
       </p>
 
       <div class="not-found-actions">
-        <a href={withBase("/")} class="btn-home">
-          <span>Return to Homepage</span>
-          <span>♥</span>
-        </a>
-        <a href={withBase("/classrooms/")} class="btn-secondary">
-          <span>See Our Classrooms</span>
-          <span>→</span>
+        <a href={withBase("/")} class="btn-petition">
+          <span>Read & Sign the Petition</span>
         </a>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>
@@ -43,58 +29,41 @@ import { withBase } from "../utils/url";
     text-align: center;
   }
 
-  .not-found-inner {
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-  }
-
-  h1 {
+  .not-found-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
     font-size: 2.5rem;
-    margin: 0;
+    font-weight: 800;
+    color: var(--color-text, #233128);
+    margin: 0 0 1rem;
   }
 
-  p {
+  .not-found-desc {
     font-size: 1.1rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-muted, #536459);
+    max-width: 480px;
+    margin: 0 auto 2rem;
     line-height: 1.6;
-    margin: 0;
   }
 
   .not-found-actions {
     display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
     justify-content: center;
   }
 
-  .btn-home {
+  .btn-petition {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    background: var(--color-tomato);
+    background: var(--color-tomato, #d86f58);
     color: #ffffff;
-    font-weight: 700;
-    padding: 0.85rem 1.75rem;
+    font-weight: 800;
+    font-size: 1.05rem;
+    padding: 0.85rem 1.85rem;
     border-radius: 999px;
     text-decoration: none;
-    box-shadow: 0 4px 12px rgba(216, 111, 88, 0.25);
+    box-shadow: 0 4px 14px rgba(216, 111, 88, 0.28);
   }
 
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: #ffffff;
-    border: 2px solid var(--color-border);
-    color: var(--color-text);
-    font-weight: 700;
-    padding: 0.85rem 1.75rem;
-    border-radius: 999px;
-    text-decoration: none;
+  .btn-petition:hover {
+    background: var(--color-tomato-dark, #be533d);
   }
 </style>

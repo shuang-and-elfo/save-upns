@@ -1,0 +1,141 @@
+---
+---
+
+<div id="sticky-sign-bar" class="sticky-sign-bar" aria-hidden="true">
+  <div class="sticky-inner">
+    <div class="sticky-text">
+      <strong class="sticky-title">Help Keep UPNS Open</strong>
+      <span class="sticky-count-line" data-count-wrapper style="display: none;">
+        <span data-signature-count></span> signed
+      </span>
+    </div>
+    <a href="#sign" class="sticky-cta-btn">
+      <span>Sign Petition</span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .sticky-sign-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    background: rgba(255, 252, 246, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--color-border, #f2ead6);
+    padding: 0.75rem 1.25rem;
+    box-shadow: 0 -4px 20px rgba(45, 58, 49, 0.08);
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    display: none;
+  }
+
+  .sticky-sign-bar.is-hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .sticky-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .sticky-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .sticky-title {
+    font-size: 0.95rem;
+    color: var(--color-text, #2d3a31);
+    line-height: 1.2;
+  }
+
+  .sticky-count-line {
+    font-size: 0.8rem;
+    color: var(--color-tomato, #d86f58);
+    font-weight: 700;
+  }
+
+  .sticky-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 0.92rem;
+    font-weight: 800;
+    text-decoration: none;
+    padding: 0.55rem 1.25rem;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(216, 111, 88, 0.25);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .sticky-sign-bar {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  // Hide sticky bar when petition form is visible on screen
+  function initStickyCTA() {
+    const bar = document.getElementById('sticky-sign-bar');
+    const formSection = document.getElementById('sign');
+
+    if (!bar || !formSection) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            bar.classList.add('is-hidden');
+            bar.setAttribute('aria-hidden', 'true');
+          } else {
+            // Only show after user has scrolled down past the hero
+            if (window.scrollY > 250) {
+              bar.classList.remove('is-hidden');
+              bar.setAttribute('aria-hidden', 'false');
+            } else {
+              bar.classList.add('is-hidden');
+              bar.setAttribute('aria-hidden', 'true');
+            }
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(formSection);
+
+    window.addEventListener('scroll', () => {
+      const rect = formSection.getBoundingClientRect();
+      const isFormVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+
+      if (window.scrollY < 250 || isFormVisible) {
+        bar.classList.add('is-hidden');
+        bar.setAttribute('aria-hidden', 'true');
+      } else {
+        bar.classList.remove('is-hidden');
+        bar.setAttribute('aria-hidden', 'false');
+      }
+    }, { passive: true });
+  }
+
+  document.addEventListener('DOMContentLoaded', initStickyCTA);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initStickyCTA();
+  }
+</script>

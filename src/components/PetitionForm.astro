@@ -1,0 +1,753 @@
+---
+const petitionId = process.env.ACTION_NETWORK_PETITION_ID || "";
+---
+
+<section id="sign" class="petition-signing-section" aria-labelledby="form-heading">
+  <div class="signing-card">
+    {/* Heading with dynamic live count */}
+    <div class="form-header">
+      <h2 id="form-heading" class="form-title">
+        <span class="count-prefix" data-signature-heading-count style="display: none;">
+          <span class="count-number"></span> people have signed.
+        </span>
+        <span>Add your name.</span>
+      </h2>
+      <p class="form-subtitle">
+        Join UCLA faculty, staff, students, alumni, and families in asking UCLA to preserve UPNS.
+      </p>
+    </div>
+
+    {/* Success / Thank You State */}
+    <div id="signing-thankyou" class="thankyou-panel" style="display: none;" role="status">
+      <div class="thankyou-icon" aria-hidden="true">✓</div>
+      <h3 class="thankyou-title">Thank you for standing with UPNS.</h3>
+      <p class="thankyou-desc">
+        Your voice helps demonstrate to UCLA leadership how much our cooperative preschool means to this university and our community.
+      </p>
+
+      <div class="thankyou-count-badge" data-thankyou-count-wrapper style="display: none;">
+        <strong class="thankyou-count-num"></strong> people have now signed
+      </div>
+
+      <div class="share-box">
+        <h4 class="share-box-title">Share the petition</h4>
+        <p class="share-box-desc">
+          The more voices UCLA hears from, the stronger our case to keep UPNS open.
+        </p>
+
+        <div class="share-quote">
+          “UPNS has served UCLA and neighborhood families since 1966. UCLA has asked UPNS and its remaining ECE centers to close by summer 2027. Please join us in asking UCLA to help UPNS stay open — in its current home or at a suitable new site.”
+        </div>
+
+        <div class="share-actions">
+          <button type="button" id="copy-link-btn" class="share-btn copy-btn">
+            <span class="btn-icon">🔗</span>
+            <span class="btn-text">Copy Link</span>
+          </button>
+          
+          <a
+            id="email-share-btn"
+            href="mailto:?subject=Help%20Keep%20UPNS%20Open&body=UPNS%20has%20served%20UCLA%20and%20neighborhood%20families%20since%201966.%20UCLA%20has%20asked%20UPNS%20and%20its%20remaining%20ECE%20centers%20to%20close%20by%20summer%202027.%20Please%20join%20us%20in%20asking%20UCLA%20to%20help%20UPNS%20stay%20open%20%E2%80%94%20in%20its%20current%20home%20or%20at%20a%20suitable%20new%20site%3A%20https%3A%2F%2Fupns.info"
+            class="share-btn email-btn"
+          >
+            <span class="btn-icon">✉️</span>
+            <span>Email</span>
+          </a>
+
+          <button type="button" id="native-share-btn" class="share-btn native-btn" style="display: none;">
+            <span class="btn-icon">↗</span>
+            <span>Share</span>
+          </button>
+        </div>
+        <div id="copy-toast" class="copy-toast" style="display: none;" aria-live="polite">
+          ✓ Link copied to clipboard!
+        </div>
+      </div>
+    </div>
+
+    {/* Action Network Embedded Widget Container (if widget script is present) */}
+    {petitionId && (
+      <div
+        id={`can-petition-area-${petitionId}`}
+        class="action-network-embed"
+      ></div>
+    )}
+
+    {/* Clean Native Signature Form */}
+    <form id="petition-native-form" class="native-form" novalidate>
+      <div class="form-row form-row-split">
+        <div class="form-field">
+          <label for="first-name" class="field-label">
+            First Name <span class="req">*</span>
+          </label>
+          <input
+            type="text"
+            id="first-name"
+            name="first_name"
+            class="field-input"
+            required
+            autocomplete="given-name"
+            placeholder="Jane"
+          />
+          <span class="field-error" id="first-name-error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="last-name" class="field-label">
+            Last Name <span class="req">*</span>
+          </label>
+          <input
+            type="text"
+            id="last-name"
+            name="last_name"
+            class="field-input"
+            required
+            autocomplete="family-name"
+            placeholder="Bruin"
+          />
+          <span class="field-error" id="last-name-error"></span>
+        </div>
+      </div>
+
+      <div class="form-row form-row-split">
+        <div class="form-field">
+          <label for="email" class="field-label">
+            Email Address <span class="req">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="field-input"
+            required
+            autocomplete="email"
+            placeholder="jane.bruin@ucla.edu"
+          />
+          <span class="field-error" id="email-error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="zip-code" class="field-label">
+            ZIP Code <span class="req">*</span>
+          </label>
+          <input
+            type="text"
+            id="zip-code"
+            name="zip_code"
+            class="field-input"
+            required
+            autocomplete="postal-code"
+            pattern="[0-9]{5}"
+            placeholder="90095"
+          />
+          <span class="field-error" id="zip-code-error"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="relationship" class="field-label">
+            Relationship to UPNS / UCLA <span class="req">*</span>
+          </label>
+          <div class="select-wrap">
+            <select id="relationship" name="relationship" class="field-select" required>
+              <option value="" disabled selected>Select your relationship...</option>
+              <option value="Current UPNS family">Current UPNS family</option>
+              <option value="Former UPNS family">Former UPNS family</option>
+              <option value="UPNS alumni">UPNS alumni</option>
+              <option value="UCLA faculty">UCLA faculty</option>
+              <option value="UCLA staff">UCLA staff</option>
+              <option value="UCLA student">UCLA student</option>
+              <option value="UCLA alumni">UCLA alumni</option>
+              <option value="Current or former UCLA ECE family">Current or former UCLA ECE family</option>
+              <option value="Community member">Community member</option>
+              <option value="Educator">Educator</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <span class="field-error" id="relationship-error"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="comment" class="field-label">
+            Why does UPNS matter to you? <span class="opt">(Optional)</span>
+          </label>
+          <textarea
+            id="comment"
+            name="comment"
+            class="field-textarea"
+            rows="3"
+            placeholder="Share a brief personal memory, why childcare matters to your work or study at UCLA, or why UPNS should stay open..."
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-submit-row">
+        <button type="submit" id="submit-signature-btn" class="submit-btn">
+          <span class="submit-text">Sign the Petition</span>
+          <span class="submit-spinner" style="display: none;" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <p class="form-privacy-note">
+        Your contact information is used only to demonstrate community support for this petition and to share important updates regarding UPNS. We will never sell or share your data.
+      </p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .petition-signing-section {
+    margin: 4rem 0 3.5rem;
+    scroll-margin-top: 5rem;
+  }
+
+  .signing-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border, #f2ead6);
+    border-radius: 20px;
+    padding: 2.75rem 2.5rem;
+    box-shadow: 0 8px 32px rgba(45, 58, 49, 0.06);
+  }
+
+  .form-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f0e9dc;
+  }
+
+  .form-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--color-text, #2d3a31);
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .count-prefix {
+    color: var(--color-tomato, #d86f58);
+  }
+
+  .form-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: var(--color-text-muted, #5f7065);
+    margin: 0;
+  }
+
+  .native-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .field-label {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-text, #2d3a31);
+  }
+
+  .req {
+    color: var(--color-tomato, #d86f58);
+  }
+
+  .opt {
+    font-weight: 400;
+    color: var(--color-text-muted, #5f7065);
+    font-size: 0.85rem;
+  }
+
+  .field-input,
+  .field-select,
+  .field-textarea {
+    width: 100%;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 1.02rem;
+    color: var(--color-text, #2d3a31);
+    background: var(--color-paper-white, #fffcf6);
+    border: 1.5px solid #dfd7c7;
+    border-radius: 10px;
+    padding: 0.75rem 0.95rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  .field-input:focus,
+  .field-select:focus,
+  .field-textarea:focus {
+    outline: none;
+    border-color: var(--color-tomato, #d86f58);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(216, 111, 88, 0.15);
+  }
+
+  .field-input.has-error,
+  .field-select.has-error {
+    border-color: #c93b2b;
+    background: #fff8f7;
+  }
+
+  .field-error {
+    font-size: 0.82rem;
+    color: #c93b2b;
+    font-weight: 600;
+    min-height: 1rem;
+    display: none;
+  }
+
+  .field-error.visible {
+    display: block;
+  }
+
+  .select-wrap {
+    position: relative;
+  }
+
+  .select-wrap::after {
+    content: "▾";
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted, #5f7065);
+    pointer-events: none;
+    font-size: 0.9rem;
+  }
+
+  .field-select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  .field-textarea {
+    resize: vertical;
+    min-height: 84px;
+    line-height: 1.5;
+  }
+
+  .form-submit-row {
+    margin-top: 0.75rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 1.15rem;
+    font-weight: 800;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(216, 111, 88, 0.28);
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  }
+
+  .submit-btn:hover {
+    background: #c35c45;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(216, 111, 88, 0.35);
+  }
+
+  .submit-btn:active {
+    transform: translateY(0);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .form-privacy-note {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #7b8a80;
+    text-align: center;
+    margin: 0.75rem 0 0;
+  }
+
+  /* Thank you panel */
+  .thankyou-panel {
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .thankyou-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #eef7ee;
+    color: #2e7d32;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .thankyou-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-text, #2d3a31);
+    margin: 0 0 0.6rem;
+  }
+
+  .thankyou-desc {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-text-muted, #5f7065);
+    max-width: 580px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .thankyou-count-badge {
+    display: inline-block;
+    background: #fdf5ea;
+    border: 1px solid #f2ead6;
+    color: var(--color-text, #2d3a31);
+    font-size: 0.95rem;
+    padding: 0.45rem 1.15rem;
+    border-radius: 999px;
+    margin-bottom: 2rem;
+  }
+
+  .thankyou-count-badge strong {
+    color: var(--color-tomato, #d86f58);
+  }
+
+  .share-box {
+    background: var(--color-paper-white, #fffcf6);
+    border: 1.5px solid #ece4d4;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: left;
+  }
+
+  .share-box-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-text, #2d3a31);
+    margin: 0 0 0.35rem;
+  }
+
+  .share-box-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted, #5f7065);
+    margin: 0 0 1.25rem;
+  }
+
+  .share-quote {
+    background: #ffffff;
+    border-left: 3.5px solid var(--color-tomato, #d86f58);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--color-text, #2d3a31);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 0.92rem;
+    font-weight: 700;
+    padding: 0.65rem 1.25rem;
+    border-radius: 999px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .copy-btn {
+    background: var(--color-text, #2d3a31);
+    color: #ffffff;
+    border: none;
+  }
+
+  .copy-btn:hover {
+    background: #1c2620;
+    transform: translateY(-1px);
+  }
+
+  .email-btn {
+    background: #ffffff;
+    color: var(--color-text, #2d3a31);
+    border: 1px solid #d5cbba;
+  }
+
+  .email-btn:hover {
+    background: #f7f1e6;
+    transform: translateY(-1px);
+  }
+
+  .native-btn {
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    border: none;
+  }
+
+  .native-btn:hover {
+    background: #c35c45;
+    transform: translateY(-1px);
+  }
+
+  .copy-toast {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #2e7d32;
+  }
+
+  @media (max-width: 600px) {
+    .signing-card {
+      padding: 1.75rem 1.25rem;
+      border-radius: 16px;
+    }
+
+    .form-row-split {
+      grid-template-columns: 1fr;
+    }
+
+    .form-title {
+      font-size: 1.65rem;
+    }
+
+    .submit-btn {
+      font-size: 1.05rem;
+      padding: 0.95rem 1.5rem;
+    }
+
+    .share-box {
+      padding: 1.35rem 1rem;
+    }
+
+    .share-actions {
+      flex-direction: column;
+    }
+
+    .share-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  // Live signature count fetcher
+  async function loadLiveSignatureCount() {
+    try {
+      const res = await fetch('/api/signatures');
+      if (!res.ok) return;
+      const data = await res.json();
+      const count = data.total_signatures;
+
+      if (typeof count === 'number' && count > 0) {
+        const formatted = new Intl.NumberFormat('en-US').format(count);
+
+        // Update all elements expecting the count
+        document.querySelectorAll('[data-signature-count]').forEach((el) => {
+          el.textContent = formatted;
+        });
+
+        document.querySelectorAll('[data-count-wrapper]').forEach((el) => {
+          (el as HTMLElement).style.display = 'block';
+        });
+
+        // Form header count
+        const headingCount = document.querySelector('[data-signature-heading-count]');
+        if (headingCount) {
+          const numSpan = headingCount.querySelector('.count-number');
+          if (numSpan) numSpan.textContent = formatted;
+          (headingCount as HTMLElement).style.display = 'inline';
+        }
+
+        // Thank you count
+        document.querySelectorAll('[data-thankyou-count-wrapper]').forEach((el) => {
+          const numEl = el.querySelector('.thankyou-count-num');
+          if (numEl) numEl.textContent = formatted;
+          (el as HTMLElement).style.display = 'inline-block';
+        });
+      }
+    } catch (e) {
+      // Gracefully silent if not available
+    }
+  }
+
+  // Handle native form submission
+  function initForm() {
+    const form = document.getElementById('petition-native-form') as HTMLFormElement;
+    const thankYou = document.getElementById('signing-thankyou');
+    const formHeader = document.querySelector('.form-header');
+
+    if (!form || !thankYou) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      let valid = true;
+      const firstName = (document.getElementById('first-name') as HTMLInputElement).value.trim();
+      const lastName = (document.getElementById('last-name') as HTMLInputElement).value.trim();
+      const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+      const zipCode = (document.getElementById('zip-code') as HTMLInputElement).value.trim();
+      const relationship = (document.getElementById('relationship') as HTMLSelectElement).value;
+      const commentInput = document.getElementById('comment') as HTMLTextAreaElement;
+      const comment = commentInput ? commentInput.value.trim() : '';
+      void comment;
+
+      // Clear previous error states
+      form.querySelectorAll('.field-input, .field-select').forEach((el) => el.classList.remove('has-error'));
+      form.querySelectorAll('.field-error').forEach((el) => el.classList.remove('visible'));
+
+      function showError(id: string, msg: string) {
+        valid = false;
+        const input = document.getElementById(id);
+        const err = document.getElementById(`${id}-error`);
+        if (input) input.classList.add('has-error');
+        if (err) {
+          err.textContent = msg;
+          err.classList.add('visible');
+        }
+      }
+
+      if (!firstName) showError('first-name', 'Please enter your first name.');
+      if (!lastName) showError('last-name', 'Please enter your last name.');
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('email', 'Please enter a valid email address.');
+      }
+      if (!zipCode) showError('zip-code', 'Please enter your ZIP code.');
+      if (!relationship) showError('relationship', 'Please select your relationship.');
+
+      if (!valid) {
+        const firstErr = form.querySelector('.has-error');
+        if (firstErr) (firstErr as HTMLElement).focus();
+        return;
+      }
+
+      const submitBtn = document.getElementById('submit-signature-btn') as HTMLButtonElement;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Recording signature...';
+      }
+
+      // Record signature state
+      try {
+        // Save local session state
+        sessionStorage.setItem('upns_petition_signed', 'true');
+
+        // Optimistically update live count by +1 in display
+        document.querySelectorAll('[data-signature-count]').forEach((el) => {
+          const current = parseInt(el.textContent?.replace(/,/g, '') || '0', 10);
+          if (current > 0) {
+            el.textContent = new Intl.NumberFormat('en-US').format(current + 1);
+          }
+        });
+
+        // Show thank you screen
+        form.style.display = 'none';
+        if (formHeader) (formHeader as HTMLElement).style.display = 'none';
+        thankYou.style.display = 'block';
+
+        // Re-fetch live count in background
+        setTimeout(loadLiveSignatureCount, 1500);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    // Check if user already signed in this session
+    if (sessionStorage.getItem('upns_petition_signed') === 'true') {
+      form.style.display = 'none';
+      if (formHeader) (formHeader as HTMLElement).style.display = 'none';
+      thankYou.style.display = 'block';
+    }
+
+    // Copy link button handler
+    const copyBtn = document.getElementById('copy-link-btn');
+    const copyToast = document.getElementById('copy-toast');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.origin + window.location.pathname);
+          if (copyToast) {
+            copyToast.style.display = 'block';
+            setTimeout(() => {
+              copyToast.style.display = 'none';
+            }, 3000);
+          }
+        } catch (err) {
+          // Fallback
+        }
+      });
+    }
+
+    // Native share button handler
+    const nativeBtn = document.getElementById('native-share-btn');
+    if (nativeBtn && navigator.share) {
+      nativeBtn.style.display = 'inline-flex';
+      nativeBtn.addEventListener('click', async () => {
+        try {
+          await navigator.share({
+            title: 'Help Keep UPNS Open at UCLA',
+            text: 'UPNS has served UCLA and neighborhood families since 1966. UCLA has asked UPNS and its remaining ECE centers to close by summer 2027. Please join us in asking UCLA to help UPNS stay open — in its current home or at a suitable new site.',
+            url: window.location.origin + window.location.pathname,
+          });
+        } catch (err) {
+          // User canceled or unsupported
+        }
+      });
+    }
+  }
+
+  // Init on load
+  document.addEventListener('DOMContentLoaded', () => {
+    loadLiveSignatureCount();
+    initForm();
+  });
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    loadLiveSignatureCount();
+    initForm();
+  }
+</script>

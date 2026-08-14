@@ -1,112 +1,24 @@
 ---
-import { SITE_CONFIG } from "../content/site";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import MobileNavigation from "../components/MobileNavigation.astro";
+import PetitionHeader from "../components/PetitionHeader.astro";
+import PetitionFooter from "../components/PetitionFooter.astro";
+import StickySignCTA from "../components/StickySignCTA.astro";
 import { withBase } from "../utils/url";
 
 export interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
-  canonicalUrl?: string;
 }
 
 const {
-  title = "Home",
-  description = SITE_CONFIG.description,
-  ogImage = "/images/hero-playground.jpg",
-  canonicalUrl = Astro.url.href,
+  title = "Help Keep UPNS Open | Save UPNS Petition to UCLA",
+  description = "UCLA has asked University Parents Nursery School (UPNS) and its remaining Early Care and Education centers to close by summer 2027. Sign the petition asking UCLA to help UPNS stay open in its current home or at a suitable new site.",
+  ogImage = "/images/kan3.jpg",
 } = Astro.props;
-
-const isHome = title === "Home" || Astro.url.pathname === "/" || Astro.url.pathname === "" || Astro.url.pathname === import.meta.env.BASE_URL;
-const pageTitle = isHome
-  ? "University Parents Nursery School (UPNS) | Play-Based Co-op Preschool in Los Angeles"
-  : title.includes(SITE_CONFIG.shortName)
-    ? title
-    : `${title} | UPNS Cooperative Preschool Los Angeles`;
 
 const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, "") : "https://upns.info";
 const fullOgImageUrl = ogImage.startsWith("http") ? ogImage : `${siteUrl}${withBase(ogImage)}`;
-
-const schemaOrgData = {
-  "@context": "https://schema.org",
-  "@type": ["Preschool", "ChildCare", "EducationalOrganization"],
-  "@id": "https://upns.info/#organization",
-  "name": "University Parents Nursery School",
-  "alternateName": ["UPNS", "UPNS Preschool", "University Parents Nursery School (UPNS)"],
-  "url": "https://upns.info/",
-  "logo": "https://upns.info/images/logo.png",
-  "image": "https://upns.info/images/hero-playground.jpg",
-  "description": SITE_CONFIG.description,
-  "foundingDate": "1966",
-  "telephone": "+1-310-397-2735",
-  "email": "upns@ucla.edu",
-  "priceRange": "$$",
-  "isAccessibleForFree": false,
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "3233 S. Sepulveda Blvd. Suite 200",
-    "addressLocality": "Los Angeles",
-    "addressRegion": "CA",
-    "postalCode": "90034",
-    "addressCountry": "US"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 34.015024,
-    "longitude": -118.422998
-  },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "08:00",
-      "closes": "17:00"
-    }
-  ],
-  "sameAs": [
-    "https://www.naeyc.org/",
-    "https://lacppns.org/"
-  ],
-  "audience": {
-    "@type": "Audience",
-    "audienceType": "Families with toddlers and preschool children aged 18 months to 5 years (UCLA and Los Angeles community)"
-  },
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Classroom Programs",
-    "itemListElement": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "EducationalOccupationalProgram",
-          "name": "Kitten Room (Toddler Program)",
-          "description": "Nurturing environment for toddlers aged 18 months to 2.5 years old focusing on sensory discovery and gentle separations.",
-          "timeToComplete": "P1Y"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "EducationalOccupationalProgram",
-          "name": "Kangaroo Room (Preschool Program)",
-          "description": "Program for 2.5 to 3.5 year olds expanding their social world through dramatic play and outdoor building.",
-          "timeToComplete": "P1Y"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "EducationalOccupationalProgram",
-          "name": "Dolphin Room (Pre-Kindergarten Program)",
-          "description": "Pre-K classroom for 3.5 to 5 year olds fostering independence, social problem-solving, and kindergarten readiness.",
-          "timeToComplete": "P1Y"
-        }
-      }
-    ]
-  }
-};
+const canonicalUrl = Astro.url.href;
 ---
 
 <!doctype html>
@@ -114,218 +26,91 @@ const schemaOrgData = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{pageTitle}</title>
+    <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/png" href={withBase("/images/fabicon.png")} />
     <link rel="shortcut icon" href={withBase("/favicon.png")} />
     <link rel="apple-touch-icon" href={withBase("/images/fabicon.png")} />
 
-    {/* Local SEO & Geographic Metadata for Los Angeles */}
-    <meta name="geo.region" content="US-CA" />
-    <meta name="geo.placename" content="Los Angeles" />
-    <meta name="geo.position" content="34.015024;-118.422998" />
-    <meta name="ICBM" content="34.015024, -118.422998" />
-    <meta name="keywords" content="UPNS, University Parents Nursery School, cooperative preschool Los Angeles, West LA preschool, UCLA preschool, parent participation nursery school, toddler program Los Angeles, play-based preschool 90034, Culver City preschool, Palms preschool, Mar Vista preschool, NAEYC accredited preschool" />
-
-    {/* Open Graph / Facebook Metadata */}
+    {/* Open Graph / Facebook */}
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:site_name" content={SITE_CONFIG.name} />
-    <meta property="og:title" content={pageTitle} />
+    <meta property="og:site_name" content="Save UPNS" />
+    <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={fullOgImageUrl} />
-    <meta property="og:image:alt" content="University Parents Nursery School (UPNS) - Children learning and growing through play" />
 
-    {/* Twitter Cards Metadata */}
+    {/* Twitter */}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={fullOgImageUrl} />
-    <meta name="twitter:image:alt" content="University Parents Nursery School (UPNS)" />
 
-    {/* Schema.org Structured Data (JSON-LD) */}
-    <script type="application/ld+json" is:inline set:html={JSON.stringify(schemaOrgData)} />
-
-    {/* Google Fonts: Baloo Chettan 2 & Amatic SC (Kootingal title fonts) and DM Sans (Body) */}
+    {/* Google Fonts */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Baloo+Chettan+2:wght@500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap"
       rel="stylesheet"
     />
-    <noscript>
-      <style>
-        img[loading="lazy"],
-        .photo-img,
-        .full-bleed-photo,
-        .slide-img,
-        .timeline-img {
-          opacity: 1 !important;
-          filter: blur(0) !important;
-        }
-      </style>
-    </noscript>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <SiteHeader />
+    <PetitionHeader />
 
     <main id="main-content" role="main">
       <slot />
     </main>
 
-    <SiteFooter />
-    <MobileNavigation currentPath={Astro.url.pathname} />
-
-    <!-- Lightbox Modal for Tappable Classroom & Site Photos -->
-    <div id="image-lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" tabindex="-1">
-      <div class="lightbox-overlay"></div>
-      <div class="lightbox-card">
-        <button type="button" class="lightbox-close" aria-label="Close modal">&times;</button>
-        <div class="lightbox-media">
-          <img id="lightbox-img" src="" alt="" class="lightbox-image" />
-        </div>
-      </div>
-    </div>
-
-    <script>
-      function initLazyImages() {
-        const images = document.querySelectorAll<HTMLImageElement>(
-          'img[loading="lazy"]:not(.doodle-illustration), .photo-img, .full-bleed-photo, .slide-img, .timeline-img'
-        );
-
-        images.forEach((img) => {
-          if (img.complete && img.naturalHeight !== 0) {
-            img.classList.add("is-loaded");
-          } else {
-            img.addEventListener("load", () => {
-              img.classList.add("is-loaded");
-            }, { once: true });
-            img.addEventListener("error", () => {
-              img.classList.add("is-loaded");
-            }, { once: true });
-          }
-        });
-      }
-
-      function initLightbox() {
-        const modal = document.getElementById("image-lightbox-modal");
-        const modalImg = document.getElementById("lightbox-img") as HTMLImageElement;
-        const closeBtn = document.querySelector(".lightbox-close");
-        const overlay = document.querySelector(".lightbox-overlay");
-
-        if (!modal || !modalImg) return;
-
-        function openLightbox(src: string, alt: string) {
-          if (!modalImg || !modal) return;
-          modalImg.src = src;
-          modalImg.alt = alt;
-          modal.setAttribute("aria-hidden", "false");
-          modal.classList.add("is-open");
-          document.body.style.overflow = "hidden";
-        }
-
-        function closeLightbox() {
-          if (!modal) return;
-          modal.setAttribute("aria-hidden", "true");
-          modal.classList.remove("is-open");
-          document.body.style.overflow = "";
-          setTimeout(() => {
-            if (modalImg) modalImg.src = "";
-          }, 300);
-        }
-
-        document.querySelectorAll("[data-lightbox-src]").forEach((el) => {
-          el.addEventListener("click", (e) => {
-            e.preventDefault();
-            const src = el.getAttribute("data-lightbox-src");
-            const alt = el.getAttribute("aria-label") || "";
-            if (src) openLightbox(src, alt);
-          });
-
-          el.addEventListener("keydown", (e: any) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              const src = el.getAttribute("data-lightbox-src");
-              const alt = el.getAttribute("aria-label") || "";
-              if (src) openLightbox(src, alt);
-            }
-          });
-        });
-
-        if (closeBtn) closeBtn.addEventListener("click", closeLightbox);
-        if (overlay) overlay.addEventListener("click", closeLightbox);
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape" && modal.classList.contains("is-open")) {
-            closeLightbox();
-          }
-        });
-      }
-
-      initLazyImages();
-      initLightbox();
-      window.addEventListener("load", () => {
-        initLazyImages();
-        initLightbox();
-      });
-      document.addEventListener("astro:page-load", () => {
-        initLazyImages();
-        initLightbox();
-      });
-    </script>
+    <PetitionFooter />
+    <StickySignCTA />
   </body>
 </html>
 
 <style is:global>
   :root {
-    /* Suggested Token Foundations */
-    --color-cream: #fff9ee;
+    --color-cream: #faf7f2;
     --color-paper-white: #fffcf6;
-    --color-text: #35483c;
-    --color-text-muted: #5f7065;
-    --color-leaf-green: #82a878;
-    --color-yellow: #f2c65a;
+    --color-text: #233128;
+    --color-text-muted: #536459;
     --color-tomato: #d86f58;
-    --color-sky-blue: #82afc1;
-    --color-lavender: #a796b7;
-    --color-border: #f2ead6;
+    --color-tomato-dark: #be533d;
+    --color-yellow: #f2c65a;
+    --color-border: #ede4d3;
 
-    /* Typography — Kootingal Preschool Title Font */
-    --font-display: "Baloo Chettan 2", "Baloo 2", cursive, sans-serif;
-    --font-hand: "Amatic SC", cursive, sans-serif;
-    --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, sans-serif;
-
-    /* Shadows */
-    --shadow-natural: 0 6px 16px rgba(53, 72, 60, 0.06),
-      0 2px 4px rgba(53, 72, 60, 0.03);
-    --shadow-deep: 0 16px 36px rgba(53, 72, 60, 0.12),
-      0 4px 10px rgba(53, 72, 60, 0.05);
-
-    /* Layout */
-    --max-content-width: 1200px;
+    --font-display: "Baloo Chettan 2", cursive, sans-serif;
+    --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
   * {
     box-sizing: border-box;
   }
 
-  html,
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     margin: 0;
     padding: 0;
     font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.65;
     color: var(--color-text);
     background-color: var(--color-cream);
-    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      font-size: 17px;
+      line-height: 1.6;
+    }
   }
 
   .skip-link {
@@ -333,7 +118,7 @@ const schemaOrgData = {
     top: -100px;
     left: 1rem;
     background: var(--color-text);
-    color: var(--color-paper-white);
+    color: #ffffff;
     padding: 0.75rem 1.25rem;
     border-radius: 8px;
     font-weight: 700;
@@ -346,182 +131,30 @@ const schemaOrgData = {
     top: 1rem;
   }
 
-  a {
-    color: inherit;
-  }
-
-  img,
-  svg {
+  img {
     max-width: 100%;
     height: auto;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-display);
-    line-height: 1.2;
-    color: var(--color-text);
-    margin-top: 0;
-    position: relative;
-    z-index: 2;
+  a {
+    color: var(--color-tomato);
+    transition: color 0.15s ease;
   }
 
-  p,
-  li,
-  span,
-  label,
-  blockquote,
-  .page-title,
-  .page-desc,
-  .hero-text,
-  .hero-title,
-  .hero-desc,
-  .section-intro {
-    position: relative;
-    z-index: 2;
+  a:hover {
+    color: var(--color-tomato-dark);
   }
 
-  .container {
-    position: relative;
-    z-index: 2;
-    max-width: var(--max-content-width);
+  /* Single Column Editorial Container */
+  .petition-container {
+    max-width: 750px;
     margin: 0 auto;
     padding: 0 1.5rem;
   }
 
-  /* Smooth Image Lazy Loading Transitions */
-  img[loading="lazy"]:not(.doodle-illustration),
-  img.photo-img,
-  .full-bleed-photo,
-  .slide-img,
-  .timeline-img {
-    opacity: 0;
-    filter: blur(8px);
-    transition:
-      opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-      filter 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: opacity, filter;
-  }
-
-  img[loading="lazy"]:not(.doodle-illustration).is-loaded,
-  img.photo-img.is-loaded,
-  .full-bleed-photo.is-loaded,
-  .slide-img.is-loaded,
-  .timeline-img.is-loaded,
-  video.photo-img {
-    opacity: 1;
-    filter: blur(0);
-  }
-
-  /* Lightbox Modal */
-  .lightbox-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .lightbox-modal.is-open {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .lightbox-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(30, 42, 34, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  .lightbox-card {
-    position: relative;
-    z-index: 10;
-    max-width: 90vw;
-    max-height: 88vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: var(--color-paper-white, #fffcf6);
-    padding: 1rem;
-    border-radius: 20px;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
-    transform: scale(0.92);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .lightbox-modal.is-open .lightbox-card {
-    transform: scale(1);
-  }
-
-  .lightbox-close {
-    position: absolute;
-    top: -16px;
-    right: -16px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--color-tomato, #d86f58);
-    color: #fff;
-    border: 3px solid #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease, background-color 0.2s ease;
-  }
-
-  .lightbox-close:hover {
-    transform: scale(1.1);
-    background: #c25943;
-  }
-
-  .lightbox-media {
-    max-width: 100%;
-    max-height: 75vh;
-    overflow: hidden;
-    border-radius: 12px;
-  }
-
-  .lightbox-image {
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: 85vw;
-    max-height: 75vh;
-    object-fit: contain;
-  }
-
-  .lightbox-caption {
-    margin: 0.75rem 0 0.25rem;
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--color-text, #35483c);
-    text-align: center;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
+  @media (max-width: 600px) {
+    .petition-container {
+      padding: 0 1.15rem;
     }
   }
 </style>

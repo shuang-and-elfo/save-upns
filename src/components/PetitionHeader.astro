@@ -1,0 +1,161 @@
+---
+import { withBase } from "../utils/url";
+---
+
+<header class="petition-header" role="banner">
+  <div class="header-container">
+    {/* Left: Brand Identity */}
+    <a href={withBase("/")} class="brand-link" aria-label="Save UPNS Home">
+      <img
+        src={withBase("/images/logo.png")}
+        alt="UPNS Preschool Logo"
+        class="brand-logo"
+        width="114"
+        height="60"
+      />
+      <span class="brand-wordmark">
+        <span class="brand-tag">SAVE</span>
+        <span class="brand-title">UPNS</span>
+      </span>
+    </a>
+
+    {/* Right: Primary Call to Action */}
+    <div class="header-action">
+      <a href="#sign" class="header-cta-btn">
+        <span>Sign the Petition</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .petition-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 252, 246, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-border, #f2ead6);
+    transition: box-shadow 0.25s ease;
+  }
+
+  .petition-header.is-scrolled {
+    box-shadow: 0 4px 16px rgba(45, 58, 49, 0.06);
+  }
+
+  .header-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--color-text, #2d3a31);
+    transition: transform 0.15s ease;
+  }
+
+  .brand-link:hover {
+    transform: scale(1.01);
+  }
+
+  .brand-logo {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .brand-wordmark {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    line-height: 1;
+  }
+
+  .brand-tag {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--color-tomato, #d86f58);
+    letter-spacing: 0.08em;
+  }
+
+  .brand-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--color-text, #2d3a31);
+    letter-spacing: -0.01em;
+  }
+
+  .header-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 0.55rem 1.15rem;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(216, 111, 88, 0.25);
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  }
+
+  .header-cta-btn:hover {
+    background: #c35c45;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(216, 111, 88, 0.32);
+  }
+
+  .header-cta-btn:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    .header-container {
+      padding: 0.65rem 1rem;
+    }
+
+    .brand-logo {
+      height: 36px;
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+    }
+
+    .brand-tag {
+      font-size: 0.75rem;
+    }
+
+    .header-cta-btn {
+      font-size: 0.84rem;
+      padding: 0.45rem 0.95rem;
+    }
+  }
+</style>
+
+<script>
+  // Add subtle shadow when scrolling
+  const header = document.querySelector('.petition-header');
+  if (header) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+    }, { passive: true });
+  }
+</script>
