@@ -23,30 +23,63 @@ export interface PublicStory {
   timestamp: string;
 }
 
-const DATA_DIR = path.join(process.cwd(), 'data');
+// In serverless environments (e.g. Vercel / AWS Lambda), the deployment root is read-only.
+// We write dynamic files to /tmp/save-upns-data and read bundled files from repo data/.
+const IS_SERVERLESS = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const DATA_DIR = IS_SERVERLESS ? path.join('/tmp', 'save-upns-data') : path.join(process.cwd(), 'data');
+const READONLY_DATA_DIR = path.join(process.cwd(), 'data');
+
 const JSONL_FILE = path.join(DATA_DIR, 'signatures.jsonl');
 const CSV_FILE = path.join(DATA_DIR, 'signatures.csv');
 
 function ensureDataDir() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+  } catch (err) {
+    console.warn('Could not create data dir:', err);
   }
 }
 
 export function getAllSignatures(): Signature[] {
   ensureDataDir();
-  if (!fs.existsSync(JSONL_FILE)) {
-    return [];
+  const recordsMap = new Map<string, Signature>();
+
+  // 1. Read from bundled repo data if present
+  const readonlyJsonl = path.join(READONLY_DATA_DIR, 'signatures.jsonl');
+  if (fs.existsSync(readonlyJsonl)) {
+    try {
+      const content = fs.readFileSync(readonlyJsonl, 'utf-8');
+      const lines = content.split('\n').filter((l) => l.trim().length > 0);
+      lines.forEach((l) => {
+        try {
+          const item = JSON.parse(l);
+          if (item && item.email) recordsMap.set(item.email.toLowerCase(), item);
+        } catch {}
+      });
+    } catch (err) {
+      console.warn('Error reading bundled signatures:', err);
+    }
   }
 
-  try {
-    const content = fs.readFileSync(JSONL_FILE, 'utf-8');
-    const lines = content.split('\n').filter((l) => l.trim().length > 0);
-    return lines.map((l) => JSON.parse(l));
-  } catch (err) {
-    console.error('Error reading signatures:', err);
-    return [];
+  // 2. Read from writable dir (/tmp in Vercel)
+  if (fs.existsSync(JSONL_FILE) && JSONL_FILE !== readonlyJsonl) {
+    try {
+      const content = fs.readFileSync(JSONL_FILE, 'utf-8');
+      const lines = content.split('\n').filter((l) => l.trim().length > 0);
+      lines.forEach((l) => {
+        try {
+          const item = JSON.parse(l);
+          if (item && item.email) recordsMap.set(item.email.toLowerCase(), item);
+        } catch {}
+      });
+    } catch (err) {
+      console.warn('Error reading tmp signatures:', err);
+    }
   }
+
+  return Array.from(recordsMap.values());
 }
 
 export function getPublicStories(): PublicStory[] {
@@ -108,41 +141,45 @@ export async function addSignature(data: {
   };
 
   if (!alreadySigned) {
-    // 1. Append to JSONL
-    fs.appendFileSync(JSONL_FILE, JSON.stringify(record) + '\n', 'utf-8');
+    try {
+      // 1. Append to JSONL in writable directory
+      fs.appendFileSync(JSONL_FILE, JSON.stringify(record) + '\n', 'utf-8');
 
-    // 2. Append to CSV
-    const csvExists = fs.existsSync(CSV_FILE);
-    if (!csvExists) {
-      fs.writeFileSync(
-        CSV_FILE,
-        '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments","Display Publicly"\n',
-        'utf-8'
-      );
+      // 2. Append to CSV in writable directory
+      const csvExists = fs.existsSync(CSV_FILE);
+      if (!csvExists) {
+        fs.writeFileSync(
+          CSV_FILE,
+          '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments","Display Publicly"\n',
+          'utf-8'
+        );
+      }
+      const escapeCsv = (str: string) => `"${(str || '').replace(/"/g, '""')}"`;
+      const csvLine = [
+        escapeCsv(record.timestamp),
+        escapeCsv(record.first_name),
+        escapeCsv(record.last_name),
+        escapeCsv(record.email),
+        escapeCsv(record.zip_code),
+        escapeCsv(record.relationship_upns),
+        escapeCsv(record.ucla_affiliation),
+        escapeCsv(record.comments),
+        escapeCsv(record.display_publicly ? 'Yes' : 'No'),
+      ].join(',') + '\n';
+      fs.appendFileSync(CSV_FILE, csvLine, 'utf-8');
+    } catch (fsErr) {
+      console.warn('Local filesystem write warning (handled for serverless):', fsErr);
     }
-    const escapeCsv = (str: string) => `"${(str || '').replace(/"/g, '""')}"`;
-    const csvLine = [
-      escapeCsv(record.timestamp),
-      escapeCsv(record.first_name),
-      escapeCsv(record.last_name),
-      escapeCsv(record.email),
-      escapeCsv(record.zip_code),
-      escapeCsv(record.relationship_upns),
-      escapeCsv(record.ucla_affiliation),
-      escapeCsv(record.comments),
-      escapeCsv(record.display_publicly ? 'Yes' : 'No'),
-    ].join(',') + '\n';
-    fs.appendFileSync(CSV_FILE, csvLine, 'utf-8');
 
     // 3. Forward to Google Sheets Webhook if configured
     const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL;
     if (webhookUrl) {
       try {
-        fetch(webhookUrl, {
+        await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(record),
-        }).catch((err) => console.error('Webhook async dispatch error:', err));
+        });
       } catch (err) {
         console.error('Webhook error:', err);
       }
@@ -161,6 +198,10 @@ export function exportSignaturesAsCSV(): string {
   ensureDataDir();
   if (fs.existsSync(CSV_FILE)) {
     return fs.readFileSync(CSV_FILE, 'utf-8');
+  }
+  const readonlyCsv = path.join(READONLY_DATA_DIR, 'signatures.csv');
+  if (fs.existsSync(readonlyCsv)) {
+    return fs.readFileSync(readonlyCsv, 'utf-8');
   }
   return '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments","Display Publicly"\n';
 }
