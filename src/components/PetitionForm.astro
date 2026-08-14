@@ -6,11 +6,12 @@
     
     {/* 1. Header (hidden after submission) */}
     <div id="form-header" class="form-header">
+      <div class="form-count-pill" data-count-wrapper>
+        <span class="live-pulse-dot" aria-hidden="true"></span>
+        <span><strong data-signature-count>0</strong> people have signed the petition</span>
+      </div>
       <h2 id="form-heading" class="form-title">
-        <span class="count-prefix" data-signature-heading-count style="display: none;">
-          <span class="count-number"></span> people have signed.
-        </span>
-        <span>Sign the Petition</span>
+        Sign the Petition
       </h2>
       <p class="form-subtitle">
         Join families, community members, UCLA faculty, staff, students, and alumni in asking UCLA to preserve UPNS.
@@ -25,8 +26,8 @@
         Your signature has been recorded. Help us build momentum by sharing this petition with colleagues, friends, and the UCLA community.
       </p>
 
-      <div class="thankyou-count-badge" data-thankyou-count-wrapper style="display: none;">
-        <strong class="thankyou-count-num"></strong> people have now signed
+      <div class="thankyou-count-badge" data-thankyou-count-wrapper>
+        <strong class="thankyou-count-num" data-signature-count>0</strong> people have now signed
       </div>
 
       <div class="share-box">
@@ -241,6 +242,49 @@
     border-bottom: 1px solid #ebdcc5;
   }
 
+  .form-count-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #fdf5ea;
+    border: 1px solid #ebdcc5;
+    padding: 0.45rem 1.05rem;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    color: var(--color-text, #233128);
+    margin-bottom: 0.85rem;
+  }
+
+  .form-count-pill strong {
+    color: var(--color-tomato, #d86f58);
+    font-weight: 800;
+  }
+
+  .live-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-tomato, #d86f58);
+    box-shadow: 0 0 0 0 rgba(216, 111, 88, 0.7);
+    animation: live-pulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes live-pulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(216, 111, 88, 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 6px rgba(216, 111, 88, 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(216, 111, 88, 0);
+    }
+  }
+
   .form-title {
     font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
     font-size: 2.1rem;
@@ -249,10 +293,6 @@
     color: var(--color-text, #233128);
     margin: 0 0 0.5rem;
     letter-spacing: -0.01em;
-  }
-
-  .count-prefix {
-    color: var(--color-tomato, #d86f58);
   }
 
   .form-subtitle {
@@ -646,30 +686,23 @@
       const data = await res.json();
       const count = data.total_signatures;
 
-      if (typeof count === 'number' && count > 0) {
+      if (typeof count === 'number') {
         const formatted = new Intl.NumberFormat('en-US').format(count);
 
-        // Hero and other wrappers
+        // Update all elements with data-signature-count
         document.querySelectorAll('[data-signature-count]').forEach((el) => {
           el.textContent = formatted;
         });
 
-        document.querySelectorAll('[data-count-wrapper]').forEach((el) => {
-          (el as HTMLElement).style.display = 'block';
+        document.querySelectorAll('.thankyou-count-num').forEach((el) => {
+          el.textContent = formatted;
         });
 
-        // Form header count
-        const headingCount = document.querySelector('[data-signature-heading-count]');
-        if (headingCount) {
-          const numSpan = headingCount.querySelector('.count-number');
-          if (numSpan) numSpan.textContent = formatted;
-          (headingCount as HTMLElement).style.display = 'inline';
-        }
+        document.querySelectorAll('[data-count-wrapper]').forEach((el) => {
+          (el as HTMLElement).style.display = 'inline-flex';
+        });
 
-        // Thank you count
         document.querySelectorAll('[data-thankyou-count-wrapper]').forEach((el) => {
-          const numEl = el.querySelector('.thankyou-count-num');
-          if (numEl) numEl.textContent = formatted;
           (el as HTMLElement).style.display = 'inline-block';
         });
       }
@@ -767,21 +800,36 @@
         // Save session state
         sessionStorage.setItem('upns_petition_signed', 'true');
 
-        // Optimistically increment counters
-        document.querySelectorAll('[data-signature-count]').forEach((el) => {
-          const current = parseInt(el.textContent?.replace(/,/g, '') || '0', 10);
-          if (current > 0) {
-            el.textContent = new Intl.NumberFormat('en-US').format(current + 1);
-          }
-        });
+        // Immediately update all counters on the page with exact count from server
+        const total = typeof resData.total_signatures === 'number' ? resData.total_signatures : null;
+        if (total !== null) {
+          const formatted = new Intl.NumberFormat('en-US').format(total);
+          document.querySelectorAll('[data-signature-count]').forEach((el) => {
+            el.textContent = formatted;
+          });
+          document.querySelectorAll('.thankyou-count-num').forEach((el) => {
+            el.textContent = formatted;
+          });
+          document.querySelectorAll('[data-count-wrapper]').forEach((el) => {
+            (el as HTMLElement).style.display = 'inline-flex';
+          });
+          document.querySelectorAll('[data-thankyou-count-wrapper]').forEach((el) => {
+            (el as HTMLElement).style.display = 'inline-block';
+          });
+        }
 
         // Show thank you screen
         form.style.display = 'none';
         if (formHeader) formHeader.style.display = 'none';
         thankYou.style.display = 'block';
 
-        // Re-sync live count
-        setTimeout(loadLiveSignatureCount, 1500);
+        // Re-sync live count and live stories
+        setTimeout(() => {
+          loadLiveSignatureCount();
+          if (typeof (window as any).loadLiveStories === 'function') {
+            (window as any).loadLiveStories();
+          }
+        }, 1000);
       } catch (err: any) {
         if (generalError) {
           generalError.textContent = err.message || 'An error occurred. Please try again.';

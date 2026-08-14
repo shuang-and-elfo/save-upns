@@ -29,9 +29,10 @@ import { withBase } from "../utils/url";
 
       <div class="hero-action-row">
         <a href="#sign" class="hero-cta-btn">Sign the Petition</a>
-        <p class="hero-live-count" data-count-wrapper style="display: none;">
-          <strong data-signature-count></strong> people have signed
-        </p>
+        <div class="hero-live-count-badge" data-count-wrapper>
+          <span class="live-pulse-dot" aria-hidden="true"></span>
+          <span class="count-text"><strong data-signature-count>0</strong> people have signed</span>
+        </div>
       </div>
     </section>
 
@@ -246,13 +247,44 @@ import { withBase } from "../utils/url";
     box-shadow: 0 6px 16px rgba(216, 111, 88, 0.35);
   }
 
-  .hero-live-count {
-    font-size: 0.98rem;
-    color: var(--color-text-muted, #536459);
-    margin: 0;
+  .hero-live-count-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: #fbf6ee;
+    border: 1.5px solid #ebdcc5;
+    padding: 0.6rem 1.25rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    color: var(--color-text, #233128);
   }
 
-  .hero-live-count strong {
+  .live-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-tomato, #d86f58);
+    box-shadow: 0 0 0 0 rgba(216, 111, 88, 0.7);
+    animation: live-pulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes live-pulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(216, 111, 88, 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 6px rgba(216, 111, 88, 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(216, 111, 88, 0);
+    }
+  }
+
+  .hero-live-count-badge strong {
     color: var(--color-tomato, #d86f58);
     font-weight: 800;
   }
