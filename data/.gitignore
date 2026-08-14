@@ -1,0 +1,5 @@
+# Protect signature data from accidental public exposure
+signatures.jsonl
+signatures.csv
+signatures.db
+*.sqlite

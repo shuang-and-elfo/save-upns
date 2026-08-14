@@ -35,6 +35,25 @@ const server = http.createServer(async (req, res) => {
       urlPath = urlPath.slice("/upns-website".length) || "/";
     }
 
+    const DATA_DIR = path.join(__dirname, "data");
+    const JSONL_FILE = path.join(DATA_DIR, "signatures.jsonl");
+    const CSV_FILE = path.join(DATA_DIR, "signatures.csv");
+
+    function ensureDataDir() {
+      if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+
+    function getLocalSignatures() {
+      ensureDataDir();
+      if (!fs.existsSync(JSONL_FILE)) return [];
+      try {
+        const content = fs.readFileSync(JSONL_FILE, "utf-8");
+        return content.split("\n").filter((l) => l.trim().length > 0).map((l) => JSON.parse(l));
+      } catch (e) {
+        return [];
+      }
+    }
+
     // Dynamic API endpoint for submitting signature
     if (urlPath === "/api/sign" && req.method === "POST") {
       let body = "";
@@ -56,51 +75,74 @@ const server = http.createServer(async (req, res) => {
             return;
           }
 
-          const apiKey = process.env.ACTION_NETWORK_API_KEY;
-          const petitionId = process.env.ACTION_NETWORK_PETITION_ID || "petition-to-preserve-university-parents-nursery-school-upns-2";
-
-          if (!apiKey) {
-            console.log("Action Network API Key not set. Recorded demo signature:", { first_name, last_name, email });
-            // Increment local cached count for immediate feedback
-            if (typeof cachedCount === "number") cachedCount += 1;
-            res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
-            res.end(JSON.stringify({ success: true, mode: "demo", message: "Signature received" }));
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            res.writeHead(400, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+            res.end(JSON.stringify({ success: false, error: "Please enter a valid email address." }));
             return;
           }
 
-          const url = petitionId.startsWith("http")
-            ? `${petitionId}/signatures`
-            : `https://actionnetwork.org/api/v2/petitions/${petitionId}/signatures`;
+          ensureDataDir();
+          const emailNorm = email.trim().toLowerCase();
+          const existing = getLocalSignatures();
+          const alreadySigned = existing.some((s) => s.email.trim().toLowerCase() === emailNorm);
 
-          const payload = {
-            person: {
-              given_name: first_name,
-              family_name: last_name,
-              email_addresses: [{ address: email }],
-              postal_addresses: [{ postal_code: zip_code }],
-              custom_fields: { relationship, comments: comments || "" },
-            },
-            comments: comments || "",
+          const record = {
+            id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            timestamp: new Date().toISOString(),
+            first_name: first_name.trim(),
+            last_name: last_name.trim(),
+            email: emailNorm,
+            zip_code: zip_code.trim(),
+            relationship: relationship.trim(),
+            comments: (comments || "").trim(),
           };
 
-          const apiRes = await fetch(url, {
-            method: "POST",
-            headers: {
-              "OSDI-API-Token": apiKey,
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-            },
-            body: JSON.stringify(payload),
-          });
+          if (!alreadySigned) {
+            // Append to JSONL
+            fs.appendFileSync(JSONL_FILE, JSON.stringify(record) + "\n", "utf-8");
 
-          if (!apiRes.ok) {
-            const errText = await apiRes.text();
-            throw new Error(`Action Network API error: ${apiRes.status} ${errText}`);
+            // Append to CSV
+            const csvExists = fs.existsSync(CSV_FILE);
+            if (!csvExists) {
+              fs.writeFileSync(
+                CSV_FILE,
+                '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship","Comments"\n',
+                "utf-8"
+              );
+            }
+            const escapeCsv = (str) => `"${(str || "").replace(/"/g, '""')}"`;
+            const csvLine = [
+              escapeCsv(record.timestamp),
+              escapeCsv(record.first_name),
+              escapeCsv(record.last_name),
+              escapeCsv(record.email),
+              escapeCsv(record.zip_code),
+              escapeCsv(record.relationship),
+              escapeCsv(record.comments),
+            ].join(",") + "\n";
+            fs.appendFileSync(CSV_FILE, csvLine, "utf-8");
+
+            // Forward to Google Sheet Webhook if configured
+            const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+            if (webhookUrl) {
+              fetch(webhookUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(record),
+              }).catch((e) => console.error("Google Sheet webhook error:", e));
+            }
           }
 
-          if (typeof cachedCount === "number") cachedCount += 1;
+          const baseCount = parseInt(process.env.INITIAL_SIGNATURE_COUNT || "0", 10) || 0;
+          const totalCount = getLocalSignatures().length + baseCount;
+
           res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
-          res.end(JSON.stringify({ success: true, message: "Signature recorded" }));
+          res.end(JSON.stringify({
+            success: true,
+            isNew: !alreadySigned,
+            total_signatures: totalCount,
+            message: "Signature recorded successfully!",
+          }));
         } catch (err) {
           res.writeHead(500, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
           res.end(JSON.stringify({ success: false, error: err.message }));
@@ -111,56 +153,32 @@ const server = http.createServer(async (req, res) => {
 
     // Dynamic API endpoint for signature count
     if (urlPath === "/api/signatures") {
-      const apiKey = process.env.ACTION_NETWORK_API_KEY;
-      const petitionId = process.env.ACTION_NETWORK_PETITION_ID || "petition-to-preserve-university-parents-nursery-school-upns-2";
-      const now = Date.now();
+      const baseCount = parseInt(process.env.INITIAL_SIGNATURE_COUNT || "0", 10) || 0;
+      const count = getLocalSignatures().length + baseCount;
+      res.writeHead(200, {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+        "Access-Control-Allow-Origin": "*",
+      });
+      res.end(JSON.stringify({ total_signatures: count }));
+      return;
+    }
 
-      if (cachedCount !== null && now - lastFetched < CACHE_TTL_MS) {
-        res.writeHead(200, {
-          "Content-Type": "application/json",
-          "Cache-Control": "public, max-age=30",
-          "Access-Control-Allow-Origin": "*",
-        });
-        res.end(JSON.stringify({ total_signatures: cachedCount, cached: true }));
-        return;
+    // Dynamic API endpoint for exporting signatures as CSV
+    if (urlPath === "/api/export" || urlPath === "/api/export-csv") {
+      ensureDataDir();
+      let csvContent = '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship","Comments"\n';
+      if (fs.existsSync(CSV_FILE)) {
+        csvContent = fs.readFileSync(CSV_FILE, "utf-8");
       }
-
-      if (!apiKey || !petitionId) {
-        res.writeHead(200, {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        });
-        res.end(JSON.stringify({ total_signatures: null, message: "Not configured" }));
-        return;
-      }
-
-      try {
-        const url = petitionId.startsWith("http")
-          ? petitionId
-          : `https://actionnetwork.org/api/v2/petitions/${petitionId}`;
-
-        const apiRes = await fetch(url, {
-          headers: { "OSDI-API-Token": apiKey, "Accept": "application/json" },
-        });
-        const data = await apiRes.json();
-        const count = data.total_signatures ?? data.total_submissions ?? null;
-        if (typeof count === "number") {
-          cachedCount = count;
-          lastFetched = now;
-        }
-        res.writeHead(200, {
-          "Content-Type": "application/json",
-          "Cache-Control": "public, max-age=30",
-          "Access-Control-Allow-Origin": "*",
-        });
-        res.end(JSON.stringify({ total_signatures: count }));
-      } catch (err) {
-        res.writeHead(200, {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        });
-        res.end(JSON.stringify({ total_signatures: cachedCount, error: err.message }));
-      }
+      const filename = `save-upns-signatures-${new Date().toISOString().slice(0, 10)}.csv`;
+      res.writeHead(200, {
+        "Content-Type": "text/csv; charset=utf-8",
+        "Content-Disposition": `attachment; filename="${filename}"`,
+        "Cache-Control": "no-cache",
+        "Access-Control-Allow-Origin": "*",
+      });
+      res.end(csvContent);
       return;
     }
 

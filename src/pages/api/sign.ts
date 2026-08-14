@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { addSignature } from '../../lib/signatures';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -32,68 +33,34 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const apiKey = process.env.ACTION_NETWORK_API_KEY;
-    const petitionId =
-      process.env.ACTION_NETWORK_PETITION_ID ||
-      'petition-to-preserve-university-parents-nursery-school-upns-2';
-
-    // 3. If API key is not configured, record in local demo mode
-    if (!apiKey) {
-      console.log('Action Network API Key not set. Recorded demo signature:', {
-        first_name,
-        last_name,
-        email,
-        zip_code,
-        relationship,
-        comments,
-      });
+    // 3. Email format validation
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return new Response(
         JSON.stringify({
-          success: true,
-          mode: 'demo',
-          message: 'Signature received (demo mode). Set ACTION_NETWORK_API_KEY to sync live.',
+          success: false,
+          error: 'Please enter a valid email address.',
         }),
-        { status: 200, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    // 4. Send to Action Network REST API
-    const url = petitionId.startsWith('http')
-      ? `${petitionId}/signatures`
-      : `https://actionnetwork.org/api/v2/petitions/${petitionId}/signatures`;
-
-    const payload = {
-      person: {
-        given_name: first_name,
-        family_name: last_name,
-        email_addresses: [{ address: email }],
-        postal_addresses: [{ postal_code: zip_code }],
-        custom_fields: {
-          relationship: relationship,
-          comments: comments || '',
-        },
-      },
-      comments: comments || '',
-    };
-
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'OSDI-API-Token': apiKey,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify(payload),
+    // 4. Securely add signature to local database and forward to Google Sheet
+    const result = await addSignature({
+      first_name,
+      last_name,
+      email,
+      zip_code,
+      relationship,
+      comments,
     });
 
-    if (!res.ok) {
-      const errText = await res.text();
-      console.error('Action Network error response:', res.status, errText);
-      throw new Error(`Action Network responded with status ${res.status}`);
-    }
-
     return new Response(
-      JSON.stringify({ success: true, message: 'Signature recorded on Action Network' }),
+      JSON.stringify({
+        success: true,
+        isNew: result.isNew,
+        total_signatures: result.totalCount,
+        message: 'Signature recorded successfully!',
+      }),
       {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
