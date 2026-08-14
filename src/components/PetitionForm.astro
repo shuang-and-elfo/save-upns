@@ -197,7 +197,6 @@
               id="display-publicly"
               name="display_publicly"
               class="field-checkbox"
-              checked
             />
             <span class="checkbox-text">
               Display my story publicly in the <strong>UPNS Stories</strong> section
@@ -709,8 +708,18 @@
     const thankYou = document.getElementById('signing-thankyou');
     const formHeader = document.getElementById('form-header');
     const generalError = document.getElementById('general-form-error');
+    const commentsInput = document.getElementById('comments') as HTMLTextAreaElement | null;
+    const displayPubliclyCheckbox = document.getElementById('display-publicly') as HTMLInputElement | null;
 
     if (!form || !thankYou) return;
+
+    // Only switch checkbox to checked when there is content in the comments field
+    if (commentsInput && displayPubliclyCheckbox) {
+      commentsInput.addEventListener('input', () => {
+        const hasContent = commentsInput.value.trim().length > 0;
+        displayPubliclyCheckbox.checked = hasContent;
+      });
+    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -722,10 +731,8 @@
       const zipCode = (document.getElementById('zip-code') as HTMLInputElement).value.trim();
       const relationshipUpns = (document.getElementById('relationship-upns') as HTMLSelectElement).value;
       const uclaAffiliation = (document.getElementById('ucla-affiliation') as HTMLSelectElement).value;
-      const commentsInput = document.getElementById('comments') as HTMLTextAreaElement;
       const comments = commentsInput ? commentsInput.value.trim() : '';
-      const displayPubliclyCheckbox = document.getElementById('display-publicly') as HTMLInputElement;
-      const displayPublicly = displayPubliclyCheckbox ? displayPubliclyCheckbox.checked : true;
+      const displayPublicly = displayPubliclyCheckbox ? displayPubliclyCheckbox.checked : false;
       const hpField = (document.getElementById('hp-field') as HTMLInputElement)?.value || '';
 
       // Reset errors
