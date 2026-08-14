@@ -49,23 +49,12 @@ const SEED_STORIES = [
       </div>
     </header>
 
-    {/* Filter Pills */}
-    <div class="stories-filter-bar">
-      <button type="button" class="filter-pill active" data-filter="all">All Stories</button>
-      <button type="button" class="filter-pill" data-filter="Current UPNS family">Current Families</button>
-      <button type="button" class="filter-pill" data-filter="Former UPNS family">Former Families</button>
-      <button type="button" class="filter-pill" data-filter="UPNS alumni / former student">Alumni</button>
-      <button type="button" class="filter-pill" data-filter="ucla">UCLA Community</button>
-    </div>
-
-    {/* Stories Masonry / Grid */}
-    <div class="stories-grid-container" id="stories-grid">
+    {/* Organic Flexible Collage (2 columns on desktop) */}
+    <div class="stories-collage-container" id="stories-collage">
       {SEED_STORIES.map((story, index) => (
         <article
-          class={`story-sticker-card sticker-rotate-${(index % 4) + 1}`}
+          class={`story-sticker-card sticker-rotate-${(index % 6) + 1}`}
           data-story-id={story.id}
-          data-upns-rel={story.relationship_upns}
-          data-ucla-affil={story.ucla_affiliation}
         >
           <div class="story-quote-mark" aria-hidden="true">“</div>
           <p class="story-text">{story.comments}</p>
@@ -108,11 +97,11 @@ const SEED_STORIES = [
       const data = await response.json();
       if (!data.stories || data.stories.length === 0) return;
 
-      const grid = document.getElementById('stories-grid');
-      if (!grid) return;
+      const collage = document.getElementById('stories-collage');
+      if (!collage) return;
 
       const existingIds = new Set(
-        Array.from(grid.querySelectorAll('[data-story-id]')).map((el) => el.getAttribute('data-story-id'))
+        Array.from(collage.querySelectorAll('[data-story-id]')).map((el) => el.getAttribute('data-story-id'))
       );
 
       let count = 0;
@@ -120,13 +109,11 @@ const SEED_STORIES = [
         if (existingIds.has(story.id)) return;
 
         const card = document.createElement('article');
-        const rotateClass = `sticker-rotate-${(count % 4) + 1}`;
+        const rotateClass = `sticker-rotate-${(count % 6) + 1}`;
         count++;
 
         card.className = `story-sticker-card ${rotateClass} story-card-new`;
         card.setAttribute('data-story-id', story.id);
-        card.setAttribute('data-upns-rel', story.relationship_upns || '');
-        card.setAttribute('data-ucla-affil', story.ucla_affiliation || '');
 
         const upnsTag = story.relationship_upns
           ? `<span class="story-tag tag-upns">${escapeHtml(story.relationship_upns)}</span>`
@@ -147,40 +134,11 @@ const SEED_STORIES = [
           </footer>
         `;
 
-        grid.prepend(card);
+        collage.prepend(card);
       });
     } catch (e) {
       console.warn('Could not load live stories:', e);
     }
-  }
-
-  function setupFilterPills() {
-    const pills = document.querySelectorAll('.filter-pill');
-    const grid = document.getElementById('stories-grid');
-    if (!grid) return;
-
-    pills.forEach((pill) => {
-      pill.addEventListener('click', () => {
-        pills.forEach((p) => p.classList.remove('active'));
-        pill.classList.add('active');
-
-        const filter = pill.getAttribute('data-filter');
-        const cards = grid.querySelectorAll<HTMLElement>('.story-sticker-card');
-
-        cards.forEach((card) => {
-          if (!filter || filter === 'all') {
-            card.style.display = 'flex';
-          } else if (filter === 'ucla') {
-            const ucla = card.getAttribute('data-ucla-affil');
-            const isUcla = ucla && ucla !== 'No UCLA affiliation' && ucla.toLowerCase().includes('ucla');
-            card.style.display = isUcla ? 'flex' : 'none';
-          } else {
-            const rel = card.getAttribute('data-upns-rel') || '';
-            card.style.display = rel.includes(filter) ? 'flex' : 'none';
-          }
-        });
-      });
-    });
   }
 
   function escapeHtml(str: string) {
@@ -190,19 +148,15 @@ const SEED_STORIES = [
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      loadLiveStories();
-      setupFilterPills();
-    });
+    document.addEventListener('DOMContentLoaded', loadLiveStories);
   } else {
     loadLiveStories();
-    setupFilterPills();
   }
 </script>
 
 <style>
   .stories-page-container {
-    max-width: 1160px;
+    max-width: 1080px;
     margin: 0 auto;
     padding: 3.5rem 1.5rem 6rem;
   }
@@ -211,7 +165,7 @@ const SEED_STORIES = [
   .stories-page-header {
     text-align: center;
     max-width: 720px;
-    margin: 0 auto 3rem;
+    margin: 0 auto 3.5rem;
   }
 
   .header-badge {
@@ -241,7 +195,7 @@ const SEED_STORIES = [
     font-size: 1.12rem;
     line-height: 1.6;
     color: var(--color-text-muted, #536459);
-    margin: 0 0 1.75rem;
+    margin: 0 0 1.85rem;
   }
 
   .header-cta-row {
@@ -256,9 +210,9 @@ const SEED_STORIES = [
     background: var(--color-tomato, #d86f58);
     color: #ffffff;
     font-weight: 800;
-    font-size: 1rem;
+    font-size: 1.02rem;
     text-decoration: none;
-    padding: 0.85rem 1.75rem;
+    padding: 0.85rem 1.85rem;
     border-radius: 999px;
     box-shadow: 0 4px 14px rgba(216, 111, 88, 0.28);
     transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
@@ -270,141 +224,114 @@ const SEED_STORIES = [
     box-shadow: 0 6px 20px rgba(216, 111, 88, 0.38);
   }
 
-  /* Filter Bar */
-  .stories-filter-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin: 0 auto 3rem;
-    max-width: 800px;
+  /* Organic Flexible 2-Column Collage */
+  .stories-collage-container {
+    column-count: 2;
+    column-gap: 2.5rem;
+    margin-bottom: 5.5rem;
   }
 
-  .filter-pill {
-    background: #ffffff;
-    border: 1.5px solid #ebdcc5;
-    color: var(--color-text, #233128);
-    font-family: inherit;
-    font-size: 0.88rem;
-    font-weight: 700;
-    padding: 0.45rem 1.05rem;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .filter-pill:hover {
-    background: #faf5ee;
-    border-color: #d8cfbe;
-  }
-
-  .filter-pill.active {
-    background: var(--color-text, #233128);
-    color: #ffffff;
-    border-color: var(--color-text, #233128);
-  }
-
-  /* Stories Grid (Responsive Columns) */
-  .stories-grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
-    align-items: start;
-    margin-bottom: 5rem;
-  }
-
-  .stories-grid-container :global(.story-sticker-card) {
+  .stories-collage-container :global(.story-sticker-card) {
+    break-inside: avoid;
+    display: block;
+    width: 100%;
+    margin-bottom: 2.5rem;
     background: #ffffff;
     border: 2px solid #ede1cc;
-    border-radius: 22px;
-    padding: 1.85rem 1.75rem 1.5rem;
-    box-shadow: 0 6px 20px rgba(35, 49, 40, 0.05);
-    display: flex;
-    flex-direction: column;
-    height: auto;
+    border-radius: 24px;
+    padding: 2.25rem 2rem 1.75rem;
+    box-shadow: 0 8px 24px rgba(35, 49, 40, 0.05);
+    box-sizing: border-box;
     position: relative;
     transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s ease;
     transform-origin: center center;
   }
 
   /* Sticker Rotations */
-  .stories-grid-container :global(.sticker-rotate-1) {
-    transform: rotate(-1.3deg);
+  .stories-collage-container :global(.sticker-rotate-1) {
+    transform: rotate(-1.5deg);
   }
 
-  .stories-grid-container :global(.sticker-rotate-2) {
-    transform: rotate(1.2deg);
+  .stories-collage-container :global(.sticker-rotate-2) {
+    transform: rotate(1.6deg);
   }
 
-  .stories-grid-container :global(.sticker-rotate-3) {
+  .stories-collage-container :global(.sticker-rotate-3) {
     transform: rotate(-0.9deg);
   }
 
-  .stories-grid-container :global(.sticker-rotate-4) {
-    transform: rotate(1.4deg);
+  .stories-collage-container :global(.sticker-rotate-4) {
+    transform: rotate(1.2deg);
   }
 
-  .stories-grid-container :global(.story-sticker-card:hover) {
-    transform: scale(1.02) rotate(0deg) !important;
-    box-shadow: 0 12px 30px rgba(35, 49, 40, 0.1);
-    z-index: 3;
+  .stories-collage-container :global(.sticker-rotate-5) {
+    transform: rotate(-1.8deg);
   }
 
-  .stories-grid-container :global(.story-quote-mark) {
+  .stories-collage-container :global(.sticker-rotate-6) {
+    transform: rotate(0.9deg);
+  }
+
+  .stories-collage-container :global(.story-sticker-card:hover) {
+    transform: scale(1.025) rotate(0deg) !important;
+    box-shadow: 0 14px 36px rgba(35, 49, 40, 0.11);
+    z-index: 5;
+  }
+
+  .stories-collage-container :global(.story-quote-mark) {
     font-family: var(--font-display, "Baloo Chettan 2", Georgia, serif);
-    font-size: 3.2rem;
-    line-height: 0.75;
+    font-size: 3.4rem;
+    line-height: 0.7;
     color: #ebd7be;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.75rem;
     user-select: none;
   }
 
-  .stories-grid-container :global(.story-text) {
-    font-size: 1.02rem;
-    line-height: 1.6;
+  .stories-collage-container :global(.story-text) {
+    font-size: 1.05rem;
+    line-height: 1.65;
     color: var(--color-text, #233128);
-    margin: 0 0 1.25rem;
+    margin: 0 0 1.35rem;
     font-style: normal;
     white-space: pre-wrap;
     word-break: break-word;
   }
 
-  .stories-grid-container :global(.story-author-row) {
+  .stories-collage-container :global(.story-author-row) {
     border-top: 1px solid #f2ead6;
-    padding-top: 0.85rem;
+    padding-top: 0.95rem;
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
   }
 
-  .stories-grid-container :global(.story-author-name) {
-    font-size: 0.98rem;
+  .stories-collage-container :global(.story-author-name) {
+    font-size: 1.02rem;
     font-weight: 800;
     font-style: normal;
     color: var(--color-forest, #233128);
   }
 
-  .stories-grid-container :global(.story-tags) {
+  .stories-collage-container :global(.story-tags) {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.45rem;
   }
 
-  .stories-grid-container :global(.story-tag) {
-    font-size: 0.76rem;
+  .stories-collage-container :global(.story-tag) {
+    font-size: 0.78rem;
     font-weight: 700;
-    padding: 0.2rem 0.55rem;
+    padding: 0.2rem 0.6rem;
     border-radius: 6px;
     line-height: 1.3;
   }
 
-  .stories-grid-container :global(.tag-upns) {
+  .stories-collage-container :global(.tag-upns) {
     background: #f7efe1;
     color: #5a4b32;
   }
 
-  .stories-grid-container :global(.tag-ucla) {
+  .stories-collage-container :global(.tag-ucla) {
     background: #eef3f7;
     color: #274c6e;
   }
@@ -459,14 +386,19 @@ const SEED_STORIES = [
     box-shadow: 0 6px 20px rgba(216, 111, 88, 0.35);
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
+    .stories-collage-container {
+      column-count: 1;
+      column-gap: 0;
+    }
+
     .header-title {
       font-size: 2.25rem;
     }
 
-    .stories-grid-container {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
+    .stories-collage-container :global(.story-sticker-card) {
+      padding: 1.75rem 1.5rem 1.5rem;
+      margin-bottom: 1.75rem;
     }
 
     .stories-bottom-cta {
