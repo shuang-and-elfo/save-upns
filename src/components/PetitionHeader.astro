@@ -15,9 +15,14 @@ import { withBase } from "../utils/url";
       />
     </a>
 
-    {/* Right: Primary Call to Action */}
+    {/* Right: Navigation Links & Primary Call to Action */}
     <div class="header-action">
-      <a href="#sign" class="header-cta-btn">
+      <nav class="header-nav" aria-label="Main Navigation">
+        <a href={withBase("/stories")} class="nav-link">
+          <span>UPNS Stories</span>
+        </a>
+      </nav>
+      <a href={withBase("/#sign")} class="header-cta-btn">
         <span>Sign the Petition</span>
       </a>
     </div>
@@ -69,6 +74,32 @@ import { withBase } from "../utils/url";
     display: block;
   }
 
+  .header-action {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-link {
+    color: var(--color-text, #233128);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    padding: 0.4rem 0.65rem;
+    border-radius: 8px;
+    transition: color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--color-tomato, #d86f58);
+    background: #fbf5eb;
+  }
+
   .header-cta-btn {
     display: inline-flex;
     align-items: center;
@@ -104,9 +135,18 @@ import { withBase } from "../utils/url";
       height: 38px;
     }
 
-    .header-cta-btn {
+    .header-action {
+      gap: 0.6rem;
+    }
+
+    .nav-link {
       font-size: 0.84rem;
-      padding: 0.45rem 0.95rem;
+      padding: 0.35rem 0.5rem;
+    }
+
+    .header-cta-btn {
+      font-size: 0.82rem;
+      padding: 0.42rem 0.85rem;
     }
   }
 </style>
