@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
 import { getSignatureCount } from '../../lib/signatures';
 
+export const prerender = false;
+
 export const GET: APIRoute = async () => {
   try {
     const count = getSignatureCount();

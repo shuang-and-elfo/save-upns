@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
 import { exportSignaturesAsCSV } from '../../lib/signatures';
 
+export const prerender = false;
+
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'saveUPNS2026!';
 
 export const GET: APIRoute = async ({ request }) => {

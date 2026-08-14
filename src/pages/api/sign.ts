@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
 import { addSignature } from '../../lib/signatures';
 
+export const prerender = false;
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
