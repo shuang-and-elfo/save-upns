@@ -1,0 +1,727 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <div class="data-page-container">
+    
+    {/* Page Header */}
+    <header class="data-header">
+      <span class="data-badge">Admin Portal</span>
+      <h1 class="data-title">Save UPNS Petition Data</h1>
+      <p class="data-subtitle">
+        Secure view and spreadsheet export of all petition signatures and community messages.
+      </p>
+    </header>
+
+    {/* Gate: Password Verification Form */}
+    <div id="login-gate" class="login-gate-card">
+      <div class="gate-icon" aria-hidden="true">🔒</div>
+      <h2 class="gate-title">Enter Access Password</h2>
+      <p class="gate-desc">
+        This page contains community signer data and requires authentication.
+      </p>
+      
+      <form id="login-form" class="login-form">
+        <div class="input-group">
+          <input
+            type="password"
+            id="password-input"
+            class="gate-input"
+            placeholder="Enter password..."
+            required
+            autocomplete="current-password"
+          />
+          <button type="submit" id="login-btn" class="gate-btn">
+            <span>Unlock Data</span>
+          </button>
+        </div>
+        <div id="login-error" class="login-error" style="display: none;"></div>
+      </form>
+    </div>
+
+    {/* Authenticated Dashboard */}
+    <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
+      
+      {/* Action Banner */}
+      <div class="dashboard-action-banner">
+        <div class="action-info">
+          <h2 class="action-heading">Petition Signatures Spreadsheet</h2>
+          <p class="action-desc">
+            Complete database of signers with timestamps, affiliations, and messages.
+          </p>
+        </div>
+        <div class="action-buttons">
+          <button id="download-csv-btn" class="download-btn">
+            <span class="download-icon" aria-hidden="true">📥</span>
+            <span>Download Spreadsheet (.CSV)</span>
+          </button>
+          <button id="logout-btn" class="logout-btn" title="Log out">
+            <span>Log Out</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Metrics Row */}
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">Total Signatures</span>
+          <span class="metric-value" id="metric-total">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Public Stories</span>
+          <span class="metric-value" id="metric-stories">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Current UPNS Families</span>
+          <span class="metric-value" id="metric-current-families">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">UCLA Affiliated</span>
+          <span class="metric-value" id="metric-ucla">0</span>
+        </div>
+      </div>
+
+      {/* Filter & Search Toolbar */}
+      <div class="toolbar-row">
+        <div class="search-box">
+          <input
+            type="text"
+            id="table-search"
+            class="search-input"
+            placeholder="Search by name, email, comments..."
+          />
+        </div>
+        <div class="filter-group">
+          <select id="filter-relationship" class="filter-select">
+            <option value="">All UPNS Relationships</option>
+            <option value="Current UPNS family">Current UPNS family</option>
+            <option value="Former UPNS family">Former UPNS family</option>
+            <option value="UPNS alumni / former student">UPNS alumni / former student</option>
+            <option value="UPNS teacher or staff">UPNS teacher or staff</option>
+            <option value="Friend / extended family of UPNS">Friend / extended family</option>
+            <option value="No direct relationship to UPNS">No direct relationship</option>
+          </select>
+
+          <select id="filter-ucla" class="filter-select">
+            <option value="">All UCLA Affiliations</option>
+            <option value="UCLA faculty">UCLA faculty</option>
+            <option value="UCLA staff">UCLA staff</option>
+            <option value="UCLA student">UCLA student</option>
+            <option value="UCLA alumni">UCLA alumni</option>
+            <option value="UCLA ECE current/former family">UCLA ECE family</option>
+            <option value="No UCLA affiliation">No UCLA affiliation</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Signatures Data Table */}
+      <div class="table-container">
+        <table class="data-table" id="signatures-table">
+          <thead>
+            <tr>
+              <th>Date & Time</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>ZIP</th>
+              <th>Relationship to UPNS</th>
+              <th>UCLA Affiliation</th>
+              <th>Public?</th>
+              <th>Comments / Story</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <tr>
+              <td colspan="8" class="empty-cell">Loading signatures data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</BaseLayout>
+
+<script>
+  let cachedSignatures: any[] = [];
+  let currentPassword = '';
+
+  const loginGate = document.getElementById('login-gate');
+  const adminDashboard = document.getElementById('admin-dashboard');
+  const loginForm = document.getElementById('login-form') as HTMLFormElement;
+  const passwordInput = document.getElementById('password-input') as HTMLInputElement;
+  const loginError = document.getElementById('login-error');
+  const downloadBtn = document.getElementById('download-csv-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+  const tableSearch = document.getElementById('table-search') as HTMLInputElement;
+  const filterRelationship = document.getElementById('filter-relationship') as HTMLSelectElement;
+  const filterUcla = document.getElementById('filter-ucla') as HTMLSelectElement;
+  const tableBody = document.getElementById('table-body');
+
+  async function tryAuthenticate(pass: string) {
+    if (!pass) return false;
+    try {
+      if (loginError) loginError.style.display = 'none';
+      const response = await fetch('/api/admin-signatures', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pass }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Incorrect password. Please check and try again.');
+      }
+
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to authenticate.');
+      }
+
+      currentPassword = pass;
+      sessionStorage.setItem('upns_admin_pass', pass);
+      cachedSignatures = data.signatures || [];
+
+      // Switch to dashboard view
+      if (loginGate) loginGate.style.display = 'none';
+      if (adminDashboard) adminDashboard.style.display = 'block';
+
+      renderDashboard(cachedSignatures);
+      return true;
+    } catch (err: any) {
+      if (loginError) {
+        loginError.textContent = err.message || 'Authentication error.';
+        loginError.style.display = 'block';
+      }
+      return false;
+    }
+  }
+
+  function renderDashboard(signatures: any[]) {
+    // 1. Update Metrics
+    const totalCount = signatures.length;
+    const storiesCount = signatures.filter((s) => s.comments && s.comments.trim().length > 0).length;
+    const currentFamilies = signatures.filter((s) => s.relationship_upns === 'Current UPNS family').length;
+    const uclaAffiliated = signatures.filter((s) => s.ucla_affiliation && s.ucla_affiliation !== 'No UCLA affiliation').length;
+
+    const elTotal = document.getElementById('metric-total');
+    const elStories = document.getElementById('metric-stories');
+    const elCurrent = document.getElementById('metric-current-families');
+    const elUcla = document.getElementById('metric-ucla');
+
+    if (elTotal) elTotal.textContent = totalCount.toString();
+    if (elStories) elStories.textContent = storiesCount.toString();
+    if (elCurrent) elCurrent.textContent = currentFamilies.toString();
+    if (elUcla) elUcla.textContent = uclaAffiliated.toString();
+
+    // 2. Render Table
+    filterAndRenderTable();
+  }
+
+  function filterAndRenderTable() {
+    if (!tableBody) return;
+    const query = (tableSearch?.value || '').toLowerCase().trim();
+    const relFilter = filterRelationship?.value || '';
+    const uclaFilter = filterUcla?.value || '';
+
+    const filtered = cachedSignatures.filter((s) => {
+      if (relFilter && s.relationship_upns !== relFilter) return false;
+      if (uclaFilter && s.ucla_affiliation !== uclaFilter) return false;
+      if (query) {
+        const fullText = `${s.first_name} ${s.last_name} ${s.email} ${s.zip_code} ${s.comments}`.toLowerCase();
+        if (!fullText.includes(query)) return false;
+      }
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      tableBody.innerHTML = `<tr><td colspan="8" class="empty-cell">No matching signatures found.</td></tr>`;
+      return;
+    }
+
+    // Display newest first
+    const rowsHtml = [...filtered].reverse().map((s) => {
+      const dateStr = s.timestamp ? new Date(s.timestamp).toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+      }) : '—';
+
+      const isPublic = s.display_publicly !== false;
+
+      return `
+        <tr>
+          <td class="cell-nowrap">${escapeHtml(dateStr)}</td>
+          <td class="cell-name">${escapeHtml(s.first_name)} ${escapeHtml(s.last_name)}</td>
+          <td class="cell-email"><a href="mailto:${escapeHtml(s.email)}">${escapeHtml(s.email)}</a></td>
+          <td>${escapeHtml(s.zip_code)}</td>
+          <td><span class="badge-tag tag-upns">${escapeHtml(s.relationship_upns || '—')}</span></td>
+          <td><span class="badge-tag tag-ucla">${escapeHtml(s.ucla_affiliation || '—')}</span></td>
+          <td class="cell-center">
+            <span class="public-badge ${isPublic ? 'is-public' : 'is-private'}">
+              ${isPublic ? 'Yes' : 'No'}
+            </span>
+          </td>
+          <td class="cell-comments">${escapeHtml(s.comments || '—')}</td>
+        </tr>
+      `;
+    }).join('');
+
+    tableBody.innerHTML = rowsHtml;
+  }
+
+  function escapeHtml(str: string) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+  }
+
+  // Handle Download CSV
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', () => {
+      const pass = currentPassword || sessionStorage.getItem('upns_admin_pass') || '';
+      window.location.href = `/api/export?pass=${encodeURIComponent(pass)}`;
+    });
+  }
+
+  // Handle Logout
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('upns_admin_pass');
+      currentPassword = '';
+      cachedSignatures = [];
+      if (adminDashboard) adminDashboard.style.display = 'none';
+      if (loginGate) loginGate.style.display = 'block';
+      if (passwordInput) passwordInput.value = '';
+    });
+  }
+
+  // Filter events
+  tableSearch?.addEventListener('input', filterAndRenderTable);
+  filterRelationship?.addEventListener('change', filterAndRenderTable);
+  filterUcla?.addEventListener('change', filterAndRenderTable);
+
+  // Login form submit
+  loginForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const pass = passwordInput?.value.trim();
+    if (pass) tryAuthenticate(pass);
+  });
+
+  // Auto-authenticate if stored in session or via URL query ?pass=
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlPass = urlParams.get('pass') || urlParams.get('password');
+  const storedPass = urlPass || sessionStorage.getItem('upns_admin_pass');
+  if (storedPass) {
+    tryAuthenticate(storedPass);
+  }
+</script>
+
+<style>
+  .data-page-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .data-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .data-badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-forest, #233128);
+    background: #eef3ed;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+  }
+
+  .data-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--color-text, #233128);
+    margin: 0 0 0.5rem;
+  }
+
+  .data-subtitle {
+    font-size: 1.05rem;
+    color: var(--color-text-muted, #536459);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Login Gate Card */
+  .login-gate-card {
+    background: #ffffff;
+    border: 1.5px solid var(--color-border, #ede4d3);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    max-width: 480px;
+    margin: 1.5rem auto 3rem;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(35, 49, 40, 0.06);
+  }
+
+  .gate-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .gate-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: var(--color-text, #233128);
+    margin: 0 0 0.5rem;
+  }
+
+  .gate-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted, #536459);
+    margin: 0 0 1.75rem;
+    line-height: 1.5;
+  }
+
+  .input-group {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  .gate-input {
+    flex-grow: 1;
+    font-size: 1rem;
+    padding: 0.8rem 1.1rem;
+    border: 1.5px solid #d8cfbe;
+    border-radius: 12px;
+    background: #faf8f5;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .gate-input:focus {
+    border-color: var(--color-forest, #233128);
+    background: #ffffff;
+  }
+
+  .gate-btn {
+    background: var(--color-forest, #233128);
+    color: #ffffff;
+    font-size: 0.98rem;
+    font-weight: 700;
+    padding: 0.8rem 1.35rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease;
+  }
+
+  .gate-btn:hover {
+    background: #18231c;
+  }
+
+  .login-error {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: #fdf2f2;
+    border: 1px solid #f8d7da;
+    border-radius: 10px;
+    color: #c53030;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  /* Authenticated Dashboard */
+  .dashboard-action-banner {
+    background: #ffffff;
+    border: 1.5px solid var(--color-border, #ede4d3);
+    border-radius: 18px;
+    padding: 1.75rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(35, 49, 40, 0.04);
+  }
+
+  .action-heading {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--color-text, #233128);
+    margin: 0 0 0.35rem;
+  }
+
+  .action-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted, #536459);
+    margin: 0;
+  }
+
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 0.85rem 1.6rem;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(216, 111, 88, 0.3);
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .download-btn:hover {
+    background: var(--color-tomato-dark, #be533d);
+    transform: translateY(-1px);
+  }
+
+  .logout-btn {
+    background: #f7efe1;
+    color: #5a4b32;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 0.85rem 1.25rem;
+    border: 1px solid #ebdcc5;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .logout-btn:hover {
+    background: #ece0cd;
+  }
+
+  /* Metrics Grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .metric-card {
+    background: #ffffff;
+    border: 1px solid #ebdcc5;
+    border-radius: 14px;
+    padding: 1.35rem 1.25rem;
+    box-shadow: 0 2px 12px rgba(35, 49, 40, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .metric-label {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--color-text-muted, #536459);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .metric-value {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-tomato, #d86f58);
+  }
+
+  /* Toolbar */
+  .toolbar-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .search-box {
+    flex-grow: 1;
+    min-width: 260px;
+  }
+
+  .search-input {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
+    border: 1.5px solid #d8cfbe;
+    border-radius: 10px;
+    background: #ffffff;
+    outline: none;
+  }
+
+  .search-input:focus {
+    border-color: var(--color-forest, #233128);
+  }
+
+  .filter-group {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-select {
+    font-size: 0.9rem;
+    padding: 0.7rem 1rem;
+    border: 1.5px solid #d8cfbe;
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--color-text, #233128);
+    outline: none;
+    cursor: pointer;
+  }
+
+  /* Table */
+  .table-container {
+    background: #ffffff;
+    border: 1px solid #ebdcc5;
+    border-radius: 16px;
+    overflow-x: auto;
+    box-shadow: 0 4px 20px rgba(35, 49, 40, 0.04);
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    text-align: left;
+  }
+
+  .data-table th {
+    background: #fbf6ee;
+    color: var(--color-text, #233128);
+    font-weight: 800;
+    padding: 1rem 1.15rem;
+    border-bottom: 2px solid #ebdcc5;
+    white-space: nowrap;
+  }
+
+  .data-table td {
+    padding: 1rem 1.15rem;
+    border-bottom: 1px solid #f2ead6;
+    vertical-align: top;
+    color: var(--color-text, #233128);
+  }
+
+  .data-table tr:hover td {
+    background: #faf8f5;
+  }
+
+  .cell-nowrap {
+    white-space: nowrap;
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #536459);
+  }
+
+  .cell-name {
+    font-weight: 700;
+    color: var(--color-forest, #233128);
+    white-space: nowrap;
+  }
+
+  .cell-email a {
+    color: #274c6e;
+    text-decoration: none;
+  }
+
+  .cell-email a:hover {
+    text-decoration: underline;
+  }
+
+  .badge-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .tag-upns {
+    background: #f7efe1;
+    color: #5a4b32;
+  }
+
+  .tag-ucla {
+    background: #eef3f7;
+    color: #274c6e;
+  }
+
+  .public-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+  }
+
+  .public-badge.is-public {
+    background: #eef7ee;
+    color: #2e7d32;
+  }
+
+  .public-badge.is-private {
+    background: #f5f5f5;
+    color: #757575;
+  }
+
+  .cell-comments {
+    max-width: 320px;
+    line-height: 1.45;
+    font-size: 0.88rem;
+  }
+
+  .empty-cell {
+    text-align: center;
+    padding: 3rem !important;
+    color: var(--color-text-muted, #536459);
+    font-style: italic;
+  }
+
+  @media (max-width: 900px) {
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-action-banner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .action-buttons {
+      width: 100%;
+    }
+
+    .download-btn {
+      flex-grow: 1;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

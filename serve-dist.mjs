@@ -196,10 +196,46 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    // Dynamic API endpoint for exporting signatures as CSV
+    // Dynamic API endpoint for admin signatures JSON
+    if (urlPath === "/api/admin-signatures" && req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => { body += chunk; });
+      req.on("end", () => {
+        try {
+          const data = JSON.parse(body);
+          const adminPass = process.env.ADMIN_PASSWORD || "saveUPNS2026!";
+          if (data.password !== adminPass) {
+            res.writeHead(401, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+            res.end(JSON.stringify({ success: false, error: "Invalid password" }));
+            return;
+          }
+          const signatures = getLocalSignatures();
+          res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+          res.end(JSON.stringify({ success: true, signatures }));
+        } catch (e) {
+          res.writeHead(500, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+          res.end(JSON.stringify({ success: false, error: e.message }));
+        }
+      });
+      return;
+    }
+
+    // Dynamic API endpoint for exporting signatures as CSV (Password protected)
     if (urlPath === "/api/export" || urlPath === "/api/export-csv") {
+      const parsedUrl = new URL(req.url, `http://${req.headers.host || "localhost"}`);
+      const passParam = parsedUrl.searchParams.get("pass") || parsedUrl.searchParams.get("password") || parsedUrl.searchParams.get("key");
+      const authHeader = req.headers["authorization"];
+      const bearerToken = authHeader && authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
+      const adminPass = process.env.ADMIN_PASSWORD || "saveUPNS2026!";
+
+      if (passParam !== adminPass && bearerToken !== adminPass) {
+        res.writeHead(401, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+        res.end(JSON.stringify({ error: "Unauthorized. Password required. Example: /api/export?pass=saveUPNS2026!" }));
+        return;
+      }
+
       ensureDataDir();
-      let csvContent = '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship","Comments"\n';
+      let csvContent = '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments","Display Publicly"\n';
       if (fs.existsSync(CSV_FILE)) {
         csvContent = fs.readFileSync(CSV_FILE, "utf-8");
       }
