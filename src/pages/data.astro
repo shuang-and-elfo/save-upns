@@ -250,13 +250,30 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       }) : '-';
 
       const isPublic = s.display_publicly !== false;
+      const commentsText = (s.comments || '').trim();
+      let commentsHtml = '<span class="empty-val">-</span>';
+      
+      if (commentsText) {
+        if (commentsText.length > 140) {
+          const preview = commentsText.slice(0, 130) + '...';
+          commentsHtml = `
+            <div class="comment-box">
+              <div class="comment-preview">${escapeHtml(preview)}</div>
+              <div class="comment-full" style="display: none;">${escapeHtml(commentsText)}</div>
+              <button type="button" class="toggle-more-btn" onclick="toggleComment(this)">more</button>
+            </div>
+          `;
+        } else {
+          commentsHtml = `<div class="comment-box">${escapeHtml(commentsText)}</div>`;
+        }
+      }
 
       return `
         <tr>
           <td class="cell-nowrap">${escapeHtml(dateStr)}</td>
           <td class="cell-name">${escapeHtml(s.first_name)} ${escapeHtml(s.last_name)}</td>
           <td class="cell-email"><a href="mailto:${escapeHtml(s.email)}">${escapeHtml(s.email)}</a></td>
-          <td>${escapeHtml(s.zip_code)}</td>
+          <td class="cell-zip">${escapeHtml(s.zip_code)}</td>
           <td><span class="badge-tag tag-upns">${escapeHtml(s.relationship_upns || '-')}</span></td>
           <td><span class="badge-tag tag-ucla">${escapeHtml(s.ucla_affiliation || '-')}</span></td>
           <td class="cell-center">
@@ -264,13 +281,32 @@ import BaseLayout from "../layouts/BaseLayout.astro";
               ${isPublic ? 'Yes' : 'No'}
             </span>
           </td>
-          <td class="cell-comments">${escapeHtml(s.comments || '-')}</td>
+          <td class="cell-comments">${commentsHtml}</td>
         </tr>
       `;
     }).join('');
 
     tableBody.innerHTML = rowsHtml;
   }
+
+  // Global toggle for truncated comments
+  (window as any).toggleComment = function(btn: HTMLButtonElement) {
+    const box = btn.closest('.comment-box');
+    if (!box) return;
+    const preview = box.querySelector('.comment-preview') as HTMLElement;
+    const full = box.querySelector('.comment-full') as HTMLElement;
+    if (!preview || !full) return;
+
+    if (full.style.display === 'none') {
+      full.style.display = 'block';
+      preview.style.display = 'none';
+      btn.textContent = 'less';
+    } else {
+      full.style.display = 'none';
+      preview.style.display = 'block';
+      btn.textContent = 'more';
+    }
+  };
 
   function escapeHtml(str: string) {
     const div = document.createElement('div');
@@ -321,9 +357,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <style>
   .data-page-container {
-    max-width: 1100px;
+    max-width: 1440px;
+    width: 96%;
     margin: 0 auto;
-    padding: 3rem 1.5rem 5rem;
+    padding: 3rem 1rem 5rem;
   }
 
   .data-header {
@@ -603,6 +640,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   .data-table {
     width: 100%;
+    min-width: 1080px;
     border-collapse: collapse;
     font-size: 0.92rem;
     text-align: left;
@@ -615,12 +653,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     padding: 1rem 1.15rem;
     border-bottom: 2px solid #ebdcc5;
     white-space: nowrap;
+    vertical-align: top;
   }
 
   .data-table td {
     padding: 1rem 1.15rem;
     border-bottom: 1px solid #f2ead6;
-    vertical-align: top;
+    vertical-align: top !important;
     color: var(--color-text, #233128);
   }
 
@@ -647,6 +686,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   .cell-email a:hover {
     text-decoration: underline;
+  }
+
+  .cell-zip {
+    white-space: nowrap;
   }
 
   .badge-tag {
@@ -687,9 +730,45 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   }
 
   .cell-comments {
-    max-width: 320px;
-    line-height: 1.45;
+    min-width: 340px;
+    max-width: 600px;
+    width: 38%;
+    line-height: 1.55;
     font-size: 0.88rem;
+    vertical-align: top !important;
+  }
+
+  .comment-box {
+    max-height: 280px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .comment-preview,
+  .comment-full {
+    white-space: pre-wrap;
+  }
+
+  .toggle-more-btn {
+    display: inline-block;
+    margin-top: 0.35rem;
+    background: transparent;
+    border: none;
+    color: var(--color-tomato, #d86f58);
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    user-select: none;
+  }
+
+  .toggle-more-btn:hover {
+    color: var(--color-tomato-dark, #be533d);
+  }
+
+  .empty-val {
+    color: #a0aec0;
   }
 
   .empty-cell {
