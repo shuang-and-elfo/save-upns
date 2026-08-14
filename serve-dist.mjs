@@ -61,7 +61,7 @@ const server = http.createServer(async (req, res) => {
       req.on("end", async () => {
         try {
           const data = JSON.parse(body);
-          const { first_name, last_name, email, zip_code, relationship, comments, hp_field } = data;
+          const { first_name, last_name, email, zip_code, relationship_upns, ucla_affiliation, comments, hp_field } = data;
 
           if (hp_field) {
             res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
@@ -69,7 +69,7 @@ const server = http.createServer(async (req, res) => {
             return;
           }
 
-          if (!first_name || !last_name || !email || !zip_code || !relationship) {
+          if (!first_name || !last_name || !email || !zip_code || !relationship_upns || !ucla_affiliation) {
             res.writeHead(400, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
             res.end(JSON.stringify({ success: false, error: "Please fill in all required fields." }));
             return;
@@ -93,7 +93,8 @@ const server = http.createServer(async (req, res) => {
             last_name: last_name.trim(),
             email: emailNorm,
             zip_code: zip_code.trim(),
-            relationship: relationship.trim(),
+            relationship_upns: relationship_upns.trim(),
+            ucla_affiliation: ucla_affiliation.trim(),
             comments: (comments || "").trim(),
           };
 
@@ -106,7 +107,7 @@ const server = http.createServer(async (req, res) => {
             if (!csvExists) {
               fs.writeFileSync(
                 CSV_FILE,
-                '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship","Comments"\n',
+                '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments"\n',
                 "utf-8"
               );
             }
@@ -117,7 +118,8 @@ const server = http.createServer(async (req, res) => {
               escapeCsv(record.last_name),
               escapeCsv(record.email),
               escapeCsv(record.zip_code),
-              escapeCsv(record.relationship),
+              escapeCsv(record.relationship_upns),
+              escapeCsv(record.ucla_affiliation),
               escapeCsv(record.comments),
             ].join(",") + "\n";
             fs.appendFileSync(CSV_FILE, csvLine, "utf-8");

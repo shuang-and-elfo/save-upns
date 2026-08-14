@@ -8,7 +8,8 @@ export interface Signature {
   last_name: string;
   email: string;
   zip_code: string;
-  relationship: string;
+  relationship_upns: string;
+  ucla_affiliation: string;
   comments: string;
 }
 
@@ -49,7 +50,8 @@ export async function addSignature(data: {
   last_name: string;
   email: string;
   zip_code: string;
-  relationship: string;
+  relationship_upns: string;
+  ucla_affiliation: string;
   comments?: string;
 }): Promise<{ success: boolean; isNew: boolean; totalCount: number }> {
   ensureDataDir();
@@ -67,7 +69,8 @@ export async function addSignature(data: {
     last_name: data.last_name.trim(),
     email: emailNorm,
     zip_code: data.zip_code.trim(),
-    relationship: data.relationship.trim(),
+    relationship_upns: data.relationship_upns.trim(),
+    ucla_affiliation: data.ucla_affiliation.trim(),
     comments: (data.comments || '').trim(),
   };
 
@@ -80,7 +83,7 @@ export async function addSignature(data: {
     if (!csvExists) {
       fs.writeFileSync(
         CSV_FILE,
-        '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship","Comments"\n',
+        '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments"\n',
         'utf-8'
       );
     }
@@ -91,7 +94,8 @@ export async function addSignature(data: {
       escapeCsv(record.last_name),
       escapeCsv(record.email),
       escapeCsv(record.zip_code),
-      escapeCsv(record.relationship),
+      escapeCsv(record.relationship_upns),
+      escapeCsv(record.ucla_affiliation),
       escapeCsv(record.comments),
     ].join(',') + '\n';
     fs.appendFileSync(CSV_FILE, csvLine, 'utf-8');
@@ -124,5 +128,5 @@ export function exportSignaturesAsCSV(): string {
   if (fs.existsSync(CSV_FILE)) {
     return fs.readFileSync(CSV_FILE, 'utf-8');
   }
-  return '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship","Comments"\n';
+  return '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments"\n';
 }

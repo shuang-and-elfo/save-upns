@@ -139,28 +139,41 @@
         </div>
       </div>
 
-      <div class="form-row">
+      <div class="form-row form-row-split">
         <div class="form-field">
-          <label for="relationship" class="field-label">
-            Relationship to UPNS / UCLA <span class="req">*</span>
+          <label for="relationship-upns" class="field-label">
+            Relationship to UPNS <span class="req">*</span>
           </label>
           <div class="select-wrap">
-            <select id="relationship" name="relationship" class="field-select" required>
+            <select id="relationship-upns" name="relationship_upns" class="field-select" required>
               <option value="" disabled selected>Select your relationship...</option>
               <option value="Current UPNS family">Current UPNS family</option>
               <option value="Former UPNS family">Former UPNS family</option>
-              <option value="UPNS alumni">UPNS alumni</option>
+              <option value="UPNS alumni / former student">UPNS alumni / former student</option>
+              <option value="UPNS teacher or staff">UPNS teacher or staff</option>
+              <option value="Friend / extended family of UPNS">Friend / extended family of UPNS</option>
+              <option value="No direct relationship to UPNS">No direct relationship to UPNS</option>
+            </select>
+          </div>
+          <span class="field-error" id="relationship-upns-error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="ucla-affiliation" class="field-label">
+            UCLA affiliation <span class="req">*</span>
+          </label>
+          <div class="select-wrap">
+            <select id="ucla-affiliation" name="ucla_affiliation" class="field-select" required>
+              <option value="" disabled selected>Select your affiliation...</option>
               <option value="UCLA faculty">UCLA faculty</option>
               <option value="UCLA staff">UCLA staff</option>
               <option value="UCLA student">UCLA student</option>
               <option value="UCLA alumni">UCLA alumni</option>
-              <option value="Current or former UCLA ECE family">Current or former UCLA ECE family</option>
-              <option value="Community member">Community member</option>
-              <option value="Educator">Educator</option>
-              <option value="Other">Other</option>
+              <option value="UCLA ECE current/former family">UCLA ECE current/former family</option>
+              <option value="No UCLA affiliation">No UCLA affiliation</option>
             </select>
           </div>
-          <span class="field-error" id="relationship-error"></span>
+          <span class="field-error" id="ucla-affiliation-error"></span>
         </div>
       </div>
 
@@ -189,7 +202,7 @@
       </div>
 
       <p class="form-privacy-note">
-        Your information is securely recorded with Action Network to demonstrate community support for UPNS. We will never sell or share your data.
+        Your contact information is used only to demonstrate community support for this petition and to share important updates regarding UPNS. We will never sell or share your data.
       </p>
     </form>
   </div>
@@ -640,7 +653,8 @@
       const lastName = (document.getElementById('last-name') as HTMLInputElement).value.trim();
       const email = (document.getElementById('email') as HTMLInputElement).value.trim();
       const zipCode = (document.getElementById('zip-code') as HTMLInputElement).value.trim();
-      const relationship = (document.getElementById('relationship') as HTMLSelectElement).value;
+      const relationshipUpns = (document.getElementById('relationship-upns') as HTMLSelectElement).value;
+      const uclaAffiliation = (document.getElementById('ucla-affiliation') as HTMLSelectElement).value;
       const commentsInput = document.getElementById('comments') as HTMLTextAreaElement;
       const comments = commentsInput ? commentsInput.value.trim() : '';
       const hpField = (document.getElementById('hp-field') as HTMLInputElement)?.value || '';
@@ -667,7 +681,8 @@
         showError('email', 'Please enter a valid email address.');
       }
       if (!zipCode) showError('zip-code', 'Please enter your ZIP code.');
-      if (!relationship) showError('relationship', 'Please select your relationship.');
+      if (!relationshipUpns) showError('relationship-upns', 'Please select your relationship to UPNS.');
+      if (!uclaAffiliation) showError('ucla-affiliation', 'Please select your UCLA affiliation.');
 
       if (!valid) {
         const firstErr = form.querySelector('.has-error');
@@ -691,7 +706,8 @@
             last_name: lastName,
             email,
             zip_code: zipCode,
-            relationship,
+            relationship_upns: relationshipUpns,
+            ucla_affiliation: uclaAffiliation,
             comments,
             hp_field: hpField,
           }),
