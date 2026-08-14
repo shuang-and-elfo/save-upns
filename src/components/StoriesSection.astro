@@ -34,35 +34,101 @@ const SEED_STORIES = [
 
 <section class="upns-stories-section" id="stories" aria-labelledby="stories-heading">
   <div class="stories-header">
-    <span class="stories-eyebrow">Community Voices</span>
-    <h2 id="stories-heading" class="stories-title">UPNS Stories</h2>
-    <p class="stories-subtitle">
-      Personal reflections from parents, faculty, staff, alumni, and students on why preserving UPNS matters.
-    </p>
+    <div class="stories-header-text">
+      <span class="stories-eyebrow">Community Voices</span>
+      <h2 id="stories-heading" class="stories-title">UPNS Stories</h2>
+      <p class="stories-subtitle">
+        Personal reflections from parents, faculty, staff, alumni, and students on why preserving UPNS matters.
+      </p>
+    </div>
+
+    {/* Navigation Arrows */}
+    <div class="stories-nav-controls" aria-label="Stories navigation">
+      <button
+        type="button"
+        id="stories-prev-btn"
+        class="stories-nav-btn prev-btn"
+        aria-label="Previous stories"
+        disabled
+      >
+        <span aria-hidden="true">&larr;</span>
+      </button>
+      <button
+        type="button"
+        id="stories-next-btn"
+        class="stories-nav-btn next-btn"
+        aria-label="Next stories"
+      >
+        <span aria-hidden="true">&rarr;</span>
+      </button>
+    </div>
   </div>
 
-  <div class="stories-grid" id="stories-grid">
-    {SEED_STORIES.map((story) => (
-      <article class="story-card" data-story-id={story.id}>
-        <div class="story-quote-mark" aria-hidden="true">“</div>
-        <p class="story-text">{story.comments}</p>
-        <footer class="story-author-row">
-          <cite class="story-author-name">{story.author}</cite>
-          <div class="story-tags">
-            {story.relationship_upns && (
-              <span class="story-tag tag-upns">{story.relationship_upns}</span>
-            )}
-            {story.ucla_affiliation && story.ucla_affiliation !== "No UCLA affiliation" && (
-              <span class="story-tag tag-ucla">{story.ucla_affiliation}</span>
-            )}
-          </div>
-        </footer>
-      </article>
-    ))}
+  {/* Carousel Track (1 row with 2 cards on desktop) */}
+  <div class="stories-carousel-container">
+    <div class="stories-carousel-track" id="stories-track" tabindex="0" role="region" aria-label="Stories Carousel">
+      {SEED_STORIES.map((story) => (
+        <article class="story-card" data-story-id={story.id}>
+          <div class="story-quote-mark" aria-hidden="true">“</div>
+          <p class="story-text">{story.comments}</p>
+          <footer class="story-author-row">
+            <cite class="story-author-name">{story.author}</cite>
+            <div class="story-tags">
+              {story.relationship_upns && (
+                <span class="story-tag tag-upns">{story.relationship_upns}</span>
+              )}
+              {story.ucla_affiliation && story.ucla_affiliation !== "No UCLA affiliation" && (
+                <span class="story-tag tag-ucla">{story.ucla_affiliation}</span>
+              )}
+            </div>
+          </footer>
+        </article>
+      ))}
+    </div>
   </div>
 </section>
 
 <script>
+  function setupStoriesCarousel() {
+    const track = document.getElementById('stories-track') as HTMLElement | null;
+    const prevBtn = document.getElementById('stories-prev-btn') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('stories-next-btn') as HTMLButtonElement | null;
+
+    if (!track || !prevBtn || !nextBtn) return;
+
+    const trackEl = track;
+    const prevEl = prevBtn;
+    const nextEl = nextBtn;
+
+    function getScrollDistance() {
+      // Scroll by approximately the width of the visible container
+      const card = trackEl.querySelector('.story-card') as HTMLElement | null;
+      if (card) {
+        const gap = 24; // 1.5rem
+        return (card.offsetWidth + gap) * (window.innerWidth > 720 ? 2 : 1);
+      }
+      return trackEl.clientWidth;
+    }
+
+    function updateArrowStates() {
+      const maxScrollLeft = trackEl.scrollWidth - trackEl.clientWidth - 5;
+      prevEl.disabled = trackEl.scrollLeft <= 5;
+      nextEl.disabled = trackEl.scrollLeft >= maxScrollLeft;
+    }
+
+    prevEl.addEventListener('click', () => {
+      trackEl.scrollBy({ left: -getScrollDistance(), behavior: 'smooth' });
+    });
+
+    nextEl.addEventListener('click', () => {
+      trackEl.scrollBy({ left: getScrollDistance(), behavior: 'smooth' });
+    });
+
+    trackEl.addEventListener('scroll', updateArrowStates, { passive: true });
+    window.addEventListener('resize', updateArrowStates);
+    updateArrowStates();
+  }
+
   // Fetch live public stories and prepend new community submissions
   async function loadLiveStories() {
     try {
@@ -71,15 +137,15 @@ const SEED_STORIES = [
       const data = await response.json();
       if (!data.stories || data.stories.length === 0) return;
 
-      const grid = document.getElementById('stories-grid');
-      if (!grid) return;
+      const track = document.getElementById('stories-track');
+      if (!track) return;
 
       // Render fresh live stories
       const existingIds = new Set(
-        Array.from(grid.querySelectorAll('[data-story-id]')).map((el) => el.getAttribute('data-story-id'))
+        Array.from(track.querySelectorAll('[data-story-id]')).map((el) => el.getAttribute('data-story-id'))
       );
 
-      // Prepend newest user stories
+      // Prepend newest user stories to the carousel track
       data.stories.forEach((story: any) => {
         if (existingIds.has(story.id)) return;
 
@@ -106,8 +172,19 @@ const SEED_STORIES = [
           </footer>
         `;
 
-        grid.prepend(card);
+        track.prepend(card);
       });
+
+      // Reset scroll position to beginning and update buttons
+      track.scrollLeft = 0;
+      const nextBtn = document.getElementById('stories-next-btn') as HTMLButtonElement;
+      const prevBtn = document.getElementById('stories-prev-btn') as HTMLButtonElement;
+      if (nextBtn && track.scrollWidth > track.clientWidth + 10) {
+        nextBtn.disabled = false;
+      }
+      if (prevBtn) {
+        prevBtn.disabled = true;
+      }
     } catch (e) {
       console.warn('Could not load live stories:', e);
     }
@@ -123,8 +200,12 @@ const SEED_STORIES = [
   (window as any).loadLiveStories = loadLiveStories;
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadLiveStories);
+    document.addEventListener('DOMContentLoaded', () => {
+      setupStoriesCarousel();
+      loadLiveStories();
+    });
   } else {
+    setupStoriesCarousel();
     loadLiveStories();
   }
 </script>
@@ -137,8 +218,15 @@ const SEED_STORIES = [
   }
 
   .stories-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stories-header-text {
+    flex-grow: 1;
   }
 
   .stories-eyebrow {
@@ -169,17 +257,76 @@ const SEED_STORIES = [
     line-height: 1.55;
     color: var(--color-text-muted, #536459);
     max-width: 620px;
-    margin: 0 auto;
+    margin: 0;
   }
 
-  .stories-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+  /* Navigation Control Arrows */
+  .stories-nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+    margin-bottom: 0.25rem;
+  }
+
+  .stories-nav-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1.5px solid #ebdcc5;
+    color: var(--color-text, #233128);
+    font-size: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(35, 49, 40, 0.05);
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+    user-select: none;
+  }
+
+  .stories-nav-btn:hover:not(:disabled) {
+    background: #f7efe1;
+    border-color: #d8cfbe;
+    transform: translateY(-1px);
+  }
+
+  .stories-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  /* Carousel Track Container */
+  .stories-carousel-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .stories-carousel-track {
+    display: flex;
     gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    padding: 0.25rem 0.25rem 1.25rem;
   }
 
-  /* Global scoped to stories section so dynamically prepended cards have full styling */
+  .stories-carousel-track::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  /* Card styling (Global so dynamic cards receive full rules) */
   .upns-stories-section :global(.story-card) {
+    flex: 0 0 calc(50% - 0.75rem);
+    min-width: calc(50% - 0.75rem);
+    max-width: calc(50% - 0.75rem);
+    box-sizing: border-box;
+    scroll-snap-align: start;
     background: #ffffff;
     border: 1px solid var(--color-border, #ede4d3);
     border-radius: 18px;
@@ -254,18 +401,26 @@ const SEED_STORIES = [
     color: #274c6e;
   }
 
-  @media (max-width: 720px) {
-    .stories-grid {
-      grid-template-columns: 1fr;
+  @media (max-width: 768px) {
+    .stories-header {
+      flex-direction: column;
+      align-items: flex-start;
       gap: 1.25rem;
+    }
+
+    .stories-nav-controls {
+      align-self: flex-end;
+    }
+
+    .upns-stories-section :global(.story-card) {
+      flex: 0 0 calc(100% - 0.5rem);
+      min-width: calc(100% - 0.5rem);
+      max-width: calc(100% - 0.5rem);
+      padding: 1.6rem 1.35rem 1.35rem;
     }
 
     .stories-title {
       font-size: 1.85rem;
-    }
-
-    .upns-stories-section :global(.story-card) {
-      padding: 1.6rem 1.35rem 1.35rem;
     }
   }
 </style>
