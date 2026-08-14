@@ -47,11 +47,11 @@ export const SITE_CONFIG: SiteConfig = {
   mission:
     "Our mission is to provide a warm and supportive learning environment that fosters physical, intellectual, social, and emotional growth in children aged 18 months to 5 years. We recognize the significance of parental involvement in a child's learning journey and strive to build a bridge between home and school.",
   fiveSelves: [
-    "Social Self — learning to make friends, share ideas, and care about others",
-    "Emotional Self — recognizing feelings and growing more confident expressing them",
-    "Physical Self — building coordination and body confidence through active, hands-on play",
-    "Creative Self — using art, music, stories, and pretend play to bring ideas to life",
-    "Cognitive Self — asking questions, testing ideas, and figuring things out through play",
+    "Social Self: learning to make friends, share ideas, and care about others",
+    "Emotional Self: recognizing feelings and growing more confident expressing them",
+    "Physical Self: building coordination and body confidence through active, hands-on play",
+    "Creative Self: using art, music, stories, and pretend play to bring ideas to life",
+    "Cognitive Self: asking questions, testing ideas, and figuring things out through play",
   ],
   accreditation: {
     naeyc: "Accredited by NAEYC",

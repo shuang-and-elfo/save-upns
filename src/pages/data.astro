@@ -247,7 +247,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         year: 'numeric',
         hour: 'numeric',
         minute: '2-digit',
-      }) : '—';
+      }) : '-';
 
       const isPublic = s.display_publicly !== false;
 
@@ -257,14 +257,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <td class="cell-name">${escapeHtml(s.first_name)} ${escapeHtml(s.last_name)}</td>
           <td class="cell-email"><a href="mailto:${escapeHtml(s.email)}">${escapeHtml(s.email)}</a></td>
           <td>${escapeHtml(s.zip_code)}</td>
-          <td><span class="badge-tag tag-upns">${escapeHtml(s.relationship_upns || '—')}</span></td>
-          <td><span class="badge-tag tag-ucla">${escapeHtml(s.ucla_affiliation || '—')}</span></td>
+          <td><span class="badge-tag tag-upns">${escapeHtml(s.relationship_upns || '-')}</span></td>
+          <td><span class="badge-tag tag-ucla">${escapeHtml(s.ucla_affiliation || '-')}</span></td>
           <td class="cell-center">
             <span class="public-badge ${isPublic ? 'is-public' : 'is-private'}">
               ${isPublic ? 'Yes' : 'No'}
             </span>
           </td>
-          <td class="cell-comments">${escapeHtml(s.comments || '—')}</td>
+          <td class="cell-comments">${escapeHtml(s.comments || '-')}</td>
         </tr>
       `;
     }).join('');
