@@ -48,7 +48,7 @@
           
           <a
             id="email-share-btn"
-            href="mailto:?subject=Help%20Keep%20UPNS%20Open&body=UPNS%20has%20served%20UCLA%20and%20neighborhood%20families%20since%201966.%20UCLA%20has%20asked%20UPNS%20and%20its%20remaining%20ECE%20centers%20to%20close%20by%20summer%202027.%20Please%20join%20us%20in%20asking%20UCLA%20to%20help%20UPNS%20stay%20open%2C%20in%20its%20current%20home%20or%20at%20a%20suitable%20new%20site%3A%20https%3A%2F%2Fupns.info"
+            href="mailto:?subject=Help%20Keep%20UPNS%20Open&body=UPNS%20has%20served%20UCLA%20and%20neighborhood%20families%20since%201966.%20UCLA%20has%20asked%20UPNS%20and%20its%20remaining%20ECE%20centers%20to%20close%20by%20summer%202027.%20Please%20join%20us%20in%20asking%20UCLA%20to%20help%20UPNS%20stay%20open%2C%20in%20its%20current%20home%20or%20at%20a%20suitable%20new%20site%3A%20https%3A%2F%2Fsaveupns.org"
             class="share-btn email-btn"
           >
             <span class="btn-icon">✉️</span>
@@ -603,25 +603,17 @@
     transition: background-color 0.2s ease, transform 0.15s ease;
   }
 
-  .copy-btn {
-    background: var(--color-text, #233128);
-    color: #ffffff;
-    border: none;
-  }
-
-  .copy-btn:hover {
-    background: #151f19;
-    transform: translateY(-1px);
-  }
-
+  .copy-btn,
   .email-btn {
     background: #ffffff;
     color: var(--color-text, #233128);
-    border: 1px solid #d5cbba;
+    border: 1.5px solid #d5cbba;
   }
 
+  .copy-btn:hover,
   .email-btn:hover {
     background: #f7f1e6;
+    border-color: #beb29e;
     transform: translateY(-1px);
   }
 
@@ -855,7 +847,7 @@
     if (copyBtn) {
       copyBtn.addEventListener('click', async () => {
         try {
-          await navigator.clipboard.writeText(window.location.origin + window.location.pathname);
+          await navigator.clipboard.writeText('https://saveupns.org');
           if (copyToast) {
             copyToast.style.display = 'block';
             setTimeout(() => {
@@ -877,7 +869,7 @@
           await navigator.share({
             title: 'Help Keep UPNS Open at UCLA',
             text: 'UPNS has served UCLA and neighborhood families since 1966. UCLA has asked UPNS and its remaining ECE centers to close by summer 2027. Please join us in asking UCLA to help UPNS stay open, in its current home or at a suitable new site.',
-            url: window.location.origin + window.location.pathname,
+            url: 'https://saveupns.org',
           });
         } catch (err) {
           // Canceled or unsupported

@@ -16,7 +16,7 @@ const {
   ogImage = "/images/kan3.jpg",
 } = Astro.props;
 
-const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, "") : "https://upns.info";
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, "") : "https://saveupns.org";
 const fullOgImageUrl = ogImage.startsWith("http") ? ogImage : `${siteUrl}${withBase(ogImage)}`;
 const canonicalUrl = Astro.url.href;
 ---
