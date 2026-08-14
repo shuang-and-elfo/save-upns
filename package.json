@@ -10,9 +10,6 @@
     "preview": "node ./serve-dist.mjs",
     "astro": "astro"
   },
-  "engines": {
-    "node": "20.x"
-  },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/sitemap": "3.1.6",
