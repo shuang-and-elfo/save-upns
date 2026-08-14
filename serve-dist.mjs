@@ -4,7 +4,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DIST_DIR = path.join(__dirname, "dist");
+const VERCEL_STATIC = path.join(__dirname, ".vercel", "output", "static");
+const DIST_DIR = fs.existsSync(VERCEL_STATIC) ? VERCEL_STATIC : path.join(__dirname, "dist");
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4322;
 const HOST = "0.0.0.0";
 

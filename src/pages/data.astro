@@ -251,22 +251,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       const isPublic = s.display_publicly !== false;
       const commentsText = (s.comments || '').trim();
-      let commentsHtml = '<span class="empty-val">-</span>';
-      
-      if (commentsText) {
-        if (commentsText.length > 140) {
-          const preview = commentsText.slice(0, 130) + '...';
-          commentsHtml = `
-            <div class="comment-box">
-              <div class="comment-preview">${escapeHtml(preview)}</div>
-              <div class="comment-full" style="display: none;">${escapeHtml(commentsText)}</div>
-              <button type="button" class="toggle-more-btn" onclick="toggleComment(this)">more</button>
-            </div>
-          `;
-        } else {
-          commentsHtml = `<div class="comment-box">${escapeHtml(commentsText)}</div>`;
-        }
-      }
+      const commentsHtml = commentsText
+        ? `<div class="comments-scroll-box">${escapeHtml(commentsText)}</div>`
+        : `<span class="empty-val">-</span>`;
 
       return `
         <tr>
@@ -630,17 +617,25 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   }
 
   /* Table */
+  .data-page-container {
+    max-width: 100%;
+    width: 97vw;
+    margin: 0 auto;
+    padding: 2rem 1rem 5rem;
+  }
+
   .table-container {
     background: #ffffff;
-    border: 1px solid #ebdcc5;
+    border: 1.5px solid #ebdcc5;
     border-radius: 16px;
     overflow-x: auto;
     box-shadow: 0 4px 20px rgba(35, 49, 40, 0.04);
+    width: 100%;
   }
 
   .data-table {
     width: 100%;
-    min-width: 1080px;
+    min-width: 1120px;
     border-collapse: collapse;
     font-size: 0.92rem;
     text-align: left;
@@ -671,12 +666,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     white-space: nowrap;
     font-size: 0.85rem;
     color: var(--color-text-muted, #536459);
+    width: 130px;
   }
 
   .cell-name {
     font-weight: 700;
     color: var(--color-forest, #233128);
     white-space: nowrap;
+    width: 130px;
+  }
+
+  .cell-email {
+    white-space: nowrap;
+    width: 170px;
   }
 
   .cell-email a {
@@ -690,6 +692,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   .cell-zip {
     white-space: nowrap;
+    width: 65px;
   }
 
   .badge-tag {
@@ -717,6 +720,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     font-weight: 800;
     padding: 0.15rem 0.5rem;
     border-radius: 999px;
+    white-space: nowrap;
   }
 
   .public-badge.is-public {
@@ -730,41 +734,36 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   }
 
   .cell-comments {
-    min-width: 340px;
-    max-width: 600px;
-    width: 38%;
-    line-height: 1.55;
-    font-size: 0.88rem;
+    min-width: 400px;
+    max-width: 750px;
+    width: 45%;
     vertical-align: top !important;
   }
 
-  .comment-box {
-    max-height: 280px;
-    word-break: break-word;
-    overflow-wrap: break-word;
-  }
-
-  .comment-preview,
-  .comment-full {
+  .comments-scroll-box {
+    max-height: 5.6rem; /* Exactly 4 lines of text */
+    overflow-y: auto;
+    line-height: 1.4;
+    font-size: 0.88rem;
+    color: var(--color-text, #233128);
     white-space: pre-wrap;
+    word-break: break-word;
+    padding-right: 0.4rem;
   }
 
-  .toggle-more-btn {
-    display: inline-block;
-    margin-top: 0.35rem;
-    background: transparent;
-    border: none;
-    color: var(--color-tomato, #d86f58);
-    font-size: 0.82rem;
-    font-weight: 800;
-    cursor: pointer;
-    padding: 0;
-    text-decoration: underline;
-    user-select: none;
+  .comments-scroll-box::-webkit-scrollbar {
+    width: 6px;
   }
-
-  .toggle-more-btn:hover {
-    color: var(--color-tomato-dark, #be533d);
+  .comments-scroll-box::-webkit-scrollbar-track {
+    background: #f7efe4;
+    border-radius: 4px;
+  }
+  .comments-scroll-box::-webkit-scrollbar-thumb {
+    background: #d4c5b0;
+    border-radius: 4px;
+  }
+  .comments-scroll-box::-webkit-scrollbar-thumb:hover {
+    background: #bfae96;
   }
 
   .empty-val {
