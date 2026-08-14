@@ -57,7 +57,7 @@ const server = http.createServer(async (req, res) => {
           }
 
           const apiKey = process.env.ACTION_NETWORK_API_KEY;
-          const petitionId = process.env.ACTION_NETWORK_PETITION_ID || "petition-to-preserve-university-parents-nursery-school-upns";
+          const petitionId = process.env.ACTION_NETWORK_PETITION_ID || "petition-to-preserve-university-parents-nursery-school-upns-2";
 
           if (!apiKey) {
             console.log("Action Network API Key not set. Recorded demo signature:", { first_name, last_name, email });
@@ -112,7 +112,7 @@ const server = http.createServer(async (req, res) => {
     // Dynamic API endpoint for signature count
     if (urlPath === "/api/signatures") {
       const apiKey = process.env.ACTION_NETWORK_API_KEY;
-      const petitionId = process.env.ACTION_NETWORK_PETITION_ID || "petition-to-preserve-university-parents-nursery-school-upns";
+      const petitionId = process.env.ACTION_NETWORK_PETITION_ID || "petition-to-preserve-university-parents-nursery-school-upns-2";
       const now = Date.now();
 
       if (cachedCount !== null && now - lastFetched < CACHE_TTL_MS) {

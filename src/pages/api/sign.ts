@@ -35,7 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
     const apiKey = process.env.ACTION_NETWORK_API_KEY;
     const petitionId =
       process.env.ACTION_NETWORK_PETITION_ID ||
-      'petition-to-preserve-university-parents-nursery-school-upns';
+      'petition-to-preserve-university-parents-nursery-school-upns-2';
 
     // 3. If API key is not configured, record in local demo mode
     if (!apiKey) {

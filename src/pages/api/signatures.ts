@@ -7,7 +7,9 @@ const CACHE_TTL_MS = 60 * 1000;
 
 export const GET: APIRoute = async () => {
   const apiKey = process.env.ACTION_NETWORK_API_KEY;
-  const petitionId = process.env.ACTION_NETWORK_PETITION_ID;
+  const petitionId =
+    process.env.ACTION_NETWORK_PETITION_ID ||
+    'petition-to-preserve-university-parents-nursery-school-upns-2';
 
   // Return cached result if still valid
   const now = Date.now();
@@ -25,8 +27,8 @@ export const GET: APIRoute = async () => {
     );
   }
 
-  // If credentials are not provided, return null (client will gracefully hide count)
-  if (!apiKey || !petitionId) {
+  // If API key is not configured, return null (client gracefully hides count)
+  if (!apiKey) {
     return new Response(
       JSON.stringify({
         total_signatures: null,
