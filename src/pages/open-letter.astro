@@ -1,0 +1,240 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../utils/url";
+---
+
+<BaseLayout
+  title="Open Letter | Save UPNS"
+  description="Formal open letter to UCLA Leadership and the Regents of the University of California regarding the preservation of University Parents Nursery School."
+>
+  <div class="petition-page-container">
+    <nav class="back-nav" aria-label="Breadcrumb">
+      <a href={withBase("/")} class="back-link">
+        <span aria-hidden="true">&larr;</span> Back to Petition
+      </a>
+    </nav>
+
+    <article class="open-letter-article" aria-labelledby="letter-title">
+      <header class="letter-header">
+        <span class="letter-badge">Open Letter</span>
+        <h1 id="letter-title" class="letter-title">Petition to Preserve University Parents Nursery School</h1>
+        <p class="letter-recipient">
+          To UCLA Leadership and the Regents of the University of California:
+        </p>
+      </header>
+
+      <div class="letter-body">
+        <p>
+          We, the undersigned members of the UPNS and UCLA communities, respectfully ask UCLA to work with University Parents Nursery School (UPNS) to ensure that the school can continue operating beyond summer 2027.
+        </p>
+        <p>
+          UPNS has served UCLA and surrounding families since 1966, when parents living in UCLA Family Student Housing came together to create a cooperative preschool for their children. For sixty years, the school has provided high-quality early childhood education while building a strong community among faculty, staff, students, and neighborhood families. Today, UPNS remains an independent nonprofit cooperative. It employs its own teachers, manages its own program, and is sustained through tuition, parent participation, fundraising, and volunteer leadership. UCLA’s support in making space available to UPNS has allowed this partnership to continue for generations.
+        </p>
+        <p>
+          The possible loss of UPNS comes at a particularly difficult time for families at UCLA. Fernald Child Care Center has already closed, and UCLA has now announced that its remaining Early Care and Education centers will close in summer 2027. Although UPNS and UCLA ECE are separate organizations and the circumstances surrounding their closures may be different, the combined effect on families is significant: a major reduction in the childcare options available to people who work and study at UCLA.
+        </p>
+        <p>
+          Affordable, reliable, high-quality childcare is already difficult to find in Los Angeles. For faculty and staff with young children, access to childcare directly affects their ability to work, teach, conduct research, and remain at UCLA. It is also an important factor in UCLA’s ability to recruit new faculty and staff, particularly families relocating to Los Angeles without established childcare or family support networks. For student parents, dependable childcare can determine whether they are able to complete their degrees and participate fully in university life.
+        </p>
+        <p>
+          UPNS has helped UCLA meet this need through an unusually efficient model. UCLA does not operate the school or employ its staff. Instead, an independent nonprofit community provides the teachers, administration, fundraising, and day-to-day operation of the program. At a time when UCLA is losing other childcare capacity, preserving an established provider like UPNS is especially valuable.
+        </p>
+        <p>
+          We understand that there may be facilities, operational, financial, or other considerations behind UCLA’s decision that have not yet been shared with the broader community. We are not asking UCLA to disregard those constraints, nor are we asking the university to assume responsibility for operating UPNS. We are asking UCLA to work with the school to identify a viable path forward.
+        </p>
+        
+        <p class="letter-subintro">Specifically, we respectfully ask UCLA to:</p>
+        <ol class="letter-demands">
+          <li>
+            <strong>Explore whether UPNS can remain in its current location beyond summer 2027</strong>, if there is a feasible way to do so.
+          </li>
+          <li>
+            <strong>If the current location cannot continue, actively work with UPNS to identify another suitable UCLA-owned, UCLA-controlled, or UCLA-supported site</strong> where the school can continue operating.
+          </li>
+          <li>
+            <strong>Provide sufficient time and transition support for a relocation</strong>, recognizing that identifying and preparing a licensed preschool site requires planning, approvals, fundraising, construction or adaptation, and licensing.
+          </li>
+          <li>
+            <strong>Meet with UPNS leadership, staff, parents, and UCLA-affiliated families before the closure becomes irreversible</strong>, so that the community can better understand the decision and participate in exploring realistic alternatives.
+          </li>
+        </ol>
+
+        <p>
+          The value of UPNS extends beyond the number of childcare spaces it provides. Its cooperative model asks parents to participate in classrooms, care for the school, attend meetings, support fundraising, and become part of one another’s lives. Many families come to UCLA and Los Angeles without extended family nearby, and UPNS becomes an important source of community and support during the demanding years of raising young children. Its teachers, traditions, relationships, and institutional knowledge have been built over decades and cannot easily be recreated once lost.
+        </p>
+        <p>
+          We recognize that institutions and facilities change over time, and we do not assume that UPNS must remain in exactly the same location forever. But a change in location should not require the disappearance of a sixty-year-old school. UPNS already has the educational program, teachers, leadership, nonprofit structure, families, and community necessary to continue serving UCLA. If its current home cannot continue, we ask UCLA to help it find a new one.
+        </p>
+        <p>
+          Preserving UPNS would support not only the families enrolled today, but also future UCLA faculty, staff, students, and families who will need reliable childcare in the years ahead. After sixty years of partnership between UPNS and the UCLA community, we respectfully ask the university to help ensure that this institution has a future.
+        </p>
+        
+        <div class="letter-closing-box">
+          <p class="letter-closing-demand">
+            We ask UCLA to work with UPNS to keep the school open beyond summer 2027, either at its current location or at a suitable new site.
+          </p>
+          <div class="letter-cta-wrap">
+            <a href={withBase("/#sign")} class="letter-sign-btn">
+              Sign the Petition
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .petition-page-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  .back-nav {
+    margin: 2rem 0 1.5rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-forest, #233128);
+    text-decoration: none;
+    transition: color 0.15s ease, transform 0.15s ease;
+  }
+
+  .back-link:hover {
+    color: var(--color-tomato, #d86f58);
+    transform: translateX(-3px);
+  }
+
+  .open-letter-article {
+    background: #ffffff;
+    border: 1px solid var(--color-border, #ede4d3);
+    border-radius: 20px;
+    padding: 3rem 2.75rem;
+    margin-bottom: 4rem;
+    box-shadow: 0 6px 28px rgba(35, 49, 40, 0.06);
+  }
+
+  .letter-header {
+    border-bottom: 2px solid var(--color-accent-soft, #f7efe1);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .letter-badge {
+    display: inline-block;
+    background: var(--color-accent-soft, #f7efe1);
+    color: var(--color-forest, #233128);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+
+  .letter-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--color-text, #233128);
+    margin: 0 0 0.75rem;
+  }
+
+  .letter-recipient {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-forest, #233128);
+    margin: 0;
+  }
+
+  .letter-body {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--color-text, #233128);
+  }
+
+  .letter-body p {
+    margin: 0 0 1.35rem;
+  }
+
+  .letter-subintro {
+    font-weight: 700;
+    margin-top: 1.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .letter-demands {
+    margin: 0 0 1.75rem 1.5rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .letter-demands li {
+    line-height: 1.6;
+  }
+
+  .letter-closing-box {
+    background: #fbf8f2;
+    border: 1px solid #ebdcc5;
+    border-radius: 14px;
+    padding: 1.75rem 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .letter-closing-demand {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-forest, #233128);
+    margin: 0 0 1.25rem;
+    line-height: 1.45;
+  }
+
+  .letter-cta-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .letter-sign-btn {
+    display: inline-block;
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.05rem;
+    padding: 0.85rem 2.25rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease;
+    box-shadow: 0 4px 14px rgba(216, 111, 88, 0.3);
+  }
+
+  .letter-sign-btn:hover {
+    background: var(--color-tomato-dark, #be533d);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 640px) {
+    .open-letter-article {
+      padding: 2rem 1.25rem;
+      border-radius: 16px;
+    }
+
+    .letter-title {
+      font-size: 1.65rem;
+    }
+
+    .letter-body {
+      font-size: 1rem;
+    }
+  }
+</style>
