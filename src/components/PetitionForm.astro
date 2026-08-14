@@ -34,8 +34,8 @@
   }
 
   .form-header {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
     border-bottom: 1px solid #ebdcc5;
   }
 
@@ -45,12 +45,12 @@
     font-weight: 800;
     line-height: 1.2;
     color: var(--color-text, #233128);
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.4rem;
     letter-spacing: -0.01em;
   }
 
   .form-subtitle {
-    font-size: 1.05rem;
+    font-size: 1.02rem;
     line-height: 1.5;
     color: var(--color-text-muted, #536459);
     margin: 0;
@@ -58,68 +58,200 @@
 
   .action-network-container {
     width: 100%;
-    min-height: 280px;
+    min-height: 260px;
   }
 
-  /* Action Network Theme & Button Overrides */
-  :global(#can-petition-area-petition-to-preserve-university-parents-nursery-school-upns) {
+  /* ============================================================
+     ACTION NETWORK WIDGET RE-SKINNING (UPNS THEME ALIGNMENT)
+     ============================================================ */
+
+  /* 1. Global Font & Reset for Widget Container */
+  :global(#can-petition-area-petition-to-preserve-university-parents-nursery-school-upns),
+  :global(#can_embed_form),
+  :global(#can_embed_form_inner) {
     font-family: var(--font-body, "DM Sans", sans-serif) !important;
+    color: var(--color-text, #233128) !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
-  :global(#can_embed_form) {
+  /* 2. Hide redundant petition title, recipient, and divider lines inside widget */
+  :global(#can_embed_form_inner > h2),
+  :global(#can_embed_form_inner > .last_line),
+  :global(#can_embed_form_inner > h4),
+  :global(#can_embed_form .lined_after_title),
+  :global(#can_embed_form_inner > h2 + h4),
+  :global(#can_embed_form_inner > .last_line + h4) {
+    display: none !important;
+  }
+
+  /* 3. Fieldset and Floating Labels (Action Network layout) */
+  :global(#can_embed_form fieldset),
+  :global(#can_embed_form .can_float_label) {
+    border: 1.5px solid #dfd7c7 !important;
+    border-radius: 10px !important;
+    background: var(--color-paper-white, #fffcf6) !important;
+    padding: 0.35rem 0.85rem 0.45rem !important;
+    margin: 0 0 1rem 0 !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+    box-sizing: border-box !important;
+  }
+
+  :global(#can_embed_form fieldset:focus-within),
+  :global(#can_embed_form .can_float_label:focus-within) {
+    border-color: var(--color-tomato, #d86f58) !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(216, 111, 88, 0.15) !important;
+  }
+
+  :global(#can_embed_form legend),
+  :global(#can_embed_form label) {
     font-family: var(--font-body, "DM Sans", sans-serif) !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: var(--color-text-muted, #536459) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 0 0.3rem !important;
+    margin: 0 !important;
   }
 
+  /* 4. Text Inputs and Selects */
+  :global(#can_embed_form input[type="text"]),
+  :global(#can_embed_form input[type="email"]),
+  :global(#can_embed_form input[type="tel"]),
+  :global(#can_embed_form input[type="number"]),
+  :global(#can_embed_form select) {
+    font-family: var(--font-body, "DM Sans", sans-serif) !important;
+    font-size: 1.02rem !important;
+    color: var(--color-text, #233128) !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    width: 100% !important;
+    padding: 0.15rem 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Standalone inputs if not wrapped in fieldset */
+  :global(#can_embed_form input[type="text"]:not(fieldset input)),
+  :global(#can_embed_form input[type="email"]:not(fieldset input)),
+  :global(#can_embed_form select:not(fieldset select)) {
+    border: 1.5px solid #dfd7c7 !important;
+    border-radius: 10px !important;
+    background: var(--color-paper-white, #fffcf6) !important;
+    padding: 0.75rem 0.95rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  :global(#can_embed_form input[type="text"]:not(fieldset input):focus),
+  :global(#can_embed_form input[type="email"]:not(fieldset input):focus),
+  :global(#can_embed_form select:not(fieldset select):focus) {
+    border-color: var(--color-tomato, #d86f58) !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(216, 111, 88, 0.15) !important;
+  }
+
+  /* 5. Comments Textarea */
+  :global(#can_embed_form textarea) {
+    font-family: var(--font-body, "DM Sans", sans-serif) !important;
+    font-size: 0.98rem !important;
+    line-height: 1.5 !important;
+    color: var(--color-text, #233128) !important;
+    border: 1.5px solid #dfd7c7 !important;
+    border-radius: 10px !important;
+    background: var(--color-paper-white, #fffcf6) !important;
+    padding: 0.75rem 0.95rem !important;
+    width: 100% !important;
+    min-height: 96px !important;
+    resize: vertical !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+  }
+
+  :global(#can_embed_form textarea:focus) {
+    border-color: var(--color-tomato, #d86f58) !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(216, 111, 88, 0.15) !important;
+    outline: none !important;
+  }
+
+  /* 6. Submit Button (UPNS Tomato Pill) */
   :global(#can_embed_form input[type="submit"]),
   :global(#can_embed_form .can_button),
   :global(#can_embed_form button[type="submit"]),
   :global(#can_embed_form input[type="button"]) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
     background: var(--color-tomato, #d86f58) !important;
     color: #ffffff !important;
     font-family: var(--font-body, "DM Sans", sans-serif) !important;
     font-weight: 800 !important;
-    font-size: 1.08rem !important;
-    padding: 0.85rem 1.85rem !important;
+    font-size: 1.1rem !important;
+    text-transform: none !important;
+    letter-spacing: 0.01em !important;
+    padding: 0.95rem 2rem !important;
     border-radius: 999px !important;
     border: none !important;
-    box-shadow: 0 3px 12px rgba(216, 111, 88, 0.28) !important;
-    transition: background-color 0.2s ease, transform 0.15s ease !important;
     cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(216, 111, 88, 0.3) !important;
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease !important;
+    margin: 1rem 0 0.5rem 0 !important;
+    box-sizing: border-box !important;
   }
 
   :global(#can_embed_form input[type="submit"]:hover),
   :global(#can_embed_form .can_button:hover) {
     background: var(--color-tomato-dark, #be533d) !important;
     transform: translateY(-1px) !important;
+    box-shadow: 0 6px 18px rgba(216, 111, 88, 0.38) !important;
   }
 
-  :global(#can_embed_form input[type="text"]),
-  :global(#can_embed_form input[type="email"]),
-  :global(#can_embed_form input[type="tel"]),
-  :global(#can_embed_form select),
-  :global(#can_embed_form textarea) {
-    font-family: var(--font-body, "DM Sans", sans-serif) !important;
-    font-size: 1rem !important;
-    border-radius: 8px !important;
-    border: 1.5px solid #dfd7c7 !important;
-    background: var(--color-paper-white, #fffcf6) !important;
-    color: var(--color-text, #233128) !important;
-    padding: 0.65rem 0.85rem !important;
+  :global(#can_embed_form input[type="submit"]:active),
+  :global(#can_embed_form .can_button:active) {
+    transform: translateY(0) !important;
   }
 
-  :global(#can_embed_form input:focus),
-  :global(#can_embed_form select:focus),
-  :global(#can_embed_form textarea:focus) {
-    border-color: var(--color-tomato, #d86f58) !important;
-    outline: none !important;
-    box-shadow: 0 0 0 3px rgba(216, 111, 88, 0.15) !important;
+  /* 7. Opt-in Checkbox and Text */
+  :global(#can_embed_form .control-group.check_boxes),
+  :global(#can_embed_form .checkbox) {
+    margin-top: 0.85rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
   }
 
-  :global(#can_embed_form h2),
-  :global(#can_embed_form h3),
-  :global(#can_embed_form h4) {
-    font-family: var(--font-display, "Baloo Chettan 2", sans-serif) !important;
-    color: var(--color-text, #233128) !important;
+  :global(#can_embed_form input[type="checkbox"]) {
+    accent-color: var(--color-tomato, #d86f58) !important;
+    width: 16px !important;
+    height: 16px !important;
+    cursor: pointer !important;
+  }
+
+  :global(#can_embed_form .control-group.check_boxes label),
+  :global(#can_embed_form .checkbox label) {
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    color: var(--color-text-muted, #536459) !important;
+    cursor: pointer !important;
+  }
+
+  /* 8. Action Info / Footer Notes */
+  :global(#can_embed_form #action_info),
+  :global(#can_embed_form .action_info) {
+    font-size: 0.8rem !important;
+    color: #839287 !important;
+    text-align: center !important;
+    margin-top: 0.85rem !important;
   }
 
   @media (max-width: 600px) {
@@ -134,8 +266,8 @@
 
     :global(#can_embed_form input[type="submit"]),
     :global(#can_embed_form .can_button) {
-      width: 100% !important;
-      text-align: center !important;
+      padding: 0.85rem 1.5rem !important;
+      font-size: 1.05rem !important;
     }
   }
 </style>
