@@ -35,10 +35,84 @@ const server = http.createServer(async (req, res) => {
       urlPath = urlPath.slice("/upns-website".length) || "/";
     }
 
-    // Dynamic API endpoint for signatures
+    // Dynamic API endpoint for submitting signature
+    if (urlPath === "/api/sign" && req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => { body += chunk; });
+      req.on("end", async () => {
+        try {
+          const data = JSON.parse(body);
+          const { first_name, last_name, email, zip_code, relationship, comments, hp_field } = data;
+
+          if (hp_field) {
+            res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+            res.end(JSON.stringify({ success: true, bot: true }));
+            return;
+          }
+
+          if (!first_name || !last_name || !email || !zip_code || !relationship) {
+            res.writeHead(400, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+            res.end(JSON.stringify({ success: false, error: "Please fill in all required fields." }));
+            return;
+          }
+
+          const apiKey = process.env.ACTION_NETWORK_API_KEY;
+          const petitionId = process.env.ACTION_NETWORK_PETITION_ID || "petition-to-preserve-university-parents-nursery-school-upns";
+
+          if (!apiKey) {
+            console.log("Action Network API Key not set. Recorded demo signature:", { first_name, last_name, email });
+            // Increment local cached count for immediate feedback
+            if (typeof cachedCount === "number") cachedCount += 1;
+            res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+            res.end(JSON.stringify({ success: true, mode: "demo", message: "Signature received" }));
+            return;
+          }
+
+          const url = petitionId.startsWith("http")
+            ? `${petitionId}/signatures`
+            : `https://actionnetwork.org/api/v2/petitions/${petitionId}/signatures`;
+
+          const payload = {
+            person: {
+              given_name: first_name,
+              family_name: last_name,
+              email_addresses: [{ address: email }],
+              postal_addresses: [{ postal_code: zip_code }],
+              custom_fields: { relationship, comments: comments || "" },
+            },
+            comments: comments || "",
+          };
+
+          const apiRes = await fetch(url, {
+            method: "POST",
+            headers: {
+              "OSDI-API-Token": apiKey,
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (!apiRes.ok) {
+            const errText = await apiRes.text();
+            throw new Error(`Action Network API error: ${apiRes.status} ${errText}`);
+          }
+
+          if (typeof cachedCount === "number") cachedCount += 1;
+          res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+          res.end(JSON.stringify({ success: true, message: "Signature recorded" }));
+        } catch (err) {
+          res.writeHead(500, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+          res.end(JSON.stringify({ success: false, error: err.message }));
+        }
+      });
+      return;
+    }
+
+    // Dynamic API endpoint for signature count
     if (urlPath === "/api/signatures") {
       const apiKey = process.env.ACTION_NETWORK_API_KEY;
-      const petitionId = process.env.ACTION_NETWORK_PETITION_ID;
+      const petitionId = process.env.ACTION_NETWORK_PETITION_ID || "petition-to-preserve-university-parents-nursery-school-upns";
       const now = Date.now();
 
       if (cachedCount !== null && now - lastFetched < CACHE_TTL_MS) {

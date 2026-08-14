@@ -3,19 +3,195 @@
 
 <section id="sign" class="petition-signing-section" aria-labelledby="form-heading">
   <div class="signing-card">
-    <div class="form-header">
-      <h2 id="form-heading" class="form-title">Add your name</h2>
+    
+    {/* 1. Header (hidden after submission) */}
+    <div id="form-header" class="form-header">
+      <h2 id="form-heading" class="form-title">
+        <span class="count-prefix" data-signature-heading-count style="display: none;">
+          <span class="count-number"></span> people have signed.
+        </span>
+        <span>Add your name.</span>
+      </h2>
       <p class="form-subtitle">
-        Sign the petition to urge UCLA leadership to protect UPNS and keep our cooperative preschool open.
+        Join UCLA faculty, staff, students, alumni, and families in asking UCLA to preserve UPNS.
       </p>
     </div>
 
-    {/* Action Network Standard Widget Container */}
-    <div class="action-network-container">
-      <link href="https://actionnetwork.org/css/style-embed-v3.css" rel="stylesheet" type="text/css" />
-      <div id="can-petition-area-petition-to-preserve-university-parents-nursery-school-upns" style="width: 100%"></div>
-      <script is:inline src="https://actionnetwork.org/widgets/v6/petition/petition-to-preserve-university-parents-nursery-school-upns?format=js&source=widget"></script>
+    {/* 2. Success / Thank You State */}
+    <div id="signing-thankyou" class="thankyou-panel" style="display: none;" role="status">
+      <div class="thankyou-icon" aria-hidden="true">✓</div>
+      <h3 class="thankyou-title">Thank you for standing with UPNS.</h3>
+      <p class="thankyou-desc">
+        Your signature has been recorded. Help us build momentum by sharing this petition with colleagues, friends, and the UCLA community.
+      </p>
+
+      <div class="thankyou-count-badge" data-thankyou-count-wrapper style="display: none;">
+        <strong class="thankyou-count-num"></strong> people have now signed
+      </div>
+
+      <div class="share-box">
+        <h4 class="share-box-title">Share the petition</h4>
+        <p class="share-box-desc">
+          The more voices UCLA hears from, the stronger our case to keep UPNS open.
+        </p>
+
+        <div class="share-quote">
+          “UPNS has served UCLA and neighborhood families since 1966. UCLA has asked UPNS and its remaining ECE centers to close by summer 2027. Please join us in asking UCLA to help UPNS stay open — in its current home or at a suitable new site.”
+        </div>
+
+        <div class="share-actions">
+          <button type="button" id="copy-link-btn" class="share-btn copy-btn">
+            <span class="btn-icon">🔗</span>
+            <span class="btn-text">Copy Link</span>
+          </button>
+          
+          <a
+            id="email-share-btn"
+            href="mailto:?subject=Help%20Keep%20UPNS%20Open&body=UPNS%20has%20served%20UCLA%20and%20neighborhood%20families%20since%201966.%20UCLA%20has%20asked%20UPNS%20and%20its%20remaining%20ECE%20centers%20to%20close%20by%20summer%202027.%20Please%20join%20us%20in%20asking%20UCLA%20to%20help%20UPNS%20stay%20open%20%E2%80%94%20in%20its%20current%20home%20or%20at%20a%20suitable%20new%20site%3A%20https%3A%2F%2Fupns.info"
+            class="share-btn email-btn"
+          >
+            <span class="btn-icon">✉️</span>
+            <span>Email</span>
+          </a>
+
+          <button type="button" id="native-share-btn" class="share-btn native-btn" style="display: none;">
+            <span class="btn-icon">↗</span>
+            <span>Share</span>
+          </button>
+        </div>
+        <div id="copy-toast" class="copy-toast" style="display: none;" aria-live="polite">
+          ✓ Link copied to clipboard!
+        </div>
+      </div>
     </div>
+
+    {/* 3. Custom UPNS Signature Form */}
+    <form id="petition-custom-form" class="custom-form" novalidate>
+      {/* Bot Honeypot */}
+      <input type="text" name="hp_field" id="hp-field" style="display: none;" tabindex="-1" autocomplete="off" />
+
+      <div class="form-row form-row-split">
+        <div class="form-field">
+          <label for="first-name" class="field-label">
+            First Name <span class="req">*</span>
+          </label>
+          <input
+            type="text"
+            id="first-name"
+            name="first_name"
+            class="field-input"
+            required
+            autocomplete="given-name"
+            placeholder="Jane"
+          />
+          <span class="field-error" id="first-name-error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="last-name" class="field-label">
+            Last Name <span class="req">*</span>
+          </label>
+          <input
+            type="text"
+            id="last-name"
+            name="last_name"
+            class="field-input"
+            required
+            autocomplete="family-name"
+            placeholder="Bruin"
+          />
+          <span class="field-error" id="last-name-error"></span>
+        </div>
+      </div>
+
+      <div class="form-row form-row-split">
+        <div class="form-field">
+          <label for="email" class="field-label">
+            Email Address <span class="req">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="field-input"
+            required
+            autocomplete="email"
+            placeholder="jane.bruin@ucla.edu"
+          />
+          <span class="field-error" id="email-error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="zip-code" class="field-label">
+            ZIP Code <span class="req">*</span>
+          </label>
+          <input
+            type="text"
+            id="zip-code"
+            name="zip_code"
+            class="field-input"
+            required
+            autocomplete="postal-code"
+            pattern="[0-9]{5}"
+            placeholder="90095"
+          />
+          <span class="field-error" id="zip-code-error"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="relationship" class="field-label">
+            Relationship to UPNS / UCLA <span class="req">*</span>
+          </label>
+          <div class="select-wrap">
+            <select id="relationship" name="relationship" class="field-select" required>
+              <option value="" disabled selected>Select your relationship...</option>
+              <option value="Current UPNS family">Current UPNS family</option>
+              <option value="Former UPNS family">Former UPNS family</option>
+              <option value="UPNS alumni">UPNS alumni</option>
+              <option value="UCLA faculty">UCLA faculty</option>
+              <option value="UCLA staff">UCLA staff</option>
+              <option value="UCLA student">UCLA student</option>
+              <option value="UCLA alumni">UCLA alumni</option>
+              <option value="Current or former UCLA ECE family">Current or former UCLA ECE family</option>
+              <option value="Community member">Community member</option>
+              <option value="Educator">Educator</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <span class="field-error" id="relationship-error"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="comments" class="field-label">
+            Why does UPNS matter to you? <span class="opt">(Optional)</span>
+          </label>
+          <textarea
+            id="comments"
+            name="comments"
+            class="field-textarea"
+            rows="3"
+            placeholder="Share a brief note on why childcare matters to your work, family, or study at UCLA..."
+          ></textarea>
+        </div>
+      </div>
+
+      <div id="general-form-error" class="general-error" style="display: none;"></div>
+
+      <div class="form-submit-row">
+        <button type="submit" id="submit-signature-btn" class="submit-btn">
+          <span class="submit-text">Sign the Petition</span>
+          <span class="submit-spinner" style="display: none;" aria-hidden="true">⏳</span>
+        </button>
+      </div>
+
+      <p class="form-privacy-note">
+        Your information is securely recorded with Action Network to demonstrate community support for UPNS. We will never sell or share your data.
+      </p>
+    </form>
   </div>
 </section>
 
@@ -34,8 +210,8 @@
   }
 
   .form-header {
-    margin-bottom: 1.75rem;
-    padding-bottom: 1.25rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
     border-bottom: 1px solid #ebdcc5;
   }
 
@@ -45,213 +221,331 @@
     font-weight: 800;
     line-height: 1.2;
     color: var(--color-text, #233128);
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.5rem;
     letter-spacing: -0.01em;
   }
 
+  .count-prefix {
+    color: var(--color-tomato, #d86f58);
+  }
+
   .form-subtitle {
-    font-size: 1.02rem;
+    font-size: 1.05rem;
     line-height: 1.5;
     color: var(--color-text-muted, #536459);
     margin: 0;
   }
 
-  .action-network-container {
+  .custom-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+  }
+
+  .form-row-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.35rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .field-label {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-text, #233128);
+  }
+
+  .req {
+    color: var(--color-tomato, #d86f58);
+  }
+
+  .opt {
+    font-weight: 400;
+    color: var(--color-text-muted, #536459);
+    font-size: 0.85rem;
+  }
+
+  .field-input,
+  .field-select,
+  .field-textarea {
     width: 100%;
-    min-height: 260px;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 1.02rem;
+    color: var(--color-text, #233128);
+    background: var(--color-paper-white, #fffcf6);
+    border: 1.5px solid #dfd7c7;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
   }
 
-  /* ============================================================
-     ACTION NETWORK WIDGET RE-SKINNING (UPNS THEME ALIGNMENT)
-     ============================================================ */
-
-  /* 1. Global Font & Reset for Widget Container */
-  :global(#can-petition-area-petition-to-preserve-university-parents-nursery-school-upns),
-  :global(#can_embed_form),
-  :global(#can_embed_form_inner) {
-    font-family: var(--font-body, "DM Sans", sans-serif) !important;
-    color: var(--color-text, #233128) !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
+  .field-input:focus,
+  .field-select:focus,
+  .field-textarea:focus {
+    outline: none;
+    border-color: var(--color-tomato, #d86f58);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(216, 111, 88, 0.15);
   }
 
-  /* 2. Hide redundant petition title, recipient, and divider lines inside widget */
-  :global(#can_embed_form_inner > h2),
-  :global(#can_embed_form_inner > .last_line),
-  :global(#can_embed_form_inner > h4),
-  :global(#can_embed_form .lined_after_title),
-  :global(#can_embed_form_inner > h2 + h4),
-  :global(#can_embed_form_inner > .last_line + h4) {
-    display: none !important;
+  .field-input.has-error,
+  .field-select.has-error {
+    border-color: #c93b2b;
+    background: #fff8f7;
   }
 
-  /* 3. Fieldset and Floating Labels (Action Network layout) */
-  :global(#can_embed_form fieldset),
-  :global(#can_embed_form .can_float_label) {
-    border: 1.5px solid #dfd7c7 !important;
-    border-radius: 10px !important;
-    background: var(--color-paper-white, #fffcf6) !important;
-    padding: 0.35rem 0.85rem 0.45rem !important;
-    margin: 0 0 1rem 0 !important;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
-    box-sizing: border-box !important;
+  .field-error {
+    font-size: 0.82rem;
+    color: #c93b2b;
+    font-weight: 600;
+    min-height: 1rem;
+    display: none;
   }
 
-  :global(#can_embed_form fieldset:focus-within),
-  :global(#can_embed_form .can_float_label:focus-within) {
-    border-color: var(--color-tomato, #d86f58) !important;
-    background: #ffffff !important;
-    box-shadow: 0 0 0 3px rgba(216, 111, 88, 0.15) !important;
+  .field-error.visible {
+    display: block;
   }
 
-  :global(#can_embed_form legend),
-  :global(#can_embed_form label) {
-    font-family: var(--font-body, "DM Sans", sans-serif) !important;
-    font-size: 0.78rem !important;
-    font-weight: 700 !important;
-    color: var(--color-text-muted, #536459) !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-    padding: 0 0.3rem !important;
-    margin: 0 !important;
+  .general-error {
+    background: #fff0ee;
+    border: 1px solid #f5c2bc;
+    color: #c93b2b;
+    border-radius: 10px;
+    padding: 0.85rem 1.15rem;
+    font-size: 0.92rem;
+    font-weight: 600;
   }
 
-  /* 4. Text Inputs and Selects */
-  :global(#can_embed_form input[type="text"]),
-  :global(#can_embed_form input[type="email"]),
-  :global(#can_embed_form input[type="tel"]),
-  :global(#can_embed_form input[type="number"]),
-  :global(#can_embed_form select) {
-    font-family: var(--font-body, "DM Sans", sans-serif) !important;
-    font-size: 1.02rem !important;
-    color: var(--color-text, #233128) !important;
-    background: transparent !important;
-    border: none !important;
-    outline: none !important;
-    width: 100% !important;
-    padding: 0.15rem 0 !important;
-    margin: 0 !important;
-    box-shadow: none !important;
-    box-sizing: border-box !important;
+  .select-wrap {
+    position: relative;
   }
 
-  /* Standalone inputs if not wrapped in fieldset */
-  :global(#can_embed_form input[type="text"]:not(fieldset input)),
-  :global(#can_embed_form input[type="email"]:not(fieldset input)),
-  :global(#can_embed_form select:not(fieldset select)) {
-    border: 1.5px solid #dfd7c7 !important;
-    border-radius: 10px !important;
-    background: var(--color-paper-white, #fffcf6) !important;
-    padding: 0.75rem 0.95rem !important;
-    margin-bottom: 1rem !important;
+  .select-wrap::after {
+    content: "▾";
+    position: absolute;
+    right: 1.15rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted, #536459);
+    pointer-events: none;
+    font-size: 0.95rem;
   }
 
-  :global(#can_embed_form input[type="text"]:not(fieldset input):focus),
-  :global(#can_embed_form input[type="email"]:not(fieldset input):focus),
-  :global(#can_embed_form select:not(fieldset select):focus) {
-    border-color: var(--color-tomato, #d86f58) !important;
-    background: #ffffff !important;
-    box-shadow: 0 0 0 3px rgba(216, 111, 88, 0.15) !important;
+  .field-select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2.75rem;
+    cursor: pointer;
   }
 
-  /* 5. Comments Textarea */
-  :global(#can_embed_form textarea) {
-    font-family: var(--font-body, "DM Sans", sans-serif) !important;
-    font-size: 0.98rem !important;
-    line-height: 1.5 !important;
-    color: var(--color-text, #233128) !important;
-    border: 1.5px solid #dfd7c7 !important;
-    border-radius: 10px !important;
-    background: var(--color-paper-white, #fffcf6) !important;
-    padding: 0.75rem 0.95rem !important;
-    width: 100% !important;
-    min-height: 96px !important;
-    resize: vertical !important;
-    box-sizing: border-box !important;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+  .field-textarea {
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.55;
   }
 
-  :global(#can_embed_form textarea:focus) {
-    border-color: var(--color-tomato, #d86f58) !important;
-    background: #ffffff !important;
-    box-shadow: 0 0 0 3px rgba(216, 111, 88, 0.15) !important;
-    outline: none !important;
+  .form-submit-row {
+    margin-top: 0.5rem;
   }
 
-  /* 6. Submit Button (UPNS Tomato Pill) */
-  :global(#can_embed_form input[type="submit"]),
-  :global(#can_embed_form .can_button),
-  :global(#can_embed_form button[type="submit"]),
-  :global(#can_embed_form input[type="button"]) {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    background: var(--color-tomato, #d86f58) !important;
-    color: #ffffff !important;
-    font-family: var(--font-body, "DM Sans", sans-serif) !important;
-    font-weight: 800 !important;
-    font-size: 1.1rem !important;
-    text-transform: none !important;
-    letter-spacing: 0.01em !important;
-    padding: 0.95rem 2rem !important;
-    border-radius: 999px !important;
-    border: none !important;
-    cursor: pointer !important;
-    box-shadow: 0 4px 14px rgba(216, 111, 88, 0.3) !important;
-    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease !important;
-    margin: 1rem 0 0.5rem 0 !important;
-    box-sizing: border-box !important;
+  .submit-btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 1.15rem;
+    font-weight: 800;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(216, 111, 88, 0.28);
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
   }
 
-  :global(#can_embed_form input[type="submit"]:hover),
-  :global(#can_embed_form .can_button:hover) {
-    background: var(--color-tomato-dark, #be533d) !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 6px 18px rgba(216, 111, 88, 0.38) !important;
+  .submit-btn:hover {
+    background: var(--color-tomato-dark, #be533d);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(216, 111, 88, 0.35);
   }
 
-  :global(#can_embed_form input[type="submit"]:active),
-  :global(#can_embed_form .can_button:active) {
-    transform: translateY(0) !important;
+  .submit-btn:active {
+    transform: translateY(0);
   }
 
-  /* 7. Opt-in Checkbox and Text */
-  :global(#can_embed_form .control-group.check_boxes),
-  :global(#can_embed_form .checkbox) {
-    margin-top: 0.85rem !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.5rem !important;
+  .submit-btn:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+    transform: none;
   }
 
-  :global(#can_embed_form input[type="checkbox"]) {
-    accent-color: var(--color-tomato, #d86f58) !important;
-    width: 16px !important;
-    height: 16px !important;
-    cursor: pointer !important;
+  .form-privacy-note {
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: #7b8a80;
+    text-align: center;
+    margin: 0.5rem 0 0;
   }
 
-  :global(#can_embed_form .control-group.check_boxes label),
-  :global(#can_embed_form .checkbox label) {
-    font-size: 0.85rem !important;
-    font-weight: 500 !important;
-    text-transform: none !important;
-    letter-spacing: normal !important;
-    color: var(--color-text-muted, #536459) !important;
-    cursor: pointer !important;
+  /* Thank you panel */
+  .thankyou-panel {
+    text-align: center;
+    padding: 1rem 0;
   }
 
-  /* 8. Action Info / Footer Notes */
-  :global(#can_embed_form #action_info),
-  :global(#can_embed_form .action_info) {
-    font-size: 0.8rem !important;
-    color: #839287 !important;
-    text-align: center !important;
-    margin-top: 0.85rem !important;
+  .thankyou-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #eef7ee;
+    color: #2e7d32;
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+  }
+
+  .thankyou-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--color-text, #233128);
+    margin: 0 0 0.6rem;
+  }
+
+  .thankyou-desc {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-text-muted, #536459);
+    max-width: 580px;
+    margin: 0 auto 1.75rem;
+  }
+
+  .thankyou-count-badge {
+    display: inline-block;
+    background: #fdf5ea;
+    border: 1px solid #f2ead6;
+    color: var(--color-text, #233128);
+    font-size: 0.98rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    margin-bottom: 2rem;
+  }
+
+  .thankyou-count-badge strong {
+    color: var(--color-tomato, #d86f58);
+  }
+
+  .share-box {
+    background: var(--color-paper-white, #fffcf6);
+    border: 1.5px solid #ece4d4;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: left;
+  }
+
+  .share-box-title {
+    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-text, #233128);
+    margin: 0 0 0.35rem;
+  }
+
+  .share-box-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted, #536459);
+    margin: 0 0 1.25rem;
+  }
+
+  .share-quote {
+    background: #ffffff;
+    border-left: 3.5px solid var(--color-tomato, #d86f58);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--color-text, #233128);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 0.92rem;
+    font-weight: 700;
+    padding: 0.65rem 1.25rem;
+    border-radius: 999px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .copy-btn {
+    background: var(--color-text, #233128);
+    color: #ffffff;
+    border: none;
+  }
+
+  .copy-btn:hover {
+    background: #151f19;
+    transform: translateY(-1px);
+  }
+
+  .email-btn {
+    background: #ffffff;
+    color: var(--color-text, #233128);
+    border: 1px solid #d5cbba;
+  }
+
+  .email-btn:hover {
+    background: #f7f1e6;
+    transform: translateY(-1px);
+  }
+
+  .native-btn {
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    border: none;
+  }
+
+  .native-btn:hover {
+    background: var(--color-tomato-dark, #be533d);
+    transform: translateY(-1px);
+  }
+
+  .copy-toast {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #2e7d32;
   }
 
   @media (max-width: 600px) {
@@ -260,14 +554,236 @@
       border-radius: 16px;
     }
 
-    .form-title {
-      font-size: 1.75rem;
+    .form-row-split {
+      grid-template-columns: 1fr;
     }
 
-    :global(#can_embed_form input[type="submit"]),
-    :global(#can_embed_form .can_button) {
-      padding: 0.85rem 1.5rem !important;
-      font-size: 1.05rem !important;
+    .form-title {
+      font-size: 1.65rem;
+    }
+
+    .submit-btn {
+      font-size: 1.05rem;
+      padding: 0.95rem 1.5rem;
+    }
+
+    .share-box {
+      padding: 1.35rem 1rem;
+    }
+
+    .share-actions {
+      flex-direction: column;
+    }
+
+    .share-btn {
+      width: 100%;
+      justify-content: center;
     }
   }
 </style>
+
+<script>
+  // Live signature count fetcher
+  async function loadLiveSignatureCount() {
+    try {
+      const res = await fetch('/api/signatures');
+      if (!res.ok) return;
+      const data = await res.json();
+      const count = data.total_signatures;
+
+      if (typeof count === 'number' && count > 0) {
+        const formatted = new Intl.NumberFormat('en-US').format(count);
+
+        // Hero and other wrappers
+        document.querySelectorAll('[data-signature-count]').forEach((el) => {
+          el.textContent = formatted;
+        });
+
+        document.querySelectorAll('[data-count-wrapper]').forEach((el) => {
+          (el as HTMLElement).style.display = 'block';
+        });
+
+        // Form header count
+        const headingCount = document.querySelector('[data-signature-heading-count]');
+        if (headingCount) {
+          const numSpan = headingCount.querySelector('.count-number');
+          if (numSpan) numSpan.textContent = formatted;
+          (headingCount as HTMLElement).style.display = 'inline';
+        }
+
+        // Thank you count
+        document.querySelectorAll('[data-thankyou-count-wrapper]').forEach((el) => {
+          const numEl = el.querySelector('.thankyou-count-num');
+          if (numEl) numEl.textContent = formatted;
+          (el as HTMLElement).style.display = 'inline-block';
+        });
+      }
+    } catch (e) {
+      // Graceful silence
+    }
+  }
+
+  // Handle custom form submission
+  function initCustomPetitionForm() {
+    const form = document.getElementById('petition-custom-form') as HTMLFormElement;
+    const thankYou = document.getElementById('signing-thankyou');
+    const formHeader = document.getElementById('form-header');
+    const generalError = document.getElementById('general-form-error');
+
+    if (!form || !thankYou) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      let valid = true;
+      const firstName = (document.getElementById('first-name') as HTMLInputElement).value.trim();
+      const lastName = (document.getElementById('last-name') as HTMLInputElement).value.trim();
+      const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+      const zipCode = (document.getElementById('zip-code') as HTMLInputElement).value.trim();
+      const relationship = (document.getElementById('relationship') as HTMLSelectElement).value;
+      const commentsInput = document.getElementById('comments') as HTMLTextAreaElement;
+      const comments = commentsInput ? commentsInput.value.trim() : '';
+      const hpField = (document.getElementById('hp-field') as HTMLInputElement)?.value || '';
+
+      // Reset errors
+      form.querySelectorAll('.field-input, .field-select').forEach((el) => el.classList.remove('has-error'));
+      form.querySelectorAll('.field-error').forEach((el) => el.classList.remove('visible'));
+      if (generalError) generalError.style.display = 'none';
+
+      function showError(id: string, msg: string) {
+        valid = false;
+        const input = document.getElementById(id);
+        const err = document.getElementById(`${id}-error`);
+        if (input) input.classList.add('has-error');
+        if (err) {
+          err.textContent = msg;
+          err.classList.add('visible');
+        }
+      }
+
+      if (!firstName) showError('first-name', 'Please enter your first name.');
+      if (!lastName) showError('last-name', 'Please enter your last name.');
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('email', 'Please enter a valid email address.');
+      }
+      if (!zipCode) showError('zip-code', 'Please enter your ZIP code.');
+      if (!relationship) showError('relationship', 'Please select your relationship.');
+
+      if (!valid) {
+        const firstErr = form.querySelector('.has-error');
+        if (firstErr) (firstErr as HTMLElement).focus();
+        return;
+      }
+
+      const submitBtn = document.getElementById('submit-signature-btn') as HTMLButtonElement;
+      const submitText = submitBtn?.querySelector('.submit-text');
+      if (submitBtn && submitText) {
+        submitBtn.disabled = true;
+        submitText.textContent = 'Recording signature...';
+      }
+
+      try {
+        const response = await fetch('/api/sign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            zip_code: zipCode,
+            relationship,
+            comments,
+            hp_field: hpField,
+          }),
+        });
+
+        const resData = await response.json();
+
+        if (!response.ok || !resData.success) {
+          throw new Error(resData.error || 'Failed to submit signature. Please try again.');
+        }
+
+        // Save session state
+        sessionStorage.setItem('upns_petition_signed', 'true');
+
+        // Optimistically increment counters
+        document.querySelectorAll('[data-signature-count]').forEach((el) => {
+          const current = parseInt(el.textContent?.replace(/,/g, '') || '0', 10);
+          if (current > 0) {
+            el.textContent = new Intl.NumberFormat('en-US').format(current + 1);
+          }
+        });
+
+        // Show thank you screen
+        form.style.display = 'none';
+        if (formHeader) formHeader.style.display = 'none';
+        thankYou.style.display = 'block';
+
+        // Re-sync live count
+        setTimeout(loadLiveSignatureCount, 1500);
+      } catch (err: any) {
+        if (generalError) {
+          generalError.textContent = err.message || 'An error occurred. Please try again.';
+          generalError.style.display = 'block';
+        }
+        if (submitBtn && submitText) {
+          submitBtn.disabled = false;
+          submitText.textContent = 'Sign the Petition';
+        }
+      }
+    });
+
+    // Check if signed earlier this session
+    if (sessionStorage.getItem('upns_petition_signed') === 'true') {
+      form.style.display = 'none';
+      if (formHeader) formHeader.style.display = 'none';
+      thankYou.style.display = 'block';
+    }
+
+    // Copy link handler
+    const copyBtn = document.getElementById('copy-link-btn');
+    const copyToast = document.getElementById('copy-toast');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.origin + window.location.pathname);
+          if (copyToast) {
+            copyToast.style.display = 'block';
+            setTimeout(() => {
+              copyToast.style.display = 'none';
+            }, 3000);
+          }
+        } catch (err) {
+          // Fallback
+        }
+      });
+    }
+
+    // Native share handler
+    const nativeBtn = document.getElementById('native-share-btn');
+    if (nativeBtn && navigator.share) {
+      nativeBtn.style.display = 'inline-flex';
+      nativeBtn.addEventListener('click', async () => {
+        try {
+          await navigator.share({
+            title: 'Help Keep UPNS Open at UCLA',
+            text: 'UPNS has served UCLA and neighborhood families since 1966. UCLA has asked UPNS and its remaining ECE centers to close by summer 2027. Please join us in asking UCLA to help UPNS stay open — in its current home or at a suitable new site.',
+            url: window.location.origin + window.location.pathname,
+          });
+        } catch (err) {
+          // Canceled or unsupported
+        }
+      });
+    }
+  }
+
+  // Init on load
+  document.addEventListener('DOMContentLoaded', () => {
+    loadLiveSignatureCount();
+    initCustomPetitionForm();
+  });
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    loadLiveSignatureCount();
+    initCustomPetitionForm();
+  }
+</script>
