@@ -61,7 +61,7 @@ const server = http.createServer(async (req, res) => {
       req.on("end", async () => {
         try {
           const data = JSON.parse(body);
-          const { first_name, last_name, email, zip_code, relationship_upns, ucla_affiliation, comments, hp_field } = data;
+          const { first_name, last_name, email, zip_code, relationship_upns, ucla_affiliation, comments, display_publicly, hp_field } = data;
 
           if (hp_field) {
             res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
@@ -96,6 +96,7 @@ const server = http.createServer(async (req, res) => {
             relationship_upns: relationship_upns.trim(),
             ucla_affiliation: ucla_affiliation.trim(),
             comments: (comments || "").trim(),
+            display_publicly: display_publicly !== false,
           };
 
           if (!alreadySigned) {
@@ -107,7 +108,7 @@ const server = http.createServer(async (req, res) => {
             if (!csvExists) {
               fs.writeFileSync(
                 CSV_FILE,
-                '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments"\n',
+                '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments","Display Publicly"\n',
                 "utf-8"
               );
             }
@@ -121,6 +122,7 @@ const server = http.createServer(async (req, res) => {
               escapeCsv(record.relationship_upns),
               escapeCsv(record.ucla_affiliation),
               escapeCsv(record.comments),
+              escapeCsv(record.display_publicly ? "Yes" : "No"),
             ].join(",") + "\n";
             fs.appendFileSync(CSV_FILE, csvLine, "utf-8");
 
@@ -150,6 +152,34 @@ const server = http.createServer(async (req, res) => {
           res.end(JSON.stringify({ success: false, error: err.message }));
         }
       });
+      return;
+    }
+
+    // Dynamic API endpoint for stories
+    if (urlPath === "/api/stories") {
+      const signatures = getLocalSignatures();
+      const stories = signatures
+        .filter((s) => s.comments && s.comments.trim().length > 0 && s.display_publicly !== false)
+        .map((s) => {
+          const lastInitial = s.last_name ? `${s.last_name.trim()[0].toUpperCase()}.` : "";
+          const author = `${s.first_name.trim()} ${lastInitial}`.trim();
+          return {
+            id: s.id,
+            author,
+            relationship_upns: s.relationship_upns,
+            ucla_affiliation: s.ucla_affiliation,
+            comments: s.comments,
+            timestamp: s.timestamp,
+          };
+        })
+        .reverse();
+
+      res.writeHead(200, {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+        "Access-Control-Allow-Origin": "*",
+      });
+      res.end(JSON.stringify({ stories }));
       return;
     }
 

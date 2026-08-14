@@ -12,6 +12,7 @@ export const POST: APIRoute = async ({ request }) => {
       relationship_upns,
       ucla_affiliation,
       comments,
+      display_publicly,
       hp_field, // honeypot
     } = data;
 
@@ -54,6 +55,7 @@ export const POST: APIRoute = async ({ request }) => {
       relationship_upns,
       ucla_affiliation,
       comments,
+      display_publicly: display_publicly !== false,
     });
 
     return new Response(

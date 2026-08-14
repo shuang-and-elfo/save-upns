@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import StoriesSection from "../components/StoriesSection.astro";
 import PetitionForm from "../components/PetitionForm.astro";
 import { withBase } from "../utils/url";
 ---
@@ -155,8 +156,15 @@ import { withBase } from "../utils/url";
           Together, we can help keep this community alive.
         </p>
       </div>
+    </section>
+
     {/* ============================================================
-        6. SIGNING FORM: Native form
+        6. UPNS STORIES: Community stories section
+        ============================================================ */}
+    <StoriesSection />
+
+    {/* ============================================================
+        7. SIGNING FORM: Native form
         ============================================================ */}
     <PetitionForm />
 

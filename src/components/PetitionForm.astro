@@ -189,6 +189,19 @@
             rows="3"
             placeholder="Share a brief note on why childcare matters to your work, family, or study at UCLA..."
           ></textarea>
+
+          <label class="checkbox-label" for="display-publicly">
+            <input
+              type="checkbox"
+              id="display-publicly"
+              name="display_publicly"
+              class="field-checkbox"
+              checked
+            />
+            <span class="checkbox-text">
+              Display my story publicly in the <strong>UPNS Stories</strong> section
+            </span>
+          </label>
         </div>
       </div>
 
@@ -367,6 +380,35 @@
     resize: vertical;
     min-height: 90px;
     line-height: 1.55;
+  }
+
+  .checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .field-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-tomato, #d86f58);
+    cursor: pointer;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .checkbox-text {
+    font-size: 0.92rem;
+    color: var(--color-text, #233128);
+    line-height: 1.4;
+  }
+
+  .checkbox-text strong {
+    color: var(--color-forest, #233128);
+    font-weight: 700;
   }
 
   .form-submit-row {
@@ -657,6 +699,8 @@
       const uclaAffiliation = (document.getElementById('ucla-affiliation') as HTMLSelectElement).value;
       const commentsInput = document.getElementById('comments') as HTMLTextAreaElement;
       const comments = commentsInput ? commentsInput.value.trim() : '';
+      const displayPubliclyCheckbox = document.getElementById('display-publicly') as HTMLInputElement;
+      const displayPublicly = displayPubliclyCheckbox ? displayPubliclyCheckbox.checked : true;
       const hpField = (document.getElementById('hp-field') as HTMLInputElement)?.value || '';
 
       // Reset errors
@@ -709,6 +753,7 @@
             relationship_upns: relationshipUpns,
             ucla_affiliation: uclaAffiliation,
             comments,
+            display_publicly: displayPublicly,
             hp_field: hpField,
           }),
         });

@@ -11,6 +11,16 @@ export interface Signature {
   relationship_upns: string;
   ucla_affiliation: string;
   comments: string;
+  display_publicly?: boolean;
+}
+
+export interface PublicStory {
+  id: string;
+  author: string;
+  relationship_upns: string;
+  ucla_affiliation: string;
+  comments: string;
+  timestamp: string;
 }
 
 const DATA_DIR = path.join(process.cwd(), 'data');
@@ -39,6 +49,27 @@ export function getAllSignatures(): Signature[] {
   }
 }
 
+export function getPublicStories(): PublicStory[] {
+  const signatures = getAllSignatures();
+  const publicStories: PublicStory[] = signatures
+    .filter((s) => s.comments && s.comments.trim().length > 0 && s.display_publicly !== false)
+    .map((s) => {
+      const lastInitial = s.last_name ? `${s.last_name.trim()[0].toUpperCase()}.` : '';
+      const author = `${s.first_name.trim()} ${lastInitial}`.trim();
+      return {
+        id: s.id,
+        author,
+        relationship_upns: s.relationship_upns,
+        ucla_affiliation: s.ucla_affiliation,
+        comments: s.comments,
+        timestamp: s.timestamp,
+      };
+    })
+    .reverse(); // newest first
+
+  return publicStories;
+}
+
 export function getSignatureCount(): number {
   const signatures = getAllSignatures();
   const baseCount = parseInt(process.env.INITIAL_SIGNATURE_COUNT || '0', 10) || 0;
@@ -53,6 +84,7 @@ export async function addSignature(data: {
   relationship_upns: string;
   ucla_affiliation: string;
   comments?: string;
+  display_publicly?: boolean;
 }): Promise<{ success: boolean; isNew: boolean; totalCount: number }> {
   ensureDataDir();
 
@@ -72,6 +104,7 @@ export async function addSignature(data: {
     relationship_upns: data.relationship_upns.trim(),
     ucla_affiliation: data.ucla_affiliation.trim(),
     comments: (data.comments || '').trim(),
+    display_publicly: data.display_publicly !== false,
   };
 
   if (!alreadySigned) {
@@ -83,7 +116,7 @@ export async function addSignature(data: {
     if (!csvExists) {
       fs.writeFileSync(
         CSV_FILE,
-        '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments"\n',
+        '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments","Display Publicly"\n',
         'utf-8'
       );
     }
@@ -97,6 +130,7 @@ export async function addSignature(data: {
       escapeCsv(record.relationship_upns),
       escapeCsv(record.ucla_affiliation),
       escapeCsv(record.comments),
+      escapeCsv(record.display_publicly ? 'Yes' : 'No'),
     ].join(',') + '\n';
     fs.appendFileSync(CSV_FILE, csvLine, 'utf-8');
 
@@ -128,5 +162,5 @@ export function exportSignaturesAsCSV(): string {
   if (fs.existsSync(CSV_FILE)) {
     return fs.readFileSync(CSV_FILE, 'utf-8');
   }
-  return '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments"\n';
+  return '"Timestamp","First Name","Last Name","Email","ZIP Code","Relationship to UPNS","UCLA Affiliation","Comments","Display Publicly"\n';
 }
