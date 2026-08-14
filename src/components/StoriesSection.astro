@@ -119,6 +119,9 @@ const SEED_STORIES = [
     return div.innerHTML;
   }
 
+  // Expose globally so PetitionForm can trigger fresh stories load after sign
+  (window as any).loadLiveStories = loadLiveStories;
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', loadLiveStories);
   } else {
@@ -175,7 +178,8 @@ const SEED_STORIES = [
     gap: 1.5rem;
   }
 
-  .story-card {
+  /* Global scoped to stories section so dynamically prepended cards have full styling */
+  .upns-stories-section :global(.story-card) {
     background: #ffffff;
     border: 1px solid var(--color-border, #ede4d3);
     border-radius: 18px;
@@ -188,12 +192,12 @@ const SEED_STORIES = [
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .story-card:hover {
+  .upns-stories-section :global(.story-card:hover) {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(35, 49, 40, 0.08);
   }
 
-  .story-quote-mark {
+  .upns-stories-section :global(.story-quote-mark) {
     font-family: var(--font-display, "Baloo Chettan 2", Georgia, serif);
     font-size: 3.5rem;
     line-height: 0.8;
@@ -202,7 +206,7 @@ const SEED_STORIES = [
     user-select: none;
   }
 
-  .story-text {
+  .upns-stories-section :global(.story-text) {
     font-size: 1.02rem;
     line-height: 1.65;
     color: var(--color-text, #233128);
@@ -211,7 +215,7 @@ const SEED_STORIES = [
     font-style: normal;
   }
 
-  .story-author-row {
+  .upns-stories-section :global(.story-author-row) {
     border-top: 1px solid #f2ead6;
     padding-top: 1rem;
     display: flex;
@@ -219,20 +223,20 @@ const SEED_STORIES = [
     gap: 0.4rem;
   }
 
-  .story-author-name {
+  .upns-stories-section :global(.story-author-name) {
     font-size: 0.98rem;
     font-weight: 800;
     font-style: normal;
     color: var(--color-forest, #233128);
   }
 
-  .story-tags {
+  .upns-stories-section :global(.story-tags) {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
   }
 
-  .story-tag {
+  .upns-stories-section :global(.story-tag) {
     font-size: 0.76rem;
     font-weight: 700;
     padding: 0.2rem 0.55rem;
@@ -240,12 +244,12 @@ const SEED_STORIES = [
     line-height: 1.3;
   }
 
-  .tag-upns {
+  .upns-stories-section :global(.tag-upns) {
     background: #f7efe1;
     color: #5a4b32;
   }
 
-  .tag-ucla {
+  .upns-stories-section :global(.tag-ucla) {
     background: #eef3f7;
     color: #274c6e;
   }
@@ -260,7 +264,7 @@ const SEED_STORIES = [
       font-size: 1.85rem;
     }
 
-    .story-card {
+    .upns-stories-section :global(.story-card) {
       padding: 1.6rem 1.35rem 1.35rem;
     }
   }
