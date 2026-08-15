@@ -1,11 +1,11 @@
 import type { APIRoute } from 'astro';
-import { getPublicStories } from '../../lib/signatures';
+import { getPublicStoriesAsync } from '../../lib/signatures';
 
 export const prerender = false;
 
 export const GET: APIRoute = async () => {
   try {
-    const stories = getPublicStories();
+    const stories = await getPublicStoriesAsync();
     return new Response(JSON.stringify({ stories }), {
       status: 200,
       headers: {

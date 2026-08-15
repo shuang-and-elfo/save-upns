@@ -1,11 +1,11 @@
 import type { APIRoute } from 'astro';
-import { getSignatureCount } from '../../lib/signatures';
+import { getSignatureCountAsync } from '../../lib/signatures';
 
 export const prerender = false;
 
 export const GET: APIRoute = async () => {
   try {
-    const count = getSignatureCount();
+    const count = await getSignatureCountAsync();
     return new Response(
       JSON.stringify({ total_signatures: count }),
       {

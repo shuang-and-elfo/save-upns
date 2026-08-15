@@ -7,7 +7,7 @@ export interface Signature {
   first_name: string;
   last_name: string;
   email: string;
-  zip_code: string;
+  zip_code?: string;
   relationship_upns: string;
   ucla_affiliation: string;
   comments: string;
@@ -24,7 +24,6 @@ export interface PublicStory {
 }
 
 // In serverless environments (e.g. Vercel / AWS Lambda), the deployment root is read-only.
-// We write dynamic files to /tmp/save-upns-data and read bundled files from repo data/.
 const IS_SERVERLESS = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
 const DATA_DIR = IS_SERVERLESS ? path.join('/tmp', 'save-upns-data') : path.join(process.cwd(), 'data');
 const READONLY_DATA_DIR = path.join(process.cwd(), 'data');
@@ -42,7 +41,53 @@ function ensureDataDir() {
   }
 }
 
-export function getAllSignatures(): Signature[] {
+// ----------------------------------------------------
+// Vercel KV / Upstash REST Client (Zero-dependency)
+// ----------------------------------------------------
+async function kvGet<T>(key: string): Promise<T | null> {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+
+  try {
+    const res = await fetch(`${url}/get/${key}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data.result) return null;
+    return typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
+  } catch (err) {
+    console.warn('Vercel KV get error:', err);
+    return null;
+  }
+}
+
+async function kvSet(key: string, value: any): Promise<boolean> {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return false;
+
+  try {
+    const res = await fetch(`${url}/set/${key}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(typeof value === 'string' ? value : JSON.stringify(value)),
+    });
+    return res.ok;
+  } catch (err) {
+    console.warn('Vercel KV set error:', err);
+    return false;
+  }
+}
+
+// ----------------------------------------------------
+// Local & Cloud Signatures Retrieval
+// ----------------------------------------------------
+export function getLocalSignatures(): Signature[] {
   ensureDataDir();
   const recordsMap = new Map<string, Signature>();
 
@@ -82,9 +127,27 @@ export function getAllSignatures(): Signature[] {
   return Array.from(recordsMap.values());
 }
 
-export function getPublicStories(): PublicStory[] {
-  const signatures = getAllSignatures();
-  const publicStories: PublicStory[] = signatures
+export async function getAllSignaturesAsync(): Promise<Signature[]> {
+  // 1. Try Vercel KV for persistent global records
+  const kvList = await kvGet<Signature[]>('upns_signatures_v1');
+  if (kvList && Array.isArray(kvList) && kvList.length > 0) {
+    const local = getLocalSignatures();
+    const map = new Map<string, Signature>();
+    local.forEach((s) => map.set(s.email.toLowerCase(), s));
+    kvList.forEach((s) => map.set(s.email.toLowerCase(), s));
+    return Array.from(map.values());
+  }
+
+  return getLocalSignatures();
+}
+
+export function getAllSignatures(): Signature[] {
+  return getLocalSignatures();
+}
+
+export async function getPublicStoriesAsync(): Promise<PublicStory[]> {
+  const signatures = await getAllSignaturesAsync();
+  return signatures
     .filter((s) => s.comments && s.comments.trim().length > 0 && s.display_publicly !== false)
     .map((s) => {
       const lastInitial = s.last_name ? `${s.last_name.trim()[0].toUpperCase()}.` : '';
@@ -98,9 +161,32 @@ export function getPublicStories(): PublicStory[] {
         timestamp: s.timestamp,
       };
     })
-    .reverse(); // newest first
+    .reverse();
+}
 
-  return publicStories;
+export function getPublicStories(): PublicStory[] {
+  const signatures = getAllSignatures();
+  return signatures
+    .filter((s) => s.comments && s.comments.trim().length > 0 && s.display_publicly !== false)
+    .map((s) => {
+      const lastInitial = s.last_name ? `${s.last_name.trim()[0].toUpperCase()}.` : '';
+      const author = `${s.first_name.trim()} ${lastInitial}`.trim();
+      return {
+        id: s.id,
+        author,
+        relationship_upns: s.relationship_upns,
+        ucla_affiliation: s.ucla_affiliation,
+        comments: s.comments,
+        timestamp: s.timestamp,
+      };
+    })
+    .reverse();
+}
+
+export async function getSignatureCountAsync(): Promise<number> {
+  const signatures = await getAllSignaturesAsync();
+  const baseCount = parseInt(process.env.INITIAL_SIGNATURE_COUNT || '0', 10) || 0;
+  return signatures.length + baseCount;
 }
 
 export function getSignatureCount(): number {
@@ -113,7 +199,7 @@ export async function addSignature(data: {
   first_name: string;
   last_name: string;
   email: string;
-  zip_code: string;
+  zip_code?: string;
   relationship_upns: string;
   ucla_affiliation: string;
   comments?: string;
@@ -122,7 +208,7 @@ export async function addSignature(data: {
   ensureDataDir();
 
   const emailNorm = data.email.trim().toLowerCase();
-  const existing = getAllSignatures();
+  const existing = await getAllSignaturesAsync();
   
   // Check if email already signed
   const alreadySigned = existing.some((s) => s.email.trim().toLowerCase() === emailNorm);
@@ -133,7 +219,7 @@ export async function addSignature(data: {
     first_name: data.first_name.trim(),
     last_name: data.last_name.trim(),
     email: emailNorm,
-    zip_code: data.zip_code.trim(),
+    zip_code: data.zip_code ? data.zip_code.trim() : '',
     relationship_upns: data.relationship_upns.trim(),
     ucla_affiliation: data.ucla_affiliation.trim(),
     comments: (data.comments || '').trim(),
@@ -141,11 +227,10 @@ export async function addSignature(data: {
   };
 
   if (!alreadySigned) {
+    // 1. Append to local temporary files
     try {
-      // 1. Append to JSONL in writable directory
       fs.appendFileSync(JSONL_FILE, JSON.stringify(record) + '\n', 'utf-8');
 
-      // 2. Append to CSV in writable directory
       const csvExists = fs.existsSync(CSV_FILE);
       if (!csvExists) {
         fs.writeFileSync(
@@ -160,7 +245,7 @@ export async function addSignature(data: {
         escapeCsv(record.first_name),
         escapeCsv(record.last_name),
         escapeCsv(record.email),
-        escapeCsv(record.zip_code),
+        escapeCsv(record.zip_code || ''),
         escapeCsv(record.relationship_upns),
         escapeCsv(record.ucla_affiliation),
         escapeCsv(record.comments),
@@ -169,6 +254,17 @@ export async function addSignature(data: {
       fs.appendFileSync(CSV_FILE, csvLine, 'utf-8');
     } catch (fsErr) {
       console.warn('Local filesystem write warning (handled for serverless):', fsErr);
+    }
+
+    // 2. Persist to Vercel KV if connected
+    try {
+      const currentKvList = (await kvGet<Signature[]>('upns_signatures_v1')) || [];
+      if (!currentKvList.some((s) => s.email.toLowerCase() === emailNorm)) {
+        currentKvList.push(record);
+        await kvSet('upns_signatures_v1', currentKvList);
+      }
+    } catch (kvErr) {
+      console.warn('Vercel KV persist error:', kvErr);
     }
 
     // 3. Forward to Google Sheets Webhook if configured
@@ -186,7 +282,7 @@ export async function addSignature(data: {
     }
   }
 
-  const totalCount = getSignatureCount();
+  const totalCount = await getSignatureCountAsync();
   return {
     success: true,
     isNew: !alreadySigned,

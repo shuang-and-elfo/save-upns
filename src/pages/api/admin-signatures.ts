@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getAllSignatures } from '../../lib/signatures';
+import { getAllSignaturesAsync } from '../../lib/signatures';
 
 export const prerender = false;
 
@@ -17,7 +17,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const signatures = getAllSignatures();
+    const signatures = await getAllSignaturesAsync();
     return new Response(JSON.stringify({ success: true, signatures }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
