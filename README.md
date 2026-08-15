@@ -2,7 +2,7 @@
 
 Welcome to the official static website repository for **University Parents Nursery School (UPNS)**, a warm, parent-participation cooperative preschool in Los Angeles serving UCLA students, staff, faculty, and non-UCLA community families.
 
-This project was redesigned and built using **Astro 4** in static-output mode, **TypeScript content collections/data files**, **semantic HTML5**, and **Vanilla CSS with CSS Custom Properties**, inspired by the warm, illustrated scrapbook character of Kootingal Preschool while maintaining 100% factual accuracy from the verified source of truth (`http://www.upns.info/`).
+This project is built using **Astro 4**, deployed to Vercel with **Redis Cloud persistence** for live petition signatures and stories, inspired by the warm, illustrated scrapbook character of UPNS while maintaining 100% factual accuracy.
 
 ---
 
