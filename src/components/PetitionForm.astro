@@ -105,7 +105,7 @@
         </div>
       </div>
 
-      <div class="form-row form-row-split">
+      <div class="form-row">
         <div class="form-field">
           <label for="email" class="field-label">
             Email Address <span class="req">*</span>
@@ -120,23 +120,6 @@
             placeholder="jane.bruin@ucla.edu"
           />
           <span class="field-error" id="email-error"></span>
-        </div>
-
-        <div class="form-field">
-          <label for="zip-code" class="field-label">
-            ZIP Code <span class="req">*</span>
-          </label>
-          <input
-            type="text"
-            id="zip-code"
-            name="zip_code"
-            class="field-input"
-            required
-            autocomplete="postal-code"
-            pattern="[0-9]{5}"
-            placeholder="90095"
-          />
-          <span class="field-error" id="zip-code-error"></span>
         </div>
       </div>
 
@@ -728,7 +711,6 @@
       const firstName = (document.getElementById('first-name') as HTMLInputElement).value.trim();
       const lastName = (document.getElementById('last-name') as HTMLInputElement).value.trim();
       const email = (document.getElementById('email') as HTMLInputElement).value.trim();
-      const zipCode = (document.getElementById('zip-code') as HTMLInputElement).value.trim();
       const relationshipUpns = (document.getElementById('relationship-upns') as HTMLSelectElement).value;
       const uclaAffiliation = (document.getElementById('ucla-affiliation') as HTMLSelectElement).value;
       const comments = commentsInput ? commentsInput.value.trim() : '';
@@ -756,7 +738,6 @@
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         showError('email', 'Please enter a valid email address.');
       }
-      if (!zipCode) showError('zip-code', 'Please enter your ZIP code.');
       if (!relationshipUpns) showError('relationship-upns', 'Please select your relationship to UPNS.');
       if (!uclaAffiliation) showError('ucla-affiliation', 'Please select your UCLA affiliation.');
 

@@ -27,7 +27,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // 2. Field validation
-    if (!first_name || !last_name || !email || !zip_code || !relationship_upns || !ucla_affiliation) {
+    if (!first_name || !last_name || !email || !relationship_upns || !ucla_affiliation) {
       return new Response(
         JSON.stringify({
           success: false,
@@ -53,7 +53,7 @@ export const POST: APIRoute = async ({ request }) => {
       first_name,
       last_name,
       email,
-      zip_code,
+      zip_code: zip_code || '',
       relationship_upns,
       ucla_affiliation,
       comments,
