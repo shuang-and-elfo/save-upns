@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { createClient } from 'redis';
 
 export interface Signature {
   id: string;
@@ -42,7 +43,31 @@ function ensureDataDir() {
 }
 
 // ----------------------------------------------------
-// Vercel KV / Upstash REST Client (Zero-dependency)
+// Redis Client (REDIS_URL connection)
+// ----------------------------------------------------
+let redisClient: ReturnType<typeof createClient> | null = null;
+
+async function getRedis() {
+  const url = process.env.REDIS_URL;
+  if (!url) return null;
+
+  try {
+    if (!redisClient) {
+      redisClient = createClient({ url });
+      redisClient.on('error', (err) => console.warn('Redis Client Warning:', err));
+    }
+    if (!redisClient.isOpen) {
+      await redisClient.connect();
+    }
+    return redisClient;
+  } catch (err) {
+    console.warn('Could not connect to Redis:', err);
+    return null;
+  }
+}
+
+// ----------------------------------------------------
+// Vercel KV REST Client (Fallback)
 // ----------------------------------------------------
 async function kvGet<T>(key: string): Promise<T | null> {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
@@ -128,17 +153,35 @@ export function getLocalSignatures(): Signature[] {
 }
 
 export async function getAllSignaturesAsync(): Promise<Signature[]> {
-  // 1. Try Vercel KV for persistent global records
+  const map = new Map<string, Signature>();
+
+  // 1. Seed from local / bundled signatures
+  const local = getLocalSignatures();
+  local.forEach((s) => map.set(s.email.toLowerCase(), s));
+
+  // 2. Fetch from Redis (REDIS_URL) if connected
+  const redis = await getRedis();
+  if (redis) {
+    try {
+      const data = await redis.get('upns_signatures_v1');
+      if (data) {
+        const cloudList: Signature[] = JSON.parse(data);
+        cloudList.forEach((s) => map.set(s.email.toLowerCase(), s));
+        return Array.from(map.values());
+      }
+    } catch (err) {
+      console.warn('Redis read error:', err);
+    }
+  }
+
+  // 3. Fallback to Vercel KV REST
   const kvList = await kvGet<Signature[]>('upns_signatures_v1');
   if (kvList && Array.isArray(kvList) && kvList.length > 0) {
-    const local = getLocalSignatures();
-    const map = new Map<string, Signature>();
-    local.forEach((s) => map.set(s.email.toLowerCase(), s));
     kvList.forEach((s) => map.set(s.email.toLowerCase(), s));
     return Array.from(map.values());
   }
 
-  return getLocalSignatures();
+  return Array.from(map.values());
 }
 
 export function getAllSignatures(): Signature[] {
@@ -256,7 +299,22 @@ export async function addSignature(data: {
       console.warn('Local filesystem write warning (handled for serverless):', fsErr);
     }
 
-    // 2. Persist to Vercel KV if connected
+    // 2. Persist to Redis (REDIS_URL) if connected
+    const redis = await getRedis();
+    if (redis) {
+      try {
+        const raw = await redis.get('upns_signatures_v1');
+        const list: Signature[] = raw ? JSON.parse(raw) : [];
+        if (!list.some((s) => s.email.toLowerCase() === emailNorm)) {
+          list.push(record);
+          await redis.set('upns_signatures_v1', JSON.stringify(list));
+        }
+      } catch (redisErr) {
+        console.warn('Redis save error:', redisErr);
+      }
+    }
+
+    // 3. Persist to Vercel KV REST if connected
     try {
       const currentKvList = (await kvGet<Signature[]>('upns_signatures_v1')) || [];
       if (!currentKvList.some((s) => s.email.toLowerCase() === emailNorm)) {
@@ -267,7 +325,7 @@ export async function addSignature(data: {
       console.warn('Vercel KV persist error:', kvErr);
     }
 
-    // 3. Forward to Google Sheets Webhook if configured
+    // 4. Forward to Google Sheets Webhook if configured
     const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL;
     if (webhookUrl) {
       try {
