@@ -1,5 +1,11 @@
 ---
 import { withBase } from "../utils/url";
+
+export interface Props {
+  hideNav?: boolean;
+}
+
+const { hideNav = false } = Astro.props;
 ---
 
 <header class="petition-header" role="banner">
@@ -16,16 +22,18 @@ import { withBase } from "../utils/url";
     </a>
 
     {/* Right: Navigation Links & Primary Call to Action */}
-    <div class="header-action">
-      <nav class="header-nav" aria-label="Main Navigation">
-        <a href={withBase("/stories")} class="nav-link">
-          <span>UPNS Stories</span>
+    {!hideNav && (
+      <div class="header-action">
+        <nav class="header-nav" aria-label="Main Navigation">
+          <a href={withBase("/stories")} class="nav-link">
+            <span>UPNS Stories</span>
+          </a>
+        </nav>
+        <a href={withBase("/draft#sign")} class="header-cta-btn">
+          <span>Sign the Petition</span>
         </a>
-      </nav>
-      <a href={withBase("/#sign")} class="header-cta-btn">
-        <span>Sign the Petition</span>
-      </a>
-    </div>
+      </div>
+    )}
   </div>
 </header>
 

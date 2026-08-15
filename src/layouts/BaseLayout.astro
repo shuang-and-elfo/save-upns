@@ -8,12 +8,16 @@ export interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  hideNav?: boolean;
+  hideStickyCTA?: boolean;
 }
 
 const {
-  title = "Help Keep UPNS Open | Save UPNS Petition to UCLA",
-  description = "UCLA has asked University Parents Nursery School (UPNS) and its remaining Early Care and Education centers to close by summer 2027. Sign the petition asking UCLA to help UPNS stay open in its current home or at a suitable new site.",
+  title = "Help Keep UPNS Open | Save UPNS",
+  description = "University Parents Nursery School (UPNS) has served UCLA and neighborhood families since 1966. Learn about the community effort to preserve UPNS.",
   ogImage = "/images/kan3.jpg",
+  hideNav = false,
+  hideStickyCTA = false,
 } = Astro.props;
 
 const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, "") : "https://saveupns.org";
@@ -59,14 +63,14 @@ const canonicalUrl = Astro.url.href;
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <PetitionHeader />
+    <PetitionHeader hideNav={hideNav} />
 
     <main id="main-content" role="main">
       <slot />
     </main>
 
     <PetitionFooter />
-    <StickySignCTA />
+    {!hideStickyCTA && <StickySignCTA />}
   </body>
 </html>
 

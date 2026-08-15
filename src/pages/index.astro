@@ -1,287 +1,99 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import StoriesCallout from "../components/StoriesCallout.astro";
-import PetitionForm from "../components/PetitionForm.astro";
 import { withBase } from "../utils/url";
 ---
 
-<BaseLayout>
-  <div class="petition-container">
-
-    {/* ============================================================
-        1. OPENING / HERO: Explain what happened immediately
-        ============================================================ */}
-    <section class="petition-hero" aria-labelledby="hero-title">
-      <span class="hero-eyebrow">SAVE UPNS</span>
-      <h1 id="hero-title" class="hero-title">Help Keep UPNS Open</h1>
-
-      <div class="hero-lead-text">
-        <p class="lead-strong">
-          UCLA has asked University Parents Nursery School (UPNS) and its remaining Early Care and Education centers to close by summer 2027.
-        </p>
-        <p>
-          For 60 years, UPNS has been a beloved cooperative preschool for UCLA-affiliated and neighborhood families, built around play, care, and a deeply involved parent community. We’re asking UCLA to help preserve this extraordinary community by allowing UPNS to remain in its current home if possible, or by helping secure a new home where the school can continue.
-        </p>
+<BaseLayout
+  title="Save UPNS — Preserving University Parents Nursery School"
+  description="We're working on putting together a petition to help preserve University Parents Nursery School (UPNS). Please stay tuned!"
+  hideNav={true}
+  hideStickyCTA={true}
+>
+  <div class="holding-page-container">
+    <div class="holding-card">
+      <div class="holding-badge">
+        <span class="badge-dot" aria-hidden="true"></span>
+        <span>Coming Soon</span>
       </div>
 
-      <div class="hero-action-row">
-        <a href="#sign" class="hero-cta-btn">Sign the Petition</a>
-        <div class="hero-live-count-badge" data-count-wrapper>
-          <span class="live-pulse-dot" aria-hidden="true"></span>
-          <span class="count-text"><strong data-signature-count>0</strong> people have signed</span>
+      <h1 class="holding-title">
+        We’re working on putting together a petition. Please stay tuned!
+      </h1>
+
+      <p class="holding-lead">
+        For 60 years, <strong>University Parents Nursery School (UPNS)</strong> has been a beloved cooperative preschool for UCLA-affiliated and neighborhood families, built around play, care, and a deeply involved parent community.
+      </p>
+
+      <div class="holding-info-box">
+        <p class="info-text">
+          We are currently preparing a community-led petition asking UCLA to help preserve UPNS beyond summer 2027.
+        </p>
+        <div class="info-contact">
+          <span>Have questions, stories, or want to get involved?</span>
+          <a href="mailto:saveupns@gmail.com" class="contact-btn">
+            Contact us at saveupns@gmail.com
+          </a>
         </div>
       </div>
-    </section>
-
-    {/* ============================================================
-        2. AUTOPLAYING FEATURED PHOTOGRAPHS (2s EACH)
-        ============================================================ */}
-    <figure class="petition-featured-photo">
-      <div class="slideshow-wrapper" id="photo-slideshow">
-        <img
-          src={withBase("/images/kan3.jpg")}
-          alt="Children, teachers, and parents playing with a colorful parachute at UPNS"
-          class="slideshow-img active"
-          loading="eager"
-        />
-        <img
-          src={withBase("/images/play.jpg")}
-          alt="Children engaged in outdoor discovery at UPNS"
-          class="slideshow-img"
-          loading="eager"
-        />
-        <img
-          src={withBase("/images/kitten-6.jpg")}
-          alt="Toddlers playing with sand and eggs in the Kitten Room"
-          class="slideshow-img"
-          loading="eager"
-        />
-        <img
-          src={withBase("/images/kitten-leaves.jpg")}
-          alt="Toddlers exploring leaves and nature outdoors in the Kitten Room"
-          class="slideshow-img"
-          loading="eager"
-        />
-        <img
-          src={withBase("/images/kangaroo-outdoor2.jpg")}
-          alt="Children painting with water and brushes on the Kangaroo Room outdoor play structure"
-          class="slideshow-img"
-          loading="eager"
-        />
-        <img
-          src={withBase("/images/kan5.jpg")}
-          alt="Children exploring the outdoor sensory water table in the Kangaroo Room"
-          class="slideshow-img"
-          loading="eager"
-        />
-        <img
-          src={withBase("/images/kan4.jpg")}
-          alt="Children engaging in group projects and indoor tray activities in the Kangaroo Room"
-          class="slideshow-img"
-          loading="eager"
-        />
-        <img
-          src={withBase("/images/birthday.jpg")}
-          alt="Classroom celebration with teachers and classmates"
-          class="slideshow-img"
-          loading="eager"
-        />
-        <img
-          src={withBase("/images/music_class.jpg")}
-          alt="Children learning instruments in enrichment music class"
-          class="slideshow-img"
-          loading="eager"
-        />
-      </div>
-      <figcaption class="featured-photo-caption">
-        UPNS has served UCLA and neighborhood families since 1966.
-      </figcaption>
-    </figure>
-
-    {/* ============================================================
-        3. WHY WE ARE ASKING UCLA TO RECONSIDER
-        ============================================================ */}
-    <section class="petition-editorial-section" aria-labelledby="why-heading">
-      <h2 id="why-heading" class="section-title">Why we are asking UCLA to reconsider</h2>
-
-      <div class="editorial-prose">
-        <p>
-          UPNS began in 1966, when parents living in UCLA Family Student Housing came together to create a cooperative preschool for their children. For sixty years, it has provided high-quality early childhood education while building a strong community among UCLA faculty, staff, students, and neighborhood families.
-        </p>
-        <p>
-          The possible loss of UPNS comes at a particularly difficult time. Fernald Child Care Center has already closed, and UCLA has now announced that its remaining Early Care and Education centers will close in summer 2027. UPNS and UCLA ECE are separate organizations, and we do not assume that the circumstances behind these decisions are the same. But the combined effect on families is significant: a major reduction in childcare options for people who work and study at UCLA.
-        </p>
-        <p>
-          Reliable, financially accessible, high-quality childcare is already difficult to find in Los Angeles. For faculty and staff with young children, access to childcare affects their ability to work, teach, conduct research, and build long-term careers at UCLA. It also affects UCLA’s ability to recruit and retain faculty and staff, particularly families relocating to Los Angeles without established childcare or family support networks. For student parents, dependable childcare can determine whether they are able to complete their degrees and participate fully in university life.
-        </p>
-        <p>
-          UPNS has helped UCLA meet this need through an unusually efficient model. UPNS is an independent nonprofit cooperative. UCLA does not operate the school or employ its teachers. The program is sustained through tuition, its teachers and staff, parent participation, fundraising, volunteer leadership, and the cooperative community.
-        </p>
-        <p>
-          At a moment when UCLA is losing other childcare capacity, preserving an established independent provider like UPNS is especially valuable.
-        </p>
-      </div>
-    </section>
-
-    {/* ============================================================
-        4. OUR ASK: The single strong visual break
-        ============================================================ */}
-    <section class="petition-ask-card" aria-labelledby="ask-heading">
-      <h2 id="ask-heading" class="ask-card-title">What we are asking UCLA to do</h2>
-
-      <p class="ask-card-intro">
-        We understand that there may be facilities, operational, financial, or other considerations behind UCLA’s decision that have not yet been shared with the broader community. We are not asking UCLA to disregard those constraints, nor are we asking the university to take over or operate UPNS. We are asking UCLA to work with the school to identify a viable path forward.
-      </p>
-
-      <ol class="ask-list">
-        <li class="ask-item">
-          <strong class="ask-item-title">1. Explore whether UPNS can remain in its current location beyond summer 2027.</strong>
-          <span class="ask-item-desc">If there is a feasible way for the school to remain, we ask UCLA to seriously consider it before closure becomes irreversible.</span>
-        </li>
-        <li class="ask-item">
-          <strong class="ask-item-title">2. If the current location cannot continue, actively help UPNS identify another suitable site.</strong>
-          <span class="ask-item-desc">Work with UPNS to identify a UCLA-owned, UCLA-controlled, or UCLA-supported location where the school can continue operating.</span>
-        </li>
-        <li class="ask-item">
-          <strong class="ask-item-title">3. Provide sufficient time and transition support for relocation.</strong>
-          <span class="ask-item-desc">A licensed preschool cannot simply move overnight. Site selection, approvals, facility adaptation, fundraising, and licensing all require time.</span>
-        </li>
-        <li class="ask-item">
-          <strong class="ask-item-title">4. Meet with UPNS leadership and families.</strong>
-          <span class="ask-item-desc">Meet with representatives of the UPNS Board, staff, parents, and UCLA-affiliated families so the community can better understand the decision and participate in exploring realistic alternatives.</span>
-        </li>
-      </ol>
-
-      <p class="ask-card-highlight">
-        If UPNS’s current home cannot continue, we ask UCLA to help it find a new one.
-      </p>
-    </section>
-
-    {/* ============================================================
-        5. EMOTIONAL ARGUMENT: Concentrated passage
-        ============================================================ */}
-    <section class="petition-emotional-passage">
-      <div class="editorial-prose">
-        <p>
-          The value of UPNS extends beyond the number of childcare spaces it provides. Its cooperative model asks parents to participate in classrooms, care for the school, support fundraising, and become part of one another’s lives. Many families arrive at UCLA and in Los Angeles without extended family nearby, and UPNS becomes an important source of community during the demanding years of raising young children.
-        </p>
-        <p>
-          Its teachers, traditions, relationships, and institutional knowledge have been built over decades. Once that community disappears, it will be extraordinarily difficult to recreate.
-        </p>
-        <p class="emotional-callout">
-          Together, we can help keep this community alive.
-        </p>
-      </div>
-    </section>
-
-    {/* ============================================================
-        6. SIGNING FORM: Native form
-        ============================================================ */}
-    <PetitionForm />
-
-    {/* ============================================================
-        7. UPNS STORIES: Callout banner to dedicated stories page
-        ============================================================ */}
-    <StoriesCallout />
-
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  /* ============================================================
-     1. HERO SECTION STYLING
-     ============================================================ */
-  .petition-hero {
-    padding: 3.5rem 0 2rem;
-  }
-
-  .hero-eyebrow {
-    display: inline-block;
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    color: var(--color-tomato, #d86f58);
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
-  }
-
-  .hero-title {
-    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
-    font-size: 2.85rem;
-    font-weight: 800;
-    line-height: 1.12;
-    color: var(--color-text, #233128);
-    margin: 0 0 1.5rem;
-    letter-spacing: -0.02em;
-  }
-
-  .hero-lead-text {
+  .holding-page-container {
+    min-height: 72vh;
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .hero-lead-text p {
-    margin: 0;
-  }
-
-  .lead-strong {
-    font-size: 1.22rem;
-    font-weight: 700;
-    line-height: 1.5;
-    color: var(--color-text, #233128);
-  }
-
-  .hero-action-row {
-    margin-top: 1.85rem;
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-  }
-
-  .hero-cta-btn {
-    display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-tomato, #d86f58);
-    color: #ffffff;
-    font-family: var(--font-body, "DM Sans", sans-serif);
-    font-size: 1.08rem;
-    font-weight: 800;
-    text-decoration: none;
-    padding: 0.85rem 1.85rem;
-    border-radius: 999px;
-    box-shadow: 0 3px 12px rgba(216, 111, 88, 0.28);
-    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    padding: 4rem 1.5rem 5rem;
   }
 
-  .hero-cta-btn:hover {
-    background: var(--color-tomato-dark, #be533d);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(216, 111, 88, 0.35);
+  .holding-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border, #ede4d3);
+    border-radius: 24px;
+    padding: 3.5rem 3rem;
+    max-width: 680px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 12px 36px rgba(35, 49, 40, 0.06);
+    position: relative;
+    overflow: hidden;
   }
 
-  .hero-live-count-badge {
+  .holding-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--color-tomato, #d86f58), var(--color-yellow, #f2c65a));
+  }
+
+  .holding-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.65rem;
-    background: #fbf6ee;
-    border: 1.5px solid #ebdcc5;
-    padding: 0.6rem 1.25rem;
+    gap: 0.55rem;
+    background: #fdf5ea;
+    border: 1px solid #ebdcc5;
+    padding: 0.45rem 1.15rem;
     border-radius: 999px;
-    font-size: 0.95rem;
-    color: var(--color-text, #233128);
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-tomato, #d86f58);
+    margin-bottom: 1.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
-  .live-pulse-dot {
+  .badge-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background: var(--color-tomato, #d86f58);
     box-shadow: 0 0 0 0 rgba(216, 111, 88, 0.7);
     animation: live-pulse 2s infinite;
-    flex-shrink: 0;
   }
 
   @keyframes live-pulse {
@@ -299,235 +111,87 @@ import { withBase } from "../utils/url";
     }
   }
 
-  .hero-live-count-badge strong {
-    color: var(--color-tomato, #d86f58);
+  .holding-title {
+    font-family: var(--font-display, "Baloo Chettan 2", cursive);
+    font-size: 2.35rem;
     font-weight: 800;
-  }
-
-  /* ============================================================
-     2. FEATURED AUTOPLAYING PHOTOGRAPHS
-     ============================================================ */
-  .petition-featured-photo {
-    margin: 2.25rem 0 3.5rem;
-    padding: 0;
-  }
-
-  .slideshow-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    max-height: 520px;
-    border-radius: 16px;
-    overflow: hidden;
-    background: #ebdcc5;
-    box-shadow: 0 6px 24px rgba(35, 49, 40, 0.09);
-  }
-
-  .slideshow-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
-    pointer-events: none;
-  }
-
-  .slideshow-img.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .featured-photo-caption {
-    font-size: 0.88rem;
-    color: var(--color-text-muted, #536459);
-    text-align: center;
-    margin-top: 0.65rem;
-    font-style: italic;
-  }
-
-  /* ============================================================
-     3. EDITORIAL PROSE
-     ============================================================ */
-  .petition-editorial-section {
-    margin: 2.5rem 0 3.5rem;
-  }
-
-  .section-title {
-    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
-    font-size: 2.1rem;
-    font-weight: 800;
-    line-height: 1.2;
+    line-height: 1.25;
     color: var(--color-text, #233128);
     margin: 0 0 1.35rem;
-    letter-spacing: -0.015em;
-  }
-
-  .editorial-prose {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-  }
-
-  .editorial-prose p {
-    margin: 0;
-  }
-
-  /* ============================================================
-     4. WHAT WE ARE ASKING UCLA TO DO (THE HIGHLIGHTED CARD)
-     ============================================================ */
-  .petition-ask-card {
-    background: #fbf5ec;
-    border: 1.5px solid #ebdcc5;
-    border-radius: 18px;
-    padding: 2.5rem 2.25rem;
-    margin: 3.5rem 0;
-    box-shadow: 0 4px 18px rgba(45, 58, 49, 0.04);
-  }
-
-  .ask-card-title {
-    font-family: var(--font-display, "Baloo Chettan 2", sans-serif);
-    font-size: 1.95rem;
-    font-weight: 800;
-    line-height: 1.2;
-    color: var(--color-text, #233128);
-    margin: 0 0 1rem;
     letter-spacing: -0.01em;
   }
 
-  .ask-card-intro {
+  .holding-lead {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: var(--color-text-muted, #536459);
+    margin: 0 0 2rem;
+  }
+
+  .holding-lead strong {
+    color: var(--color-text, #233128);
+  }
+
+  .holding-info-box {
+    background: var(--color-paper-white, #fffcf6);
+    border: 1px solid #ebdcc5;
+    border-radius: 16px;
+    padding: 1.75rem;
+    text-align: center;
+  }
+
+  .info-text {
     font-size: 1.02rem;
-    line-height: 1.6;
     color: var(--color-text, #233128);
-    margin: 0 0 1.75rem;
-  }
-
-  .ask-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .ask-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid #ebdcc5;
-  }
-
-  .ask-item:last-child {
-    padding-bottom: 0;
-    border-bottom: none;
-  }
-
-  .ask-item-title {
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: var(--color-text, #233128);
-  }
-
-  .ask-item-desc {
-    font-size: 0.98rem;
+    margin: 0 0 1.25rem;
     line-height: 1.55;
+  }
+
+  .info-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
     color: var(--color-text-muted, #536459);
   }
 
-  .ask-card-highlight {
-    margin: 1.75rem 0 0;
-    padding-top: 1.35rem;
-    border-top: 2px solid var(--color-tomato, #d86f58);
-    font-size: 1.12rem;
-    font-weight: 800;
-    line-height: 1.45;
-    color: var(--color-text, #233128);
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-tomato, #d86f58);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.98rem;
+    text-decoration: none;
+    padding: 0.65rem 1.35rem;
+    border-radius: 999px;
+    transition: background-color 0.2s ease, transform 0.15s ease;
   }
 
-  /* ============================================================
-     5. EMOTIONAL PASSAGE
-     ============================================================ */
-  .petition-emotional-passage {
-    margin: 3rem 0;
+  .contact-btn:hover {
+    background: var(--color-tomato-dark, #be533d);
+    transform: translateY(-1px);
+    color: #ffffff;
   }
 
-  .emotional-callout {
-    font-size: 1.15rem;
-    font-weight: 800;
-    line-height: 1.5;
-    color: var(--color-text, #233128);
-    border-left: 3px solid var(--color-tomato, #d86f58);
-    padding-left: 1.15rem;
-    margin: 0.5rem 0 0;
-  }
-
-  /* ============================================================
-     RESPONSIVE ADJUSTMENTS
-     ============================================================ */
-  @media (max-width: 600px) {
-    .petition-hero {
-      padding: 2.25rem 0 1.5rem;
+  @media (max-width: 650px) {
+    .holding-page-container {
+      padding: 2.5rem 1rem 3.5rem;
     }
 
-    .hero-title {
-      font-size: 2.2rem;
+    .holding-card {
+      padding: 2.25rem 1.5rem;
+      border-radius: 18px;
     }
 
-    .lead-strong {
-      font-size: 1.1rem;
-    }
-
-    .hero-action-row {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.85rem;
-    }
-
-    .hero-cta-btn {
-      width: 100%;
-      text-align: center;
-    }
-
-    .hero-live-count {
-      text-align: center;
-    }
-
-    .petition-ask-card {
-      padding: 1.75rem 1.25rem;
-      border-radius: 14px;
-    }
-
-    .ask-card-title {
-      font-size: 1.6rem;
-    }
-
-    .section-title {
+    .holding-title {
       font-size: 1.75rem;
+    }
+
+    .holding-lead {
+      font-size: 1.02rem;
     }
   }
 </style>
-
-<script>
-  function initPhotoSlideshow() {
-    const container = document.getElementById('photo-slideshow');
-    if (!container) return;
-    const slides = Array.from(container.querySelectorAll<HTMLImageElement>('.slideshow-img'));
-    if (slides.length <= 1) return;
-
-    let currentIndex = 0;
-    setInterval(() => {
-      slides[currentIndex].classList.remove('active');
-      currentIndex = (currentIndex + 1) % slides.length;
-      slides[currentIndex].classList.add('active');
-    }, 2000);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPhotoSlideshow);
-  } else {
-    initPhotoSlideshow();
-  }
-</script>
