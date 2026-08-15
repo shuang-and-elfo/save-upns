@@ -5,3 +5,6 @@ dist/
 *.log
 audit_data/
 crawled_pages.json
+.env
+.env.*
+.env.local
