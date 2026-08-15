@@ -331,11 +331,12 @@ export async function addSignature(data: {
       try {
         await fetch(webhookUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(record),
+          redirect: 'follow',
         });
       } catch (err) {
-        console.error('Webhook error:', err);
+        console.warn('Google Sheet webhook error:', err);
       }
     }
   }
